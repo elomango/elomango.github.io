@@ -203,10 +203,6 @@ header h1 {
 
 .ad-container {
     margin: 40px 0;
-    padding: 20px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
     text-align: center;
 }
 
