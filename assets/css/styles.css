@@ -206,6 +206,14 @@ header h1 {
     text-align: center;
 }
 
+/* Top ad styling */
+.ad-container.top-ad {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0 0 20px 0;
+    padding: 10px 0;
+}
+
 footer {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px 20px 0 0;
@@ -276,6 +284,14 @@ footer {
     .project-grid {
         grid-template-columns: 1fr;
     }
+}
+
+/* Header subtitle */
+header .subtitle {
+    font-size: 1rem;
+    color: #6b7280;
+    margin-top: 10px;
+    font-weight: 400;
 }
 /* Language Selector Styles */
 .language-selector {

@@ -1,0 +1,273 @@
+/* Fear & Greed Index Widgets */
+.fear-greed-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+.fear-greed-widget {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.fear-greed-widget:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Color themes based on index value */
+.fear-greed-widget.extreme-fear {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+}
+
+.fear-greed-widget.fear {
+    border-color: #f59e0b;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+}
+
+.fear-greed-widget.neutral {
+    border-color: #6b7280;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.fear-greed-widget.greed {
+    border-color: #059669;
+    background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+}
+
+.fear-greed-widget.extreme-greed {
+    border-color: #dc2626;
+    background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+}
+
+.fear-greed-widget.loading {
+    border-color: #e5e7eb;
+    background: #f9fafb;
+}
+
+/* Widget Header */
+.widget-header {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.widget-header h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0 0 8px 0;
+}
+
+.widget-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+    font-weight: 500;
+}
+
+.demo-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #f59e0b;
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Widget Content */
+.widget-content {
+    text-align: center;
+}
+
+.fear-greed-score {
+    margin-bottom: 20px;
+}
+
+.score-value {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.score-value .emoji {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.score-value .value {
+    font-size: 3.5rem;
+    font-weight: 900;
+    color: #1f2937;
+    line-height: 1;
+}
+
+.score-rating {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #374151;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* Error State */
+.fear-greed-score.error .score-value .value {
+    font-size: 2rem;
+    color: #6b7280;
+}
+
+.fear-greed-score.error .score-rating {
+    color: #6b7280;
+    text-transform: none;
+    font-size: 0.9rem;
+}
+
+/* Loading State */
+.loading-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    padding: 40px 0;
+}
+
+.loading-spinner .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f4f6;
+    border-top: 4px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.loading-spinner p {
+    color: #6b7280;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+/* Widget Footer */
+.widget-footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.widget-footer small {
+    color: #6b7280;
+    font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .fear-greed-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        margin: 30px 0;
+    }
+    
+    .fear-greed-widget {
+        padding: 25px 20px;
+    }
+    
+    .widget-header h3 {
+        font-size: 1.3rem;
+    }
+    
+    .score-value .emoji {
+        font-size: 2.5rem;
+    }
+    
+    .score-value .value {
+        font-size: 3rem;
+    }
+    
+    .score-rating {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .fear-greed-widget {
+        padding: 20px 15px;
+    }
+    
+    .score-value .emoji {
+        font-size: 2rem;
+    }
+    
+    .score-value .value {
+        font-size: 2.5rem;
+    }
+    
+    .widget-header h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* Fallback State */
+.fear-greed-widget.fallback {
+    border-color: #d1d5db;
+    background: linear-gradient(135deg, #f9fafb 0%, #f3f4f6 100%);
+}
+
+.fallback-content {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.fallback-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.7;
+}
+
+.fallback-content p {
+    color: #6b7280;
+    font-size: 0.95rem;
+    margin: 0 0 20px 0;
+}
+
+.cnn-button {
+    display: inline-block;
+    background: #dc2626;
+    color: white;
+    text-decoration: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.cnn-button:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.cnn-button:active {
+    transform: translateY(0);
+}
+
+/* Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

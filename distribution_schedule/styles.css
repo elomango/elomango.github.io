@@ -17,6 +17,15 @@ body {
     padding: 20px;
 }
 
+/* Top ad styling */
+.ad-container.top-ad {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    margin: 0 0 20px 0;
+    padding: 10px 0;
+    text-align: center;
+}
+
 header {
     text-align: center;
     padding: 40px 0;

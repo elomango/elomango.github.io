@@ -7,6 +7,7 @@
     <meta name="description" content="{{meta.description}}">
     <meta name="keywords" content="{{meta.keywords}}">
     <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/fear-greed.css">
     
     <!-- Language alternates for SEO -->
     <link rel="alternate" hreflang="ko" href="https://elomango.github.io/ko/">
@@ -19,6 +20,19 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+    <!-- Top Ad -->
+    <div class="ad-container top-ad">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8489358176879104"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <div class="container">
         <!-- Language Selector -->
         <div class="language-selector">
@@ -31,11 +45,15 @@
         <header>
             <h1>{{header.title}}</h1>
             <p class="tagline">{{header.tagline}}</p>
+            <p class="subtitle">{{header.subtitle}}</p>
         </header>
 
         <section class="hero">
-            <h2>{{hero.title}}</h2>
-            <p>{{hero.subtitle}}</p>
+            <!-- Fear & Greed Index Widgets -->
+            <div class="fear-greed-container">
+                <div id="cnn-fear-greed"></div>
+                <div id="crypto-fear-greed"></div>
+            </div>
         </section>
 
         <section class="projects">
@@ -87,19 +105,6 @@
             <p>{{about.description}}</p>
         </section>
 
-        <!-- Footer Ad -->
-        <div class="ad-container">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-8489358176879104"
-                 data-ad-slot="1234567890"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-
         <footer>
             <div class="footer-content">
                 <div class="footer-section">
@@ -122,6 +127,7 @@
         </footer>
     </div>
 
+    <script src="../assets/js/fear-greed-index.js"></script>
     <script>
         function changeLanguage(lang) {
             // Simply go to the other language folder
