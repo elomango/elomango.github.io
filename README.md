@@ -24,4 +24,4 @@ For inquiries, please contact: elomango7@gmail.com
 
 ---
 
-© 2025 Elomango. All rights reserved.
+© 2025 Elomango. All rights reserved. 
