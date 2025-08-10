@@ -238,7 +238,6 @@ class FearGreedIndex {
                         </div>
                         <div class="widget-content">
                             <div class="fallback-content">
-                                <div class="fallback-icon">📊</div>
                                 <p>Data temporarily unavailable</p>
                                 <a href="https://www.cnn.com/markets/fear-and-greed" 
                                    target="_blank" 

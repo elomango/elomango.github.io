@@ -350,12 +350,30 @@ class Calendar {
 
         // Show REX distributions if the filter is active
         if (this.showRex) {
+            const rexTickers = [];
+            const weeklyTickers = ['COII', 'MSII', 'NVII', 'TSII'];
+            let hasWeekly = false;
+            
             // Check each REX ticker separately
             for (const [ticker, dates] of Object.entries(this.distributionDates.rex)) {
                 if (dates.some(d => d.toDateString() === dateStr)) {
-                    distributions.push({ type: 'rex', label: `REX ${ticker}` });
+                    if (weeklyTickers.includes(ticker)) {
+                        hasWeekly = true;
+                    } else {
+                        rexTickers.push(`REX ${ticker}`);
+                    }
                 }
             }
+            
+            // Add weekly group if any weekly ticker has a distribution
+            if (hasWeekly) {
+                rexTickers.push('REX Weekly');
+            }
+            
+            // Add all REX distributions to the main list
+            rexTickers.forEach(label => {
+                distributions.push({ type: 'rex', label: label });
+            });
         }
 
         return distributions;
