@@ -39,13 +39,65 @@
             <div class="filter-buttons">
                 <button id="today-btn">Today</button>
                 <button id="yieldmax-btn" class="filter-btn active">YieldMax</button>
+                <button id="rex-btn" class="filter-btn active">REX</button>
             </div>
             <div id="calendar" class="calendar-grid"></div>
         </div>
 
         <div class="etf-tables">
             <h2>ETF Groupings</h2>
-            <div class="table-container">
+            
+            <!-- REX Shares ETFs -->
+            <div class="rex-section">
+                <h3 class="collapsible-header" onclick="toggleSection('rex-content')">
+                    <span>REX Shares ETFs</span>
+                    <span class="toggle-icon" id="rex-icon">▼</span>
+                </h3>
+                <div id="rex-content" class="collapsible-content">
+                    <div class="table-container">
+                        <table class="etf-table">
+                            <thead>
+                                <tr>
+                                    <th>Monthly</th>
+                                    <th>Weekly</th>
+                                    <th>Quarterly</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>FEPI</td>
+                                    <td>COII</td>
+                                    <td>BMAX</td>
+                                </tr>
+                                <tr>
+                                    <td>AIPI</td>
+                                    <td>MSII</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>CEPI</td>
+                                    <td>NVII</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>SSK</td>
+                                    <td>TSII</td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- YieldMax ETFs -->
+            <div class="yieldmax-section">
+                <h3 class="collapsible-header" onclick="toggleSection('yieldmax-content')">
+                    <span>YieldMax ETFs</span>
+                    <span class="toggle-icon" id="yieldmax-icon">▼</span>
+                </h3>
+                <div id="yieldmax-content" class="collapsible-content">
+                    <div class="table-container">
                 <table class="etf-table">
                     <thead>
                         <tr>
@@ -157,13 +209,10 @@
                     </tbody>
                 </table>
             </div>
+                </div>
+            </div>
         </div>
 
-        <div class="link-section">
-            <a href="https://www.yieldmaxetfs.com/distribution-schedule/" target="_blank" class="visit-link">
-                Visit Original YieldMax Distribution Schedule
-            </a>
-        </div>
 
         <!-- Footer Ad -->
         <div class="ad-container">

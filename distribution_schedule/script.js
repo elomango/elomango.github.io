@@ -4,6 +4,7 @@ class Calendar {
         this.currentMonth = this.currentDate.getMonth();
         this.currentYear = this.currentDate.getFullYear();
         this.showYieldMax = true;
+        this.showRex = true;
         
         this.distributionDates = {
             target12: [
@@ -71,7 +72,74 @@ class Calendar {
                 new Date(2025, 9, 22), // 10/22/25
                 new Date(2025, 10, 19), // 11/19/25
                 new Date(2025, 11, 17)  // 12/17/25
-            ]
+            ],
+            rex: {
+                BMAX: [
+                    new Date(2025, 11, 29), new Date(2025, 8, 26), new Date(2025, 5, 26), new Date(2026, 2, 27),
+                    new Date(2026, 5, 26), new Date(2026, 8, 28), new Date(2026, 11, 29)
+                ],
+                FEPI: [
+                    new Date(2025, 0, 28), new Date(2025, 1, 25), new Date(2025, 2, 25), new Date(2025, 3, 22),
+                    new Date(2025, 4, 27), new Date(2025, 5, 24), new Date(2025, 6, 22), new Date(2025, 7, 26),
+                    new Date(2025, 8, 23), new Date(2025, 9, 28), new Date(2025, 10, 24), new Date(2025, 11, 23)
+                ],
+                AIPI: [
+                    new Date(2024, 6, 25), new Date(2024, 7, 26), new Date(2024, 8, 25), new Date(2024, 9, 23),
+                    new Date(2024, 10, 25), new Date(2024, 11, 23), new Date(2025, 0, 28), new Date(2025, 1, 25),
+                    new Date(2025, 2, 25), new Date(2025, 3, 22), new Date(2025, 4, 27), new Date(2025, 5, 24),
+                    new Date(2025, 6, 22), new Date(2025, 7, 26), new Date(2025, 8, 23), new Date(2025, 9, 28),
+                    new Date(2025, 10, 24), new Date(2025, 11, 23)
+                ],
+                CEPI: [
+                    new Date(2025, 0, 27), new Date(2025, 1, 24), new Date(2025, 2, 24), new Date(2025, 3, 28),
+                    new Date(2025, 4, 28), new Date(2025, 5, 23), new Date(2025, 6, 28), new Date(2025, 7, 25),
+                    new Date(2025, 8, 22), new Date(2025, 9, 27), new Date(2025, 10, 25), new Date(2025, 11, 22)
+                ],
+                COII: [
+                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
+                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
+                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
+                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
+                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
+                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
+                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
+                    new Date(2025, 11, 29)
+                ],
+                MSII: [
+                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
+                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
+                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
+                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
+                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
+                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
+                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
+                    new Date(2025, 11, 29)
+                ],
+                NVII: [
+                    new Date(2025, 5, 9), new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30),
+                    new Date(2025, 6, 7), new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28),
+                    new Date(2025, 7, 4), new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25),
+                    new Date(2025, 8, 2), new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22),
+                    new Date(2025, 8, 29), new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20),
+                    new Date(2025, 9, 27), new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17),
+                    new Date(2025, 10, 24), new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15),
+                    new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                TSII: [
+                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
+                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
+                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
+                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
+                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
+                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
+                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
+                    new Date(2025, 11, 29)
+                ],
+                SSK: [
+                    new Date(2025, 6, 30), new Date(2025, 7, 27), new Date(2025, 8, 26), new Date(2025, 9, 29),
+                    new Date(2025, 10, 25), new Date(2025, 11, 29)
+                ]
+            }
         };
 
         // Weekly dates are the same as all group dates combined
@@ -95,6 +163,7 @@ class Calendar {
         document.getElementById('next-btn').addEventListener('click', () => this.nextMonth());
         document.getElementById('today-btn').addEventListener('click', () => this.goToToday());
         document.getElementById('yieldmax-btn').addEventListener('click', () => this.toggleYieldMax());
+        document.getElementById('rex-btn').addEventListener('click', () => this.toggleRex());
     }
 
     toggleYieldMax() {
@@ -102,6 +171,19 @@ class Calendar {
         const btn = document.getElementById('yieldmax-btn');
         
         if (this.showYieldMax) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        
+        this.renderCalendar();
+    }
+
+    toggleRex() {
+        this.showRex = !this.showRex;
+        const btn = document.getElementById('rex-btn');
+        
+        if (this.showRex) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
@@ -266,6 +348,16 @@ class Calendar {
             }
         }
 
+        // Show REX distributions if the filter is active
+        if (this.showRex) {
+            // Check each REX ticker separately
+            for (const [ticker, dates] of Object.entries(this.distributionDates.rex)) {
+                if (dates.some(d => d.toDateString() === dateStr)) {
+                    distributions.push({ type: 'rex', label: `REX ${ticker}` });
+                }
+            }
+        }
+
         return distributions;
     }
 }
@@ -274,3 +366,21 @@ class Calendar {
 document.addEventListener('DOMContentLoaded', () => {
     new Calendar();
 });
+
+// Toggle function for collapsible sections
+function toggleSection(contentId) {
+    const content = document.getElementById(contentId);
+    const icon = document.getElementById(contentId.replace('-content', '-icon'));
+    
+    if (content.classList.contains('collapsed')) {
+        // Expand
+        content.classList.remove('collapsed');
+        icon.classList.remove('collapsed');
+        icon.textContent = '▼';
+    } else {
+        // Collapse
+        content.classList.add('collapsed');
+        icon.classList.add('collapsed');
+        icon.textContent = '►';
+    }
+}
