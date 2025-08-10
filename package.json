@@ -1,0 +1,13 @@
+{
+  "name": "elomango-multilingual",
+  "version": "1.0.0",
+  "description": "Multilingual website for Elomango financial tools",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "watch": "node build.js && echo 'Build complete. Run npm run build to rebuild.'"
+  },
+  "keywords": ["multilingual", "website", "financial"],
+  "author": "Elomango",
+  "license": "MIT"
+}

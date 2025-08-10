@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elomango - Financial Tools & Resources</title>
+    <meta name="description" content="Platform providing various financial tools and investment information. Access ETF distribution schedules, portfolio analysis and more.">
+    <meta name="keywords" content="ETF, dividends, investment, finance, portfolio">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    
+    <!-- Language alternates for SEO -->
+    <link rel="alternate" hreflang="ko" href="https://elomango.github.io/ko/">
+    <link rel="alternate" hreflang="en" href="https://elomango.github.io/en/">
+    <link rel="alternate" hreflang="x-default" href="https://elomango.github.io/">
+    <link rel="canonical" href="https://elomango.github.io/en/">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8489358176879104"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ko" >🇰🇷 한국어</option>
+                <option value="en" selected>🇺🇸 English</option>
+            </select>
+        </div>
+
+        <header>
+            <h1>Elomango</h1>
+            <p class="tagline">Financial Tools & Investment Resources</p>
+        </header>
+
+        <section class="hero">
+            <h2>Investment Information at a Glance</h2>
+            <p>We provide various financial tools and resources</p>
+        </section>
+
+        <section class="projects">
+            <h2>Projects</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>📅 ETF Distribution Calendar</h3>
+                    <p>View YieldMax ETFs distribution schedules in calendar format. See all distribution dates for Target12, Weekly Payers, and Groups A/B/C/D at a glance.</p>
+                    <a href="../distribution_schedule/index.html" class="btn">Go to Calendar</a>
+                </div>
+                
+                <div class="project-card coming-soon">
+                    <h3>📊 Portfolio Analyzer</h3>
+                    <p>Analyze your portfolio performance and receive rebalancing suggestions.</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+                
+                <div class="project-card coming-soon">
+                    <h3>💹 Real-time Market Dashboard</h3>
+                    <p>Check real-time information for major indices, exchange rates, cryptocurrencies and more.</p>
+                    <span class="badge">Coming Soon</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Features</h2>
+            <div class="feature-list">
+                <div class="feature">
+                    <span class="icon">🔒</span>
+                    <h3>Secure Data</h3>
+                    <p>All data is provided through public APIs</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">📱</span>
+                    <h3>Mobile Optimized</h3>
+                    <p>Works perfectly on all devices</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">🚀</span>
+                    <h3>Fast Performance</h3>
+                    <p>Optimized code provides fast loading speeds</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>About</h2>
+            <p>Elomango is a platform that provides useful financial tools and information for investors. We are developing various tools to help understand complex financial information easily and intuitively.</p>
+        </section>
+
+        <!-- Footer Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8489358176879104"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../distribution_schedule/index.html">ETF Distribution Calendar</a></li>
+                        <li><a href="./privacy.html">Privacy Policy</a></li>
+                        <li><a href="./terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Feel free to contact us if you have any questions</p>
+                    <p>elomango7@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Elomango. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function changeLanguage(lang) {
+            // Simply go to the other language folder
+            window.location.href = `../${lang}/index.html`;
+        }
+
+        // Save language preference
+        if (typeof(Storage) !== "undefined") {
+            const currentLang = 'en';
+            localStorage.setItem('preferredLanguage', currentLang);
+        }
+    </script>
+</body>
+</html>

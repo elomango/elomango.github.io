@@ -1,0 +1,86 @@
+{
+  "lang": "en",
+  "meta": {
+    "title": "Elomango - Financial Tools & Resources",
+    "description": "Platform providing various financial tools and investment information. Access ETF distribution schedules, portfolio analysis and more.",
+    "keywords": "ETF, dividends, investment, finance, portfolio"
+  },
+  "nav": {
+    "home": "Home",
+    "etf_calendar": "ETF Distribution Calendar",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "header": {
+    "title": "Elomango",
+    "tagline": "Financial Tools & Investment Resources"
+  },
+  "hero": {
+    "title": "Investment Information at a Glance",
+    "subtitle": "We provide various financial tools and resources"
+  },
+  "projects": {
+    "title": "Projects",
+    "etf": {
+      "title": "📅 ETF Distribution Calendar",
+      "description": "View YieldMax ETFs distribution schedules in calendar format. See all distribution dates for Target12, Weekly Payers, and Groups A/B/C/D at a glance.",
+      "button": "Go to Calendar"
+    },
+    "portfolio": {
+      "title": "📊 Portfolio Analyzer",
+      "description": "Analyze your portfolio performance and receive rebalancing suggestions.",
+      "badge": "Coming Soon"
+    },
+    "dashboard": {
+      "title": "💹 Real-time Market Dashboard",
+      "description": "Check real-time information for major indices, exchange rates, cryptocurrencies and more.",
+      "badge": "Coming Soon"
+    }
+  },
+  "features": {
+    "title": "Features",
+    "security": {
+      "icon": "🔒",
+      "title": "Secure Data",
+      "description": "All data is provided through public APIs"
+    },
+    "mobile": {
+      "icon": "📱",
+      "title": "Mobile Optimized",
+      "description": "Works perfectly on all devices"
+    },
+    "performance": {
+      "icon": "🚀",
+      "title": "Fast Performance",
+      "description": "Optimized code provides fast loading speeds"
+    }
+  },
+  "about": {
+    "title": "About",
+    "description": "Elomango is a platform that provides useful financial tools and information for investors. We are developing various tools to help understand complex financial information easily and intuitively."
+  },
+  "footer": {
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "Feel free to contact us if you have any questions",
+      "email": "elomango7@gmail.com"
+    },
+    "copyright": "© 2025 Elomango. All rights reserved."
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "subtitle": "Privacy Policy",
+    "effectiveDate": "Effective Date: January 1, 2025",
+    "backToHome": "Back to Home"
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "subtitle": "Terms of Service",
+    "effectiveDate": "Effective Date: January 1, 2025",
+    "backToHome": "Back to Home",
+    "lastUpdated": "These terms are effective from January 1, 2025."
+  }
+}

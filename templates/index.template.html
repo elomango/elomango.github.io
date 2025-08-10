@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="{{lang}}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{meta.title}}</title>
+    <meta name="description" content="{{meta.description}}">
+    <meta name="keywords" content="{{meta.keywords}}">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    
+    <!-- Language alternates for SEO -->
+    <link rel="alternate" hreflang="ko" href="https://elomango.github.io/ko/">
+    <link rel="alternate" hreflang="en" href="https://elomango.github.io/en/">
+    <link rel="alternate" hreflang="x-default" href="https://elomango.github.io/">
+    <link rel="canonical" href="https://elomango.github.io/{{lang}}/">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8489358176879104"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ko" {{#if_eq lang 'ko'}}selected{{/if_eq}}>🇰🇷 한국어</option>
+                <option value="en" {{#if_eq lang 'en'}}selected{{/if_eq}}>🇺🇸 English</option>
+            </select>
+        </div>
+
+        <header>
+            <h1>{{header.title}}</h1>
+            <p class="tagline">{{header.tagline}}</p>
+        </header>
+
+        <section class="hero">
+            <h2>{{hero.title}}</h2>
+            <p>{{hero.subtitle}}</p>
+        </section>
+
+        <section class="projects">
+            <h2>{{projects.title}}</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>{{projects.etf.title}}</h3>
+                    <p>{{projects.etf.description}}</p>
+                    <a href="../distribution_schedule/index.html" class="btn">{{projects.etf.button}}</a>
+                </div>
+                
+                <div class="project-card coming-soon">
+                    <h3>{{projects.portfolio.title}}</h3>
+                    <p>{{projects.portfolio.description}}</p>
+                    <span class="badge">{{projects.portfolio.badge}}</span>
+                </div>
+                
+                <div class="project-card coming-soon">
+                    <h3>{{projects.dashboard.title}}</h3>
+                    <p>{{projects.dashboard.description}}</p>
+                    <span class="badge">{{projects.dashboard.badge}}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>{{features.title}}</h2>
+            <div class="feature-list">
+                <div class="feature">
+                    <span class="icon">{{features.security.icon}}</span>
+                    <h3>{{features.security.title}}</h3>
+                    <p>{{features.security.description}}</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">{{features.mobile.icon}}</span>
+                    <h3>{{features.mobile.title}}</h3>
+                    <p>{{features.mobile.description}}</p>
+                </div>
+                <div class="feature">
+                    <span class="icon">{{features.performance.icon}}</span>
+                    <h3>{{features.performance.title}}</h3>
+                    <p>{{features.performance.description}}</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <h2>{{about.title}}</h2>
+            <p>{{about.description}}</p>
+        </section>
+
+        <!-- Footer Ad -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-8489358176879104"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>{{footer.quickLinks.title}}</h3>
+                    <ul>
+                        <li><a href="../distribution_schedule/index.html">{{nav.etf_calendar}}</a></li>
+                        <li><a href="./privacy.html">{{nav.privacy}}</a></li>
+                        <li><a href="./terms.html">{{nav.terms}}</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>{{footer.contact.title}}</h3>
+                    <p>{{footer.contact.description}}</p>
+                    <p>{{footer.contact.email}}</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>{{footer.copyright}}</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function changeLanguage(lang) {
+            // Simply go to the other language folder
+            window.location.href = `../${lang}/index.html`;
+        }
+
+        // Save language preference
+        if (typeof(Storage) !== "undefined") {
+            const currentLang = '{{lang}}';
+            localStorage.setItem('preferredLanguage', currentLang);
+        }
+    </script>
+</body>
+</html>

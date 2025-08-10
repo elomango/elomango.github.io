@@ -1,0 +1,86 @@
+{
+  "lang": "ko",
+  "meta": {
+    "title": "Elomango - Financial Tools & Resources",
+    "description": "다양한 금융 도구와 투자 정보를 제공하는 플랫폼입니다. ETF 배당 일정, 포트폴리오 분석 등의 서비스를 이용하세요.",
+    "keywords": "ETF, 배당, 투자, 금융, 포트폴리오"
+  },
+  "nav": {
+    "home": "홈",
+    "etf_calendar": "ETF 배당 캘린더",
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관"
+  },
+  "header": {
+    "title": "Elomango",
+    "tagline": "Financial Tools & Investment Resources"
+  },
+  "hero": {
+    "title": "투자 정보를 한눈에",
+    "subtitle": "다양한 금융 도구와 리소스를 제공합니다"
+  },
+  "projects": {
+    "title": "프로젝트",
+    "etf": {
+      "title": "📅 ETF 배당 캘린더",
+      "description": "YieldMax ETFs의 배당 일정을 캘린더 형식으로 확인하세요. Target12, Weekly Payers, Group A/B/C/D의 모든 배당 일정을 한눈에 볼 수 있습니다.",
+      "button": "바로가기"
+    },
+    "portfolio": {
+      "title": "📊 포트폴리오 분석기",
+      "description": "포트폴리오의 성과를 분석하고 리밸런싱 제안을 받아보세요.",
+      "badge": "준비중"
+    },
+    "dashboard": {
+      "title": "💹 실시간 시장 대시보드",
+      "description": "주요 지수, 환율, 암호화폐 등의 실시간 정보를 확인하세요.",
+      "badge": "준비중"
+    }
+  },
+  "features": {
+    "title": "특징",
+    "security": {
+      "icon": "🔒",
+      "title": "안전한 데이터",
+      "description": "모든 데이터는 공개 API를 통해 제공됩니다"
+    },
+    "mobile": {
+      "icon": "📱",
+      "title": "모바일 최적화",
+      "description": "모든 기기에서 완벽하게 작동합니다"
+    },
+    "performance": {
+      "icon": "🚀",
+      "title": "빠른 성능",
+      "description": "최적화된 코드로 빠른 로딩 속도를 제공합니다"
+    }
+  },
+  "about": {
+    "title": "About",
+    "description": "Elomango는 투자자들을 위한 유용한 금융 도구와 정보를 제공하는 플랫폼입니다. 복잡한 금융 정보를 쉽고 직관적으로 이해할 수 있도록 다양한 도구를 개발하고 있습니다."
+  },
+  "footer": {
+    "quickLinks": {
+      "title": "Quick Links"
+    },
+    "contact": {
+      "title": "Contact",
+      "description": "문의사항이 있으시면 언제든 연락주세요",
+      "email": "elomango7@gmail.com"
+    },
+    "copyright": "© 2025 Elomango. All rights reserved."
+  },
+  "privacy": {
+    "title": "개인정보처리방침",
+    "subtitle": "Privacy Policy",
+    "effectiveDate": "시행일: 2025년 1월 1일",
+    "backToHome": "홈으로 돌아가기"
+  },
+  "terms": {
+    "title": "이용약관",
+    "subtitle": "Terms of Service",
+    "effectiveDate": "시행일: 2025년 1월 1일",
+    "backToHome": "홈으로 돌아가기",
+    "lastUpdated": "본 약관은 2025년 1월 1일부터 시행됩니다."
+  }
+}
