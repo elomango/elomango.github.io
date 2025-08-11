@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TQQQ & QQQ Rebalancing Strategy - Elomango</title>
+    <meta name="description" content="Portfolio backtest simulator using Shannon's rebalancing theory for TQQQ and QQQ">
+    <link rel="stylesheet" href="src/css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131530037931"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .advertisement-banner {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.95);
+            margin-bottom: 20px;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(253,203,110,0.3);
+        }
+        
+        .back-btn:hover {
+            background: #e17055;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(225,112,85,0.3);
+        }
+        
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        #subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector at the very top right of the page -->
+    <div class="language-selector" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+        <select id="langSelect" onchange="changeLanguage(this.value)" style="padding: 8px 12px; border: 1px solid #e5e5e7; border-radius: 8px; font-size: 14px; cursor: pointer; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <option value="en" selected>🇺🇸 English</option>
+            <option value="ko">🇰🇷 한국어</option>
+        </select>
+    </div>
+
+    <!-- Top Ad Banner -->
+    <div class="advertisement-banner">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6475131530037931"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="main-container">
+        <!-- Header with back button only -->
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goHome()" id="home-btn">← 홈으로</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1 id="title">TQQQ & QQQ Rebalancing Strategy</h1>
+            <p id="subtitle">Portfolio backtest simulator using Shannon's rebalancing theory</p>
+            
+            <div class="input-section">
+                <h2 id="parameters-title">Parameters</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="dateFrom" id="label-dateFrom">Period From:</label>
+                        <input type="date" id="dateFrom" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for="dateTo" id="label-dateTo">Period To:</label>
+                        <input type="date" id="dateTo" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for="seed" id="label-seed">Initial Capital:</label>
+                        <input type="number" id="seed" value="10000">
+                    </div>
+                    <div class="input-group">
+                        <label for="tickerA" id="label-tickerA">Ticker A:</label>
+                        <input type="text" id="tickerA" value="TQQQ">
+                    </div>
+                    <div class="input-group">
+                        <label for="tickerB" id="label-tickerB">Ticker B:</label>
+                        <input type="text" id="tickerB" value="QQQ">
+                    </div>
+                    <div class="input-group">
+                        <label for="aIncGap" id="label-aIncGap">A Increase Threshold (%):</label>
+                        <input type="number" id="aIncGap" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="aIncSell" id="label-aIncSell">A Sell Ratio on Increase (%):</label>
+                        <input type="number" id="aIncSell" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="aDecGap" id="label-aDecGap">A Decrease Threshold (%):</label>
+                        <input type="number" id="aDecGap" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="bDecSell" id="label-bDecSell">B Sell Ratio on A Decrease (%):</label>
+                        <input type="number" id="bDecSell" value="20">
+                    </div>
+                </div>
+                <button id="simulateBtn" class="simulate-btn">Start Simulation</button>
+            </div>
+
+            <div id="results" class="results-section" style="display: none;">
+                <div class="chart-container">
+                    <h3 id="chart-title-simulation">Simulation</h3>
+                    <canvas id="simulationChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3 id="chart-title-value">Value</h3>
+                    <canvas id="valueChart"></canvas>
+                </div>
+                
+                <div class="table-container">
+                    <h3 id="table-title">Rebalancing History</h3>
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th id="th-no">No</th>
+                                <th id="th-date">Date</th>
+                                <th id="tickerACountHeader">TQQQ Count</th>
+                                <th id="tickerBCountHeader">QQQ Count</th>
+                                <th id="tickerAPriceHeader">TQQQ Price</th>
+                                <th id="tickerBPriceHeader">QQQ Price</th>
+                                <th id="tickerARatioHeader">TQQQ Ratio</th>
+                                <th id="th-portfolio">Portfolio Value</th>
+                                <th id="th-performance">Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="comparison-container">
+                    <h3 id="comparison-title">Performance Comparison</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4 id="tickerAOnlyTitle">Holding Only TQQQ</h4>
+                            <div class="performance-value" id="tickerAOnlyPerformance">--</div>
+                            <div class="performance-label" id="label-total-return-a">Total Return</div>
+                        </div>
+                        <div class="comparison-card">
+                            <h4 id="tickerBOnlyTitle">Holding Only QQQ</h4>
+                            <div class="performance-value" id="tickerBOnlyPerformance">--</div>
+                            <div class="performance-label" id="label-total-return-b">Total Return</div>
+                        </div>
+                        <div class="comparison-card highlight">
+                            <h4 id="rebalance-strategy-title">Rebalance Strategy</h4>
+                            <div class="performance-value" id="rebalancePerformance">--</div>
+                            <div class="performance-label" id="label-total-return-strategy">Total Return</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Language data
+        const translations = {
+            en: {
+                'home-btn': '← Home',
+                'title': 'TQQQ & QQQ Rebalancing Strategy',
+                'subtitle': 'Portfolio backtest simulator using Shannon\'s rebalancing theory',
+                'parameters-title': 'Parameters',
+                'label-dateFrom': 'Period From:',
+                'label-dateTo': 'Period To:',
+                'label-seed': 'Initial Capital:',
+                'label-tickerA': 'Ticker A:',
+                'label-tickerB': 'Ticker B:',
+                'label-aIncGap': 'A Increase Threshold (%):',
+                'label-aIncSell': 'A Sell Ratio on Increase (%):',
+                'label-aDecGap': 'A Decrease Threshold (%):',
+                'label-bDecSell': 'B Sell Ratio on A Decrease (%):',
+                'simulateBtn': 'Start Simulation',
+                'chart-title-simulation': 'Simulation',
+                'chart-title-value': 'Value',
+                'table-title': 'Rebalancing History',
+                'th-no': 'No',
+                'th-date': 'Date',
+                'th-portfolio': 'Portfolio Value',
+                'th-performance': 'Performance',
+                'comparison-title': 'Performance Comparison',
+                'rebalance-strategy-title': 'Rebalance Strategy',
+                'label-total-return-a': 'Total Return',
+                'label-total-return-b': 'Total Return',
+                'label-total-return-strategy': 'Total Return'
+            },
+            ko: {
+                'home-btn': '← 홈으로',
+                'title': 'TQQQ & QQQ 리밸런싱 전략',
+                'subtitle': 'Shannon의 리밸런싱 이론을 활용한 포트폴리오 백테스트 시뮬레이터',
+                'parameters-title': '매개변수',
+                'label-dateFrom': '시작 기간:',
+                'label-dateTo': '종료 기간:',
+                'label-seed': '초기 자본:',
+                'label-tickerA': '티커 A:',
+                'label-tickerB': '티커 B:',
+                'label-aIncGap': 'A 상승 임계값 (%):',
+                'label-aIncSell': 'A 상승시 매도 비율 (%):',
+                'label-aDecGap': 'A 하락 임계값 (%):',
+                'label-bDecSell': 'A 하락시 B 매도 비율 (%):',
+                'simulateBtn': '시뮬레이션 시작',
+                'chart-title-simulation': '시뮬레이션',
+                'chart-title-value': '가치',
+                'table-title': '리밸런싱 기록',
+                'th-no': '번호',
+                'th-date': '날짜',
+                'th-portfolio': '포트폴리오 가치',
+                'th-performance': '성과',
+                'comparison-title': '성과 비교',
+                'rebalance-strategy-title': '리밸런스 전략',
+                'label-total-return-a': '총 수익률',
+                'label-total-return-b': '총 수익률',
+                'label-total-return-strategy': '총 수익률'
+            }
+        };
+
+        // Language detection and initialization
+        function detectLanguage() {
+            const savedLang = localStorage.getItem('preferredLanguage');
+            if (savedLang && (savedLang === 'ko' || savedLang === 'en')) {
+                return savedLang;
+            }
+            const browserLang = navigator.language || navigator.userLanguage;
+            return browserLang.startsWith('ko') ? 'ko' : 'en';
+        }
+
+        let currentLang = detectLanguage();
+        
+        function applyTranslations(lang) {
+            const trans = translations[lang];
+            
+            // Update text content
+            document.getElementById('home-btn').textContent = trans['home-btn'];
+            document.getElementById('title').textContent = trans['title'];
+            document.getElementById('subtitle').textContent = trans['subtitle'];
+            document.getElementById('parameters-title').textContent = trans['parameters-title'];
+            document.getElementById('simulateBtn').textContent = trans['simulateBtn'];
+            
+            // Update labels
+            Object.keys(trans).forEach(key => {
+                if (key.startsWith('label-')) {
+                    const element = document.getElementById(key);
+                    if (element) element.textContent = trans[key];
+                }
+                if (key.startsWith('th-')) {
+                    const element = document.getElementById(key);
+                    if (element) element.textContent = trans[key];
+                }
+                if (key.startsWith('chart-title-') || key === 'table-title' || key === 'comparison-title') {
+                    const element = document.getElementById(key);
+                    if (element) element.textContent = trans[key];
+                }
+                if (key === 'rebalance-strategy-title') {
+                    const element = document.getElementById(key);
+                    if (element) element.textContent = trans[key];
+                }
+            });
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+            
+            // Update language selector
+            document.getElementById('langSelect').value = lang;
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('preferredLanguage', lang);
+            applyTranslations(lang);
+        }
+
+        function goHome() {
+            // Navigate to the appropriate language home page
+            if (currentLang === 'ko') {
+                window.location.href = '../../ko/index.html';
+            } else {
+                window.location.href = '../../en/index.html';
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            applyTranslations(currentLang);
+        });
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>

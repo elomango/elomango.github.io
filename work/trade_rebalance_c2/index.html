@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shannon Rebalancing Strategy Backtest</title>
+    <link rel="stylesheet" href="src/css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">TQQQ & QQQ rebalance trading strategy</h1>
+        
+        <div class="input-section">
+            <h2>Parameters</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="dateFrom">Period From:</label>
+                    <input type="date" id="dateFrom" value="">
+                </div>
+                <div class="input-group">
+                    <label for="dateTo">Period To:</label>
+                    <input type="date" id="dateTo" value="">
+                </div>
+                <div class="input-group">
+                    <label for="seed">Initial Capital:</label>
+                    <input type="number" id="seed" value="10000">
+                </div>
+                <div class="input-group">
+                    <label for="tickerA">Ticker A:</label>
+                    <input type="text" id="tickerA" value="TQQQ">
+                </div>
+                <div class="input-group">
+                    <label for="tickerB">Ticker B:</label>
+                    <input type="text" id="tickerB" value="QQQ">
+                </div>
+                <div class="input-group">
+                    <label for="aIncGap">A Increase Threshold (%):</label>
+                    <input type="number" id="aIncGap" value="100">
+                </div>
+                <div class="input-group">
+                    <label for="aIncSell">A Sell Ratio on Increase (%):</label>
+                    <input type="number" id="aIncSell" value="20">
+                </div>
+                <div class="input-group">
+                    <label for="aDecGap">A Decrease Threshold (%):</label>
+                    <input type="number" id="aDecGap" value="20">
+                </div>
+                <div class="input-group">
+                    <label for="bDecSell">B Sell Ratio on A Decrease (%):</label>
+                    <input type="number" id="bDecSell" value="20">
+                </div>
+            </div>
+            <button id="simulateBtn" class="simulate-btn">Start Simulation</button>
+        </div>
+
+        <div id="results" class="results-section" style="display: none;">
+            <div class="chart-container">
+                <h3>Simulation</h3>
+                <canvas id="simulationChart"></canvas>
+            </div>
+            
+            <div class="chart-container">
+                <h3>Value</h3>
+                <canvas id="valueChart"></canvas>
+            </div>
+            
+            <div class="table-container">
+                <h3>Rebalancing History</h3>
+                <table id="resultsTable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Date</th>
+                            <th id="tickerACountHeader">TQQQ Count</th>
+                            <th id="tickerBCountHeader">QQQ Count</th>
+                            <th id="tickerAPriceHeader">TQQQ Price</th>
+                            <th id="tickerBPriceHeader">QQQ Price</th>
+                            <th id="tickerARatioHeader">TQQQ Ratio</th>
+                            <th>Portfolio Value</th>
+                            <th>Performance</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody">
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="comparison-container">
+                <h3>Performance Comparison</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h4 id="tickerAOnlyTitle">Holding Only TQQQ</h4>
+                        <div class="performance-value" id="tickerAOnlyPerformance">--</div>
+                        <div class="performance-label">Total Return</div>
+                    </div>
+                    <div class="comparison-card">
+                        <h4 id="tickerBOnlyTitle">Holding Only QQQ</h4>
+                        <div class="performance-value" id="tickerBOnlyPerformance">--</div>
+                        <div class="performance-label">Total Return</div>
+                    </div>
+                    <div class="comparison-card highlight">
+                        <h4>Rebalance Strategy</h4>
+                        <div class="performance-value" id="rebalancePerformance">--</div>
+                        <div class="performance-label">Total Return</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>

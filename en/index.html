@@ -16,7 +16,7 @@
     <link rel="canonical" href="https://elomango.github.io/en/">
     
     <!-- Google AdSense -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8489358176879104"
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131530037931"
             crossorigin="anonymous"></script>
 </head>
 <body>
@@ -24,7 +24,7 @@
     <div class="ad-container top-ad">
         <ins class="adsbygoogle"
              style="display:block"
-             data-ad-client="ca-pub-8489358176879104"
+             data-ad-client="ca-pub-6475131530037931"
              data-ad-slot="1234567890"
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
@@ -76,6 +76,23 @@
                     <p>Check real-time information for major indices, exchange rates, cryptocurrencies and more.</p>
                     <span class="badge">Coming Soon</span>
                 </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <h2>Trade Strategy Simulation</h2>
+            <div id="trade-strategies">
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody id="strategies-tbody">
+                        <!-- Strategies will be loaded here -->
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -137,6 +154,40 @@
             localStorage.setItem('preferredLanguage', currentLang);
         }
 
+        // Load trade strategies
+        async function loadTradeStrategies() {
+            try {
+                const strategies = [
+                    {
+                        id: "rebalance-c2",
+                        title: {
+                            ko: "TQQQ & QQQ 리밸런싱 전략",
+                            en: "TQQQ & QQQ Rebalancing Strategy"
+                        },
+                        description: {
+                            ko: "Shannon의 리밸런싱 이론을 활용한 TQQQ와 QQQ 포트폴리오 백테스트 시뮬레이터",
+                            en: "Portfolio backtest simulator using Shannon's rebalancing theory for TQQQ and QQQ"
+                        },
+                        path: "../trade/rebalance-c2/"
+                    }
+                ];
+                
+                const tbody = document.getElementById('strategies-tbody');
+                
+                strategies.forEach(strategy => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td style="font-size: 0.85rem;"><a href="${strategy.path}index.html" style="color: #667eea; text-decoration: none;">${strategy.title.en}</a></td>
+                        <td style="font-size: 0.85rem;">${strategy.description.en}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Failed to load trade strategies:', error);
+                document.getElementById('strategies-tbody').innerHTML = '<tr><td colspan="2" style="text-align: center; color: #999;">Failed to load strategies</td></tr>';
+            }
+        }
+
         // Load research reports
         async function loadResearchReports() {
             try {
@@ -192,7 +243,10 @@
         }
 
         // Load reports when page loads
-        document.addEventListener('DOMContentLoaded', loadResearchReports);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTradeStrategies();
+            loadResearchReports();
+        });
     </script>
     <style>
         .reports-table {
