@@ -146,6 +146,34 @@
             font-weight: 600;
         }
         
+        .report-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+        }
+        
+        .report-content th,
+        .report-content td {
+            border: 1px solid #ddd;
+            padding: 12px 8px;
+            text-align: left;
+        }
+        
+        .report-content th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .report-content tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .report-content tr:hover {
+            background-color: #f5f5f5;
+        }
+        
         .loading {
             text-align: center;
             padding: 60px 20px;
@@ -291,11 +319,11 @@
             let markdownContent;
             
             if (reportId === 'circle-20250811') {
-                markdownContent = `# Circle Internet Group Comprehensive Analysis Report
+                markdownContent = `# Circle Comprehensive Analysis Report
 
 ## Executive Summary
 
-Circle Internet Group (NYSE: **CRCL**) is the world's second-largest stablecoin issuer of USDC that successfully went public on the New York Stock Exchange in June 2025. As of August 2025, the stock trades in the $164-192 range with a market capitalization of approximately $37-40 billion.
+Circle Internet Group (NYSE: **CRCL**) is the world's second-largest stablecoin USDC issuer that successfully went public on the New York Stock Exchange in June 2025. As of August 2025, the stock trades in the $164-192 range with a market capitalization of approximately $37-40 billion.
 
 Circle's business model is extremely dependent on **US Treasury bill interest income from USDC reserves** (99% of total revenue), with approximately $65.3 billion worth of USDC currently in circulation. In 2024, the company recorded $1.68 billion in revenue and $156 million in net income, though actual margins are limited due to revenue-sharing agreements with Coinbase.
 
@@ -335,6 +363,21 @@ Circle's asset structure is highly conservative and transparent:
 - **Fund Manager**: BlackRock Advisors
 - **Custodian Bank**: Bank of New York Mellon
 
+*_Treasury Bills and Treasury Interest Rates_*
+Treasury Bills are short-term government securities issued by the US government with maturities of one year or less. They are considered risk-free assets and are directly affected by the Federal Reserve's benchmark interest rate policy. When the Fed benchmark rate is at 4.5-5%, Treasury bill yields maintain similar levels. Circle invests USDC reserves in these Treasury bills, generating annual returns of 4.2-4.5%.
+
+### USDC Reserve Composition and Management
+
+**Reserve Transparency**:
+- **100% Collateral**: All USDC is backed 1:1 by US dollar assets
+- **Monthly Audits**: Independent attestation reports issued by Grant Thornton LLP
+- **Daily Reporting**: Circle Reserve Fund holdings disclosed through BlackRock
+- **Average Maturity**: Only holds ultra-short assets with less than 90 days maturity
+
+---
+
+## In-depth Business Structure Analysis
+
 ### Core Revenue Model - Correlation with Treasury Rates
 
 Circle's revenue structure is extremely simple yet high-risk:
@@ -347,6 +390,54 @@ Circle's revenue structure is extremely simple yet high-risk:
 - **1% Rate Increase**: $441 million annual revenue increase
 - **1% Rate Decrease**: $441 million annual revenue decrease
 - **Break-even Rate**: Approximately 2.5-3% (below this level, the company turns unprofitable)
+
+*_Fed Rates and Circle Revenue Relationship_*
+When the Federal Reserve raises the benchmark rate, Treasury bill yields also rise accordingly. Since Circle invests $65.3 billion in USDC reserves in Treasury bills, a 1% rate increase generates an additional $653 million in annual revenue. However, about 50% of this is shared with Coinbase, so Circle's actual additional revenue is approximately $327 million.
+
+### Correlation with Cryptocurrency Markets
+
+**Bitcoin Price and USDC Demand Relationship**:
+
+Circle's growth is closely tied to the overall cryptocurrency market:
+
+- **Bull Market**: Increased trading volume drives USDC demand surge
+- **Bear Market**: Safe-haven preference increases USDC holdings
+- **Increased Volatility**: Higher stablecoin trading volume
+
+**Market Share Status**:
+- **Tether (USDT)**: $158.5 billion (65% market share) - Asia/emerging markets leader
+- **Circle (USDC)**: $65.3 billion (25% market share) - North America/institutional markets leader
+
+### Revenue Sharing Structure with Coinbase
+
+One of Circle's biggest weaknesses is its **revenue-sharing agreement with Coinbase**:
+
+- **Distribution Ratio**: Approximately 50-56% of residual USDC reserve income paid to Coinbase
+- **2024 Payments**: About $1.01 billion (out of $1.7 billion total revenue)
+- **Actual Margin**: Circle retains only about 44-50% of total revenue
+
+---
+
+## Relationship with US Policy
+
+### Impact of the GENIUS Act
+
+The GENIUS Act passed in July 2025 is a game changer for Circle:
+
+**Key Provisions**:
+- Provides **clear federal regulatory framework** for stablecoin issuers
+- **100% reserve requirement** mandatory (US Treasuries or cash)
+- **Priority liquidation rights** for stablecoin holders in bankruptcy
+- 18-month implementation grace period (effective November 2026)
+
+**Circle's Competitive Advantage**:
+- Already meets most requirements for **immediate compliance**
+- Holds money transmission licenses in 46 states + DC + Puerto Rico
+- First to obtain New York BitLicense (2015)
+- Completed EU MiCA regulation compliance (July 2024)
+
+*_Importance of Stablecoin Regulation_*
+Stablecoins are key infrastructure connecting cryptocurrency and traditional finance. Without clear regulations, institutional investors find it difficult to enter. The GENIUS Act applies bank-level regulations to recognize stablecoins as 'legitimate' financial products. This opens the path for large banks, pension funds, and corporations to officially use USDC.
 
 ---
 
@@ -384,6 +475,36 @@ Circle's revenue structure is extremely simple yet high-risk:
 **Financial Projections**:
 - 2027 Revenue: $6-8 billion
 - 2027 Net Income: $1.5-2 billion
+
+#### Bear Case: $100-120 (25-35% decline)
+
+**Risk Factors**:
+- Traditional banks entering the stablecoin market
+- Fed rate cuts reducing reserve income
+- Cryptocurrency market downturn
+
+### Circle Stock Price Outlook by Bitcoin Price
+
+**Bitcoin-Circle Stock Price Correlation**:
+
+| Bitcoin Price | Crypto Market Condition | Expected USDC Scale | Circle Target Price |
+|--------------|------------------------|-------------------|-------------------|
+| $50,000 | Bear Market | $80-100 billion | $90-110 |
+| $100,000 | Normal Growth | $150-200 billion | $250-300 |
+| $150,000 | Bull Market | $300-400 billion | $400-500+ |
+
+### Stock Price Impact by Treasury Yield
+
+**Treasury Yield Scenario Analysis**:
+
+| Treasury Yield | Annual Reserve Income | Circle Net Income | Stock Price Impact |
+|---------------|---------------------|------------------|-------------------|
+| 2% | $1.2 billion | $200-300 million | -30% (vs all targets) |
+| 4% (Current) | $2.5 billion | $500-600 million | Base scenario |
+| 6% | $3.7 billion | $800-1 billion | +35% (vs all targets) |
+
+*_Cryptocurrency Market Size and Stablecoins_*
+The total cryptocurrency market cap is approximately $2.5 trillion as of August 2025. Stablecoins account for about 10% of this ($250 billion). Historically, as the cryptocurrency market grows, the stablecoin market grows alongside it. If the cryptocurrency market reaches $10 trillion by 2030, the stablecoin market could reach $1-1.5 trillion, with USDC potentially reaching $300-450 billion.
 
 ---
 
