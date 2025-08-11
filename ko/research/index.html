@@ -234,6 +234,7 @@
                     <span id="companyName"></span>
                     <span id="ticker"></span>
                     <span id="reportDate"></span>
+                    <span id="analyst"></span>
                 </div>
             </div>
 
@@ -261,84 +262,165 @@
         function loadReport() {
             console.log('Report ID:', reportId); // Debug log
             
-            if (!reportId || reportId !== 'abc-20250111') {
-                console.log('Invalid report ID');
+            if (!reportId) {
+                console.log('No report ID provided');
                 showError();
                 return;
             }
 
             // Korean report data
-            const metadata = {
-                id: "abc-20250111",
-                company: "ABC Corporation",
-                ticker: "AAPL, GOOGL, MSFT",
-                date: "2025-01-11",
-                title: {
-                    ko: "ABC 기업 분석",
-                    en: "ABC Company Analysis"
-                }
-            };
+            let metadata, markdownContent;
+            
+            if (reportId === 'circle-20250811') {
+                metadata = {
+                    id: "circle-20250811",
+                    company: "Circle Internet Group",
+                    ticker: "CRCL",
+                    date: "2025-08-11",
+                    title: {
+                        ko: "Circle 종합 분석",
+                        en: "Circle Comprehensive Analysis"
+                    },
+                    analyst: {
+                        ko: "Claude Opus 4.1",
+                        en: "Claude Opus 4.1"
+                    }
+                };
+                
+                markdownContent = `# Circle (써클) 종합 분석 보고서
 
-            const markdownContent = `# ABC Corporation 실적 분석 보고서
+## Executive Summary
 
-## 요약
-ABC Corporation의 2025년 1분기 실적이 예상을 크게 상회했습니다. 클라우드 서비스 부문의 폭발적 성장과 AI 솔루션 도입이 주요 성장 동력이 되었습니다.
+Circle Internet Group (NYSE: **CRCL**)은 2025년 6월 성공적으로 뉴욕증권거래소에 상장한 세계 2위 스테이블코인 USDC 발행사입니다. 2025년 8월 현재 주가는 $164-192 범위에서 거래되고 있으며, 시가총액은 약 $370-400억에 달합니다. 
 
-## 주요 지표
+Circle의 비즈니스 모델은 **USDC 준비금의 미국 단기 국채 이자 수익**(전체 수익의 99%)에 극도로 의존하고 있으며, 현재 약 $653억 규모의 USDC가 유통되고 있습니다. 2024년 매출은 $16.8억, 순이익은 $1.56억을 기록했으나, Coinbase와의 수익 배분 계약으로 인해 실제 마진은 제한적입니다.
 
-### 재무 성과
-- **매출**: $15.2B (+28% YoY)
-- **영업이익**: $4.8B (+35% YoY)
-- **순이익**: $3.2B (+32% YoY)
-- **EPS**: $2.45 (예상 $2.10)
-
-### 부문별 실적
-
-#### 클라우드 서비스
-- 매출: $8.5B (+45% YoY)
-- 시장 점유율: 18% (+3%p)
-- 신규 고객: 1,200개사
-
-#### AI 솔루션
-- 매출: $3.2B (+120% YoY)
-- 엔터프라이즈 고객: 450개사
-- ARR: $2.8B
-
-#### 레거시 사업
-- 매출: $3.5B (-5% YoY)
-- 점진적 축소 진행 중
-
-## 투자 포인트
-
-### 긍정적 요인
-1. **AI 시장 선점**: 차세대 AI 플랫폼 출시로 시장 주도권 확보
-2. **클라우드 성장**: AWS, Azure와 경쟁 가능한 수준으로 성장
-3. **수익성 개선**: 영업이익률 31.6% 달성
-4. **강력한 현금흐름**: FCF $2.5B
-
-### 리스크 요인
-1. **경쟁 심화**: 빅테크 기업들의 공격적 투자
-2. **규제 리스크**: AI 규제 강화 가능성
-3. **인재 확보**: 개발자 인건비 상승
-
-## 밸류에이션
-- 현재 주가: $145
-- 목표 주가: $170 (상향 17%)
-- P/E: 25.3x (업계 평균 28.5x)
-- PEG: 1.2
-
-## 결론 및 투자 의견
-**매수 (Buy)** - AI와 클라우드 부문의 강력한 성장세가 지속될 전망. 밸류에이션도 동종업계 대비 매력적인 수준.
+2025년 7월 통과된 **GENIUS Act**는 Circle에게 명확한 규제 프레임워크를 제공하여 기관 투자자 진입을 촉진할 것으로 예상됩니다. **기본 시나리오 목표 주가는 $280-320** (75-95% 상승 여력), 강세 시나리오에서는 $400-500까지 상승 가능성이 있습니다.
 
 ---
-*작성일: 2025년 1월 11일*  
-*애널리스트: 투자분석팀*`;
+
+## Circle의 2025년 8월 기준 최근 이슈들
+
+### IPO 성공과 주가 급등
+
+Circle은 2022년 SPAC 합병 실패 후 2025년 6월 5일 전통적인 IPO를 통해 성공적으로 상장했습니다. **IPO 가격 $31에서 첫날 $83.23으로 168% 급등**했으며, 한때 $254까지 상승하여 IPO 가격 대비 8배 이상의 수익률을 기록했습니다. 
+
+### 주요 비즈니스 발전사항
+
+- **본사 이전**: 2025년 초 보스턴에서 뉴욕 원 월드 트레이드 센터로 이전
+- **USDC 성장**: 2024년 한 해 동안 78% 성장하여 $653억 규모 달성
+- **글로벌 확장**: 180개국 이상에서 USDC 사용 가능
+- **멀티체인 전략**: Solana, Aptos, Sui, Unichain 등 23개 블록체인 지원
+
+### 규제 환경의 획기적 개선
+
+2025년 7월 17일 **GENIUS Act (Guiding Regulation and Establishing New Innovations for the US Stablecoin Act)**가 의회를 통과하고 트럼프 대통령이 서명했습니다. 이 법안은 스테이블코인 발행사에 대한 연방-주정부 차원의 명확한 규제 프레임워크를 제공합니다.
+
+---
+
+## 재무 구조 분석
+
+### 자산 형성 방식과 단기 국채 보유 현황
+
+Circle의 자산 구조는 매우 보수적이고 투명합니다:
+
+- **총 운용자산**: $653억 (USDC 유통량과 동일)
+- **자산 구성**:
+  - **80%**: Circle Reserve Fund (USDXX) - SEC 등록 정부 단기자금시장펀드
+  - **20%**: 글로벌 시스템적 중요 은행(GSIB)의 현금
+- **펀드 운용사**: BlackRock Advisors
+- **수탁 은행**: Bank of New York Mellon
+
+### 수익 모델의 핵심 - 단기 국채 이자율과의 상관관계
+
+Circle의 수익 구조는 극도로 단순하면서도 리스크가 높습니다:
+
+**수익 구성 (2024년 기준)**:
+- **준비금 이자 수익**: $16억 (전체 수익의 99%)
+- **기타 서비스 수익**: $0.17억 (1% 미만)
+
+**이자율 민감도 분석**:
+- **금리 1% 상승 시**: 연간 수익 $4.41억 증가
+- **금리 1% 하락 시**: 연간 수익 $4.41억 감소
+- **손익분기 금리**: 약 2.5-3% (이 이하로 떨어지면 적자 전환)
+
+---
+
+## 주가 전망 - 수치 중심 분석
+
+### 현재 밸류에이션 (2025년 8월)
+
+- **현재 주가**: $164-192
+- **시가총액**: $370-400억
+- **2024년 실적 기준 PER**: 106-140배
+- **PSR (Price to Sales Ratio)**: 20-24배
+
+### 시나리오별 목표 주가
+
+#### 기본 시나리오: $280-320 (상승률 75-95%)
+
+**전제 조건**:
+- USDC 유통량 2026년 말까지 $1,500-2,000억 성장
+- 평균 국채 수익률 3.5-4.0% 유지
+- 스테이블코인 시장 점유율 25-30% 유지
+
+**재무 전망**:
+- 2026년 매출: $35-40억
+- 2026년 순이익: $8-10억
+- 목표 PER: 35-40배
+
+#### 강세 시나리오: $400-500 (상승률 130-210%)
+
+**촉매제**:
+- 비트코인 $150,000 돌파로 암호화폐 생태계 급성장
+- 국채 수익률 4% 이상 유지
+- GENIUS Act 시행 후 기관 채택 가속화
+- 은행 라이선스 승인으로 새로운 수익원 창출
+
+**재무 전망**:
+- 2027년 매출: $60-80억
+- 2027년 순이익: $15-20억
+
+---
+
+## 투자 리스크 요인
+
+### 주요 리스크
+
+1. **금리 의존도**: 수익의 99%가 국채 이자에 의존
+2. **파트너 의존도**: Coinbase와의 높은 수익 배분 비율
+3. **경쟁 심화**: JP모간, Bank of America 등 전통 금융기관 진입
+4. **규제 불확실성**: GENIUS Act 시행 세부사항 미확정
+5. **기술적 리스크**: 스마트 컨트랙트 취약점, 해킹 위험
+
+---
+
+## 결론 및 투자 의견
+
+Circle (CRCL)은 **규제 환경 개선과 암호화폐 시장 성장의 최대 수혜주**입니다. GENIUS Act 통과로 기관 투자자 진입 장벽이 크게 낮아졌으며, 스테이블코인 시장의 폭발적 성장이 예상됩니다.
+
+**투자 등급**: 매수 (중간 위험)
+**12개월 목표 주가**: $280-320
+**24개월 목표 주가**: $400-500
+
+다만 극도로 높은 금리 민감도와 Coinbase 의존도는 지속적인 모니터링이 필요한 리스크 요인입니다. 포트폴리오의 3-7% 수준의 분산 투자를 권장합니다.
+
+---
+*작성일: 2025년 8월 11일*  
+*애널리스트: ${metadata.analyst.ko}*`;
+            } else {
+                console.log('Invalid report ID');
+                showError();
+                return;
+            }
+
 
             // Update page metadata
             document.getElementById('reportTitle').textContent = metadata.title.ko;
             document.getElementById('companyName').textContent = metadata.company;
             document.getElementById('ticker').textContent = metadata.ticker;
             document.getElementById('reportDate').textContent = metadata.date;
+            document.getElementById('analyst').textContent = metadata.analyst.ko;
             
             // Update page title
             document.title = `${metadata.company} - ${metadata.title.ko}`;

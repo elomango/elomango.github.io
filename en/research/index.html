@@ -234,6 +234,7 @@
                     <span id="companyName"></span>
                     <span id="ticker"></span>
                     <span id="reportDate"></span>
+                    <span id="analyst"></span>
                 </div>
             </div>
 
@@ -261,84 +262,164 @@
         function loadReport() {
             console.log('Report ID:', reportId); // Debug log
             
-            if (!reportId || reportId !== 'abc-20250111') {
+            if (!reportId || reportId !== 'circle-20250811') {
                 console.log('Invalid report ID');
                 showError();
                 return;
             }
 
             // English report data
-            const metadata = {
-                id: "abc-20250111",
-                company: "ABC Corporation",
-                ticker: "AAPL, GOOGL, MSFT",
-                date: "2025-01-11",
-                title: {
-                    ko: "ABC 기업 분석",
-                    en: "ABC Company Analysis"
-                }
-            };
+            let metadata;
+            
+            if (reportId === 'circle-20250811') {
+                metadata = {
+                    id: "circle-20250811",
+                    company: "Circle Internet Group",
+                    ticker: "CRCL",
+                    date: "2025-08-11",
+                    title: {
+                        ko: "Circle 종합 분석",
+                        en: "Circle Comprehensive Analysis"
+                    },
+                    analyst: {
+                        ko: "Claude Opus 4.1",
+                        en: "Claude Opus 4.1"
+                    }
+                };
+            }
 
-            const markdownContent = `# ABC Corporation Earnings Analysis Report
+            let markdownContent;
+            
+            if (reportId === 'circle-20250811') {
+                markdownContent = `# Circle Internet Group Comprehensive Analysis Report
 
-## Summary
-ABC Corporation's Q1 2025 results significantly exceeded expectations. Explosive growth in the cloud services division and AI solution adoption were key growth drivers.
+## Executive Summary
 
-## Key Metrics
+Circle Internet Group (NYSE: **CRCL**) is the world's second-largest stablecoin issuer of USDC that successfully went public on the New York Stock Exchange in June 2025. As of August 2025, the stock trades in the $164-192 range with a market capitalization of approximately $37-40 billion.
 
-### Financial Performance
-- **Revenue**: $15.2B (+28% YoY)
-- **Operating Income**: $4.8B (+35% YoY)
-- **Net Income**: $3.2B (+32% YoY)
-- **EPS**: $2.45 (Expected $2.10)
+Circle's business model is extremely dependent on **US Treasury bill interest income from USDC reserves** (99% of total revenue), with approximately $65.3 billion worth of USDC currently in circulation. In 2024, the company recorded $1.68 billion in revenue and $156 million in net income, though actual margins are limited due to revenue-sharing agreements with Coinbase.
 
-### Segment Performance
-
-#### Cloud Services
-- Revenue: $8.5B (+45% YoY)
-- Market Share: 18% (+3%p)
-- New Customers: 1,200 companies
-
-#### AI Solutions
-- Revenue: $3.2B (+120% YoY)
-- Enterprise Customers: 450 companies
-- ARR: $2.8B
-
-#### Legacy Business
-- Revenue: $3.5B (-5% YoY)
-- Gradual downsizing in progress
-
-## Investment Points
-
-### Positive Factors
-1. **AI Market Leadership**: Secured market dominance with next-gen AI platform launch
-2. **Cloud Growth**: Reached competitive level with AWS and Azure
-3. **Profitability Improvement**: Achieved 31.6% operating margin
-4. **Strong Cash Flow**: FCF $2.5B
-
-### Risk Factors
-1. **Intensified Competition**: Aggressive investment by big tech companies
-2. **Regulatory Risk**: Possibility of strengthened AI regulations
-3. **Talent Acquisition**: Rising developer labor costs
-
-## Valuation
-- Current Price: $145
-- Target Price: $170 (Upward 17%)
-- P/E: 25.3x (Industry Average 28.5x)
-- PEG: 1.2
-
-## Conclusion and Investment Opinion
-**Buy** - Strong growth in AI and cloud segments expected to continue. Valuation is attractive compared to industry peers.
+The **GENIUS Act** passed in July 2025 is expected to provide Circle with a clear regulatory framework and facilitate institutional investor adoption. **Base case target price is $280-320** (75-95% upside potential), with bull case scenarios reaching $400-500.
 
 ---
-*Report Date: January 11, 2025*  
-*Analyst: Investment Analysis Team*`;
+
+## Circle's Recent Issues as of August 2025
+
+### Successful IPO and Stock Surge
+
+Following a failed SPAC merger in 2022, Circle successfully went public through a traditional IPO on June 5, 2025. The **stock surged 168% from the IPO price of $31 to $83.23 on the first day**, reaching as high as $254, representing over 8x return from the IPO price.
+
+### Key Business Developments
+
+- **Headquarters Relocation**: Moved from Boston to One World Trade Center in New York in early 2025
+- **USDC Growth**: 78% growth throughout 2024, reaching $65.3 billion in circulation
+- **Global Expansion**: USDC available in over 180 countries
+- **Multi-chain Strategy**: Supporting 23 blockchains including Solana, Aptos, Sui, and Unichain
+
+### Revolutionary Regulatory Environment Improvement
+
+On July 17, 2025, the **GENIUS Act (Guiding Regulation and Establishing New Innovations for the US Stablecoin Act)** was passed by Congress and signed by President Trump. This legislation provides a clear federal-state regulatory framework for stablecoin issuers.
+
+---
+
+## Financial Structure Analysis
+
+### Asset Formation and Treasury Holdings
+
+Circle's asset structure is highly conservative and transparent:
+
+- **Total Assets Under Management**: $65.3 billion (equal to USDC circulation)
+- **Asset Composition**:
+  - **80%**: Circle Reserve Fund (USDXX) - SEC-registered government money market fund
+  - **20%**: Cash at Global Systemically Important Banks (GSIBs)
+- **Fund Manager**: BlackRock Advisors
+- **Custodian Bank**: Bank of New York Mellon
+
+### Core Revenue Model - Correlation with Treasury Rates
+
+Circle's revenue structure is extremely simple yet high-risk:
+
+**Revenue Composition (2024)**:
+- **Reserve Interest Income**: $1.6 billion (99% of total revenue)
+- **Other Service Revenue**: $17 million (less than 1%)
+
+**Interest Rate Sensitivity Analysis**:
+- **1% Rate Increase**: $441 million annual revenue increase
+- **1% Rate Decrease**: $441 million annual revenue decrease
+- **Break-even Rate**: Approximately 2.5-3% (below this level, the company turns unprofitable)
+
+---
+
+## Stock Price Outlook - Quantitative Analysis
+
+### Current Valuation (August 2025)
+
+- **Current Stock Price**: $164-192
+- **Market Capitalization**: $37-40 billion
+- **P/E Ratio (2024 basis)**: 106-140x
+- **PSR (Price to Sales Ratio)**: 20-24x
+
+### Target Price by Scenario
+
+#### Base Case: $280-320 (75-95% upside)
+
+**Assumptions**:
+- USDC circulation grows to $150-200 billion by end of 2026
+- Average Treasury yield maintains 3.5-4.0%
+- Stablecoin market share remains 25-30%
+
+**Financial Projections**:
+- 2026 Revenue: $3.5-4.0 billion
+- 2026 Net Income: $800 million - $1 billion
+- Target P/E: 35-40x
+
+#### Bull Case: $400-500 (130-210% upside)
+
+**Catalysts**:
+- Bitcoin breaking $150,000 driving explosive crypto ecosystem growth
+- Treasury yields remaining above 4%
+- Accelerated institutional adoption post-GENIUS Act implementation
+- Banking license approval creating new revenue streams
+
+**Financial Projections**:
+- 2027 Revenue: $6-8 billion
+- 2027 Net Income: $1.5-2 billion
+
+---
+
+## Investment Risk Factors
+
+### Key Risks
+
+1. **Interest Rate Dependency**: 99% of revenue dependent on Treasury interest
+2. **Partner Dependency**: High revenue-sharing ratio with Coinbase
+3. **Intensifying Competition**: Traditional financial institutions like JPMorgan and Bank of America entering the space
+4. **Regulatory Uncertainty**: GENIUS Act implementation details not finalized
+5. **Technical Risks**: Smart contract vulnerabilities and hacking risks
+
+---
+
+## Conclusion and Investment Opinion
+
+Circle (CRCL) is the **primary beneficiary of improved regulatory environment and crypto market growth**. The passage of the GENIUS Act significantly lowers barriers for institutional investor entry, with explosive growth expected in the stablecoin market.
+
+**Investment Rating**: Buy (Medium Risk)
+**12-Month Target Price**: $280-320
+**24-Month Target Price**: $400-500
+
+However, extremely high interest rate sensitivity and Coinbase dependency are risk factors requiring continuous monitoring. We recommend diversified investment at 3-7% of portfolio allocation.
+
+---
+*Report Date: August 11, 2025*  
+*Analyst: ${metadata.analyst.en}*`;
+            }
 
             // Update page metadata
             document.getElementById('reportTitle').textContent = metadata.title.en;
             document.getElementById('companyName').textContent = metadata.company;
             document.getElementById('ticker').textContent = metadata.ticker;
             document.getElementById('reportDate').textContent = metadata.date;
+            document.getElementById('analyst').textContent = metadata.analyst.en;
             
             // Update page title
             document.title = `${metadata.company} - ${metadata.title.en}`;
