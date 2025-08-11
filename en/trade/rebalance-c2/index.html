@@ -6,6 +6,7 @@
     <title>TQQQ & QQQ Rebalancing Strategy - Elomango</title>
     <meta name="description" content="Portfolio backtest simulator using Shannon's rebalancing theory for TQQQ and QQQ">
     <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <!-- Google AdSense -->
@@ -117,7 +118,7 @@
         <!-- Header with back button only -->
         <div class="header">
             <div class="header-left">
-                <button class="back-btn" onclick="goHome()" id="home-btn">← 홈으로</button>
+                <button class="back-btn" onclick="goHome()">← Home</button>
             </div>
         </div>
 
@@ -335,18 +336,13 @@
         }
 
         function changeLanguage(lang) {
-            currentLang = lang;
-            localStorage.setItem('preferredLanguage', lang);
-            applyTranslations(lang);
+            if (lang === 'ko') {
+                window.location.href = '../../../ko/trade/rebalance-c2/index.html';
+            }
         }
 
         function goHome() {
-            // Navigate to the appropriate language home page
-            if (currentLang === 'ko') {
-                window.location.href = '../../ko/index.html';
-            } else {
-                window.location.href = '../../en/index.html';
-            }
+            window.location.href = '../../index.html';
         }
 
         // Initialize on page load

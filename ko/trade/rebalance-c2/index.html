@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TQQQ & QQQ 리밸런싱 전략 - Elomango</title>
+    <meta name="description" content="Shannon의 리밸런싱 이론을 활용한 TQQQ와 QQQ 포트폴리오 백테스트 시뮬레이터">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131530037931"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .advertisement-banner {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.95);
+            margin-bottom: 20px;
+        }
+        
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(253,203,110,0.3);
+        }
+        
+        .back-btn:hover {
+            background: #e17055;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(225,112,85,0.3);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        #subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Language Selector at the very top right of the page -->
+    <div class="language-selector" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+        <select id="langSelect" onchange="changeLanguage(this.value)" style="padding: 8px 12px; border: 1px solid #e5e5e7; border-radius: 8px; font-size: 14px; cursor: pointer; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <option value="ko" selected>🇰🇷 한국어</option>
+            <option value="en">🇺🇸 English</option>
+        </select>
+    </div>
+
+    <!-- Top Ad Banner -->
+    <div class="advertisement-banner">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6475131530037931"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="main-container">
+        <!-- Header with back button -->
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goHome()">← 홈으로</button>
+            </div>
+        </div>
+
+        <div class="container">
+            <h1>TQQQ & QQQ 리밸런싱 전략</h1>
+            <p id="subtitle">Shannon의 리밸런싱 이론을 활용한 포트폴리오 백테스트 시뮬레이터</p>
+            
+            <div class="input-section">
+                <h2>매개변수</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="dateFrom">시작 기간:</label>
+                        <input type="date" id="dateFrom" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for="dateTo">종료 기간:</label>
+                        <input type="date" id="dateTo" value="">
+                    </div>
+                    <div class="input-group">
+                        <label for="seed">초기 자본:</label>
+                        <input type="number" id="seed" value="10000">
+                    </div>
+                    <div class="input-group">
+                        <label for="tickerA">티커 A:</label>
+                        <input type="text" id="tickerA" value="TQQQ">
+                    </div>
+                    <div class="input-group">
+                        <label for="tickerB">티커 B:</label>
+                        <input type="text" id="tickerB" value="QQQ">
+                    </div>
+                    <div class="input-group">
+                        <label for="aIncGap">A 상승 임계값 (%):</label>
+                        <input type="number" id="aIncGap" value="100">
+                    </div>
+                    <div class="input-group">
+                        <label for="aIncSell">A 상승시 매도 비율 (%):</label>
+                        <input type="number" id="aIncSell" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="aDecGap">A 하락 임계값 (%):</label>
+                        <input type="number" id="aDecGap" value="20">
+                    </div>
+                    <div class="input-group">
+                        <label for="bDecSell">A 하락시 B 매도 비율 (%):</label>
+                        <input type="number" id="bDecSell" value="20">
+                    </div>
+                </div>
+                <button id="simulateBtn" class="simulate-btn">시뮬레이션 시작</button>
+            </div>
+
+            <div id="results" class="results-section" style="display: none;">
+                <div class="chart-container">
+                    <h3>시뮬레이션</h3>
+                    <canvas id="simulationChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>가치</h3>
+                    <canvas id="valueChart"></canvas>
+                </div>
+                
+                <div class="table-container">
+                    <h3>리밸런싱 기록</h3>
+                    <table id="resultsTable">
+                        <thead>
+                            <tr>
+                                <th>번호</th>
+                                <th>날짜</th>
+                                <th id="tickerACountHeader">TQQQ 수량</th>
+                                <th id="tickerBCountHeader">QQQ 수량</th>
+                                <th id="tickerAPriceHeader">TQQQ 가격</th>
+                                <th id="tickerBPriceHeader">QQQ 가격</th>
+                                <th id="tickerARatioHeader">TQQQ 비율</th>
+                                <th>포트폴리오 가치</th>
+                                <th>성과</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsBody">
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="comparison-container">
+                    <h3>성과 비교</h3>
+                    <div class="comparison-grid">
+                        <div class="comparison-card">
+                            <h4 id="tickerAOnlyTitle">TQQQ만 보유</h4>
+                            <div class="performance-value" id="tickerAOnlyPerformance">--</div>
+                            <div class="performance-label">총 수익률</div>
+                        </div>
+                        <div class="comparison-card">
+                            <h4 id="tickerBOnlyTitle">QQQ만 보유</h4>
+                            <div class="performance-value" id="tickerBOnlyPerformance">--</div>
+                            <div class="performance-label">총 수익률</div>
+                        </div>
+                        <div class="comparison-card highlight">
+                            <h4>리밸런스 전략</h4>
+                            <div class="performance-value" id="rebalancePerformance">--</div>
+                            <div class="performance-label">총 수익률</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeLanguage(lang) {
+            if (lang === 'en') {
+                window.location.href = '../../../en/trade/rebalance-c2/index.html';
+            }
+        }
+
+        function goHome() {
+            window.location.href = '../../index.html';
+        }
+    </script>
+    
+    <script src="app.js"></script>
+</body>
+</html>
