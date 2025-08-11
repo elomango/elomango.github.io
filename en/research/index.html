@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Report</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2565005914845312" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+            min-height: 100vh;
+            margin: 0;
+            color: #444;
+        }
+        
+        .advertisement-banner {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ffeaa7;
+        }
+        
+        .back-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(253,203,110,0.3);
+        }
+        
+        .back-btn:hover {
+            background: #e17055;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(225,112,85,0.3);
+        }
+        
+        .report-meta {
+            margin-bottom: 30px;
+        }
+        
+        .report-meta h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .meta-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .meta-info span {
+            padding: 6px 12px;
+            background: #f0f0f0;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .rating {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        
+        .rating-buy {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .report-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        .report-content h1 {
+            font-size: 28px;
+            margin: 30px 0 20px;
+            color: #444;
+            border-bottom: 2px solid #fdcb6e;
+            padding-bottom: 10px;
+        }
+        
+        .report-content h2 {
+            font-size: 24px;
+            margin: 25px 0 15px;
+            color: #444;
+        }
+        
+        .report-content h3 {
+            font-size: 20px;
+            margin: 20px 0 10px;
+            color: #555;
+        }
+        
+        .report-content h4 {
+            font-size: 18px;
+            margin: 15px 0 10px;
+            color: #666;
+        }
+        
+        .report-content p {
+            margin: 15px 0;
+        }
+        
+        .report-content ul, .report-content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        
+        .report-content li {
+            margin: 8px 0;
+        }
+        
+        .report-content strong {
+            color: #333;
+            font-weight: 600;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f0f0f0;
+            border-top: 3px solid #fdcb6e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #f44336;
+            font-size: 18px;
+        }
+        
+        /* Language Selector */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
+        .language-selector select {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e7;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .language-selector select:hover {
+            border-color: #fdcb6e;
+            box-shadow: 0 2px 8px rgba(253, 203, 110, 0.3);
+        }
+        
+        .language-selector select:focus {
+            outline: none;
+            border-color: #fdcb6e;
+            box-shadow: 0 0 0 3px rgba(253, 203, 110, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Advertisement -->
+    <div class="advertisement-banner">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-2565005914845312"
+             data-ad-slot="4536280549"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+    </div>
+
+    <div class="container">
+        <!-- Language Selector -->
+        <div class="language-selector">
+            <select id="langSelect" onchange="changeLanguage(this.value)">
+                <option value="ko">🇰🇷 한국어</option>
+                <option value="en" selected>🇺🇸 English</option>
+            </select>
+        </div>
+
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../index.html'">← Back to List</button>
+        </div>
+
+        <div id="reportView" style="display: none;">
+            <div class="report-meta">
+                <h1 id="reportTitle"></h1>
+                <div class="meta-info">
+                    <span id="companyName"></span>
+                    <span id="ticker"></span>
+                    <span id="reportDate"></span>
+                </div>
+            </div>
+
+            <div id="reportContent" class="report-content">
+                <!-- Markdown content will be rendered here -->
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Loading report...</p>
+        </div>
+
+        <div id="error" class="error" style="display: none;">
+            <p>Failed to load report</p>
+        </div>
+    </div>
+
+    <script>
+        // Get report ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const reportId = urlParams.get('id');
+
+        // Load report data
+        function loadReport() {
+            console.log('Report ID:', reportId); // Debug log
+            
+            if (!reportId || reportId !== 'abc-20250111') {
+                console.log('Invalid report ID');
+                showError();
+                return;
+            }
+
+            // English report data
+            const metadata = {
+                id: "abc-20250111",
+                company: "ABC Corporation",
+                ticker: "AAPL, GOOGL, MSFT",
+                date: "2025-01-11",
+                title: {
+                    ko: "ABC 기업 분석",
+                    en: "ABC Company Analysis"
+                }
+            };
+
+            const markdownContent = `# ABC Corporation Earnings Analysis Report
+
+## Summary
+ABC Corporation's Q1 2025 results significantly exceeded expectations. Explosive growth in the cloud services division and AI solution adoption were key growth drivers.
+
+## Key Metrics
+
+### Financial Performance
+- **Revenue**: $15.2B (+28% YoY)
+- **Operating Income**: $4.8B (+35% YoY)
+- **Net Income**: $3.2B (+32% YoY)
+- **EPS**: $2.45 (Expected $2.10)
+
+### Segment Performance
+
+#### Cloud Services
+- Revenue: $8.5B (+45% YoY)
+- Market Share: 18% (+3%p)
+- New Customers: 1,200 companies
+
+#### AI Solutions
+- Revenue: $3.2B (+120% YoY)
+- Enterprise Customers: 450 companies
+- ARR: $2.8B
+
+#### Legacy Business
+- Revenue: $3.5B (-5% YoY)
+- Gradual downsizing in progress
+
+## Investment Points
+
+### Positive Factors
+1. **AI Market Leadership**: Secured market dominance with next-gen AI platform launch
+2. **Cloud Growth**: Reached competitive level with AWS and Azure
+3. **Profitability Improvement**: Achieved 31.6% operating margin
+4. **Strong Cash Flow**: FCF $2.5B
+
+### Risk Factors
+1. **Intensified Competition**: Aggressive investment by big tech companies
+2. **Regulatory Risk**: Possibility of strengthened AI regulations
+3. **Talent Acquisition**: Rising developer labor costs
+
+## Valuation
+- Current Price: $145
+- Target Price: $170 (Upward 17%)
+- P/E: 25.3x (Industry Average 28.5x)
+- PEG: 1.2
+
+## Conclusion and Investment Opinion
+**Buy** - Strong growth in AI and cloud segments expected to continue. Valuation is attractive compared to industry peers.
+
+---
+*Report Date: January 11, 2025*  
+*Analyst: Investment Analysis Team*`;
+
+            // Update page metadata
+            document.getElementById('reportTitle').textContent = metadata.title.en;
+            document.getElementById('companyName').textContent = metadata.company;
+            document.getElementById('ticker').textContent = metadata.ticker;
+            document.getElementById('reportDate').textContent = metadata.date;
+            
+            // Update page title
+            document.title = `${metadata.company} - ${metadata.title.en}`;
+
+            // Render markdown
+            marked.setOptions({
+                breaks: true,
+                gfm: true,
+                tables: true,
+                smartLists: true,
+                smartypants: true
+            });
+            
+            document.getElementById('reportContent').innerHTML = marked.parse(markdownContent);
+
+            // Hide loading, show content
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('reportView').style.display = 'block';
+            
+            // Load ad
+            setTimeout(() => {
+                if (typeof adsbygoogle !== 'undefined') {
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
+            }, 100);
+        }
+
+        function showError() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // Language change function
+        function changeLanguage(lang) {
+            const currentReportId = new URLSearchParams(window.location.search).get('id');
+            if (lang === 'ko') {
+                window.location.href = `../../ko/research/index.html?id=${currentReportId}`;
+            } else if (lang === 'en') {
+                // Already on English page
+                return;
+            }
+        }
+
+        // Load report when page loads
+        document.addEventListener('DOMContentLoaded', loadReport);
+    </script>
+</body>
+</html>

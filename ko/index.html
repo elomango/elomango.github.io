@@ -80,23 +80,20 @@
         </section>
 
         <section class="features">
-            <h2>특징</h2>
-            <div class="feature-list">
-                <div class="feature">
-                    <span class="icon">🔒</span>
-                    <h3>안전한 데이터</h3>
-                    <p>모든 데이터는 공개 API를 통해 제공됩니다</p>
-                </div>
-                <div class="feature">
-                    <span class="icon">📱</span>
-                    <h3>모바일 최적화</h3>
-                    <p>모든 기기에서 완벽하게 작동합니다</p>
-                </div>
-                <div class="feature">
-                    <span class="icon">🚀</span>
-                    <h3>빠른 성능</h3>
-                    <p>최적화된 코드로 빠른 로딩 속도를 제공합니다</p>
-                </div>
+            <h2>분석 보고서</h2>
+            <div id="research-reports">
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th>날짜</th>
+                            <th>제목</th>
+                            <th>티커</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-tbody">
+                        <!-- Reports will be loaded here -->
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -139,6 +136,106 @@
             const currentLang = 'ko';
             localStorage.setItem('preferredLanguage', currentLang);
         }
+
+        // Load research reports
+        async function loadResearchReports() {
+            try {
+                // Embedded data for simplicity (works with file:// protocol)
+                const data = {
+                    "reports": [
+                        {
+                            "id": "abc-20250111",
+                            "year": 2025,
+                            "month": 1,
+                            "day": 11,
+                            "company": "ABC Corporation",
+                            "ticker": "AAPL, GOOGL, MSFT",
+                            "date": "2025-01-11",
+                            "title": {
+                                "ko": "ABC 기업 분석",
+                                "en": "ABC Company Analysis",
+                                "ja": "ABC企業分析"
+                            },
+                            "summary": {
+                                "ko": "클라우드와 AI 부문 호조로 예상치 상회하는 실적 달성",
+                                "en": "Beat estimates driven by strong cloud and AI performance",
+                                "ja": "クラウドとAI部門の好調で予想を上回る業績"
+                            },
+                            "path": "/research/reports/2025/01/abc-20250111/",
+                            "rating": "Buy",
+                            "tags": ["technology", "cloud", "AI", "earnings"]
+                        }
+                    ]
+                };
+                const tbody = document.getElementById('reports-tbody');
+                
+                data.reports.forEach(report => {
+                    const row = document.createElement('tr');
+                    const date = new Date(report.date);
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                    
+                    row.innerHTML = `
+                        <td style="font-size: 0.85rem;">${formattedDate}</td>
+                        <td style="font-size: 0.85rem;"><a href="./research/index.html?id=${report.id}" style="color: #667eea; text-decoration: none;">${report.title.ko || report.title.en}</a></td>
+                        <td style="font-size: 0.85rem;"><strong>${report.ticker}</strong></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Failed to load research reports:', error);
+                document.getElementById('reports-tbody').innerHTML = '<tr><td colspan="3" style="text-align: center; color: #999;">보고서를 불러올 수 없습니다</td></tr>';
+            }
+        }
+
+        // Load reports when page loads
+        document.addEventListener('DOMContentLoaded', loadResearchReports);
     </script>
+    <style>
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .reports-table th,
+        .reports-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reports-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #444;
+        }
+        
+        .reports-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .rating-badge {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .rating-buy {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .rating-hold {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .rating-sell {
+            background: #f44336;
+            color: white;
+        }
+    </style>
 </body>
 </html>

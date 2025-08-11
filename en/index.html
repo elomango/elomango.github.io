@@ -80,23 +80,20 @@
         </section>
 
         <section class="features">
-            <h2>Features</h2>
-            <div class="feature-list">
-                <div class="feature">
-                    <span class="icon">🔒</span>
-                    <h3>Secure Data</h3>
-                    <p>All data is provided through public APIs</p>
-                </div>
-                <div class="feature">
-                    <span class="icon">📱</span>
-                    <h3>Mobile Optimized</h3>
-                    <p>Works perfectly on all devices</p>
-                </div>
-                <div class="feature">
-                    <span class="icon">🚀</span>
-                    <h3>Fast Performance</h3>
-                    <p>Optimized code provides fast loading speeds</p>
-                </div>
+            <h2>Analysis Reports</h2>
+            <div id="research-reports">
+                <table class="reports-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Ticker</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-tbody">
+                        <!-- Reports will be loaded here -->
+                    </tbody>
+                </table>
             </div>
         </section>
 
@@ -139,6 +136,106 @@
             const currentLang = 'en';
             localStorage.setItem('preferredLanguage', currentLang);
         }
+
+        // Load research reports
+        async function loadResearchReports() {
+            try {
+                // Embedded data for simplicity (works with file:// protocol)
+                const data = {
+                    "reports": [
+                        {
+                            "id": "abc-20250111",
+                            "year": 2025,
+                            "month": 1,
+                            "day": 11,
+                            "company": "ABC Corporation",
+                            "ticker": "AAPL, GOOGL, MSFT",
+                            "date": "2025-01-11",
+                            "title": {
+                                "ko": "ABC 기업 분석",
+                                "en": "ABC Company Analysis",
+                                "ja": "ABC企業分析"
+                            },
+                            "summary": {
+                                "ko": "클라우드와 AI 부문 호조로 예상치 상회하는 실적 달성",
+                                "en": "Beat estimates driven by strong cloud and AI performance",
+                                "ja": "クラウドとAI部門の好調で予想を上回る業績"
+                            },
+                            "path": "/research/reports/2025/01/abc-20250111/",
+                            "rating": "Buy",
+                            "tags": ["technology", "cloud", "AI", "earnings"]
+                        }
+                    ]
+                };
+                const tbody = document.getElementById('reports-tbody');
+                
+                data.reports.forEach(report => {
+                    const row = document.createElement('tr');
+                    const date = new Date(report.date);
+                    const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                    
+                    row.innerHTML = `
+                        <td style="font-size: 0.85rem;">${formattedDate}</td>
+                        <td style="font-size: 0.85rem;"><a href="./research/index.html?id=${report.id}" style="color: #667eea; text-decoration: none;">${report.title.en || report.title.ko}</a></td>
+                        <td style="font-size: 0.85rem;"><strong>${report.ticker}</strong></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Failed to load research reports:', error);
+                document.getElementById('reports-tbody').innerHTML = '<tr><td colspan="3" style="text-align: center; color: #999;">Failed to load reports</td></tr>';
+            }
+        }
+
+        // Load reports when page loads
+        document.addEventListener('DOMContentLoaded', loadResearchReports);
     </script>
+    <style>
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .reports-table th,
+        .reports-table td {
+            padding: 8px 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reports-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #444;
+        }
+        
+        .reports-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .rating-badge {
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .rating-buy {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .rating-hold {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .rating-sell {
+            background: #f44336;
+            color: white;
+        }
+    </style>
 </body>
 </html>
