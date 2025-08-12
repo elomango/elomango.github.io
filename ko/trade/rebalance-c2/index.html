@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TQQQ & QQQ 리밸런싱 전략 - Elomango</title>
+    <title>Rebalance C2 Trading Strategy - Elomango</title>
     <meta name="description" content="Shannon의 리밸런싱 이론을 활용한 TQQQ와 QQQ 포트폴리오 백테스트 시뮬레이터">
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="../../../assets/css/styles.css">
@@ -122,8 +122,25 @@
         </div>
 
         <div class="container">
-            <h1>TQQQ & QQQ 리밸런싱 전략</h1>
-            <p id="subtitle">Shannon의 리밸런싱 이론을 활용한 포트폴리오 백테스트 시뮬레이터</p>
+            <h1 id="title">Rebalance C2 Trading Strategy</h1>
+            <div id="subtitle" style="color: #5a6c7d; font-size: 14px; line-height: 1.6; margin-bottom: 30px; padding: 0 20px; text-align: left;">
+                <p style="margin-bottom: 8px;">Rebalance C2 트레이딩 전략은 두 개의 종목 비율을 일정하게 유지하는 전략입니다.</p>
+                <ol style="margin: 10px 0; padding-left: 0; font-size: 13px; list-style: none; counter-reset: item;">
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">1.</span>
+                        <span>L은 B의 레버리지입니다 (예: L: TQQQ, B: QQQ)</span>
+                    </li>
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">2.</span>
+                        <span>L이 "L 상승 임계값" 만큼 상승하면, L을 매도하고, 매도한 양만큼 B를 매수합니다 (📈 L→B)</span>
+                    </li>
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">3.</span>
+                        <span>L이 "L 하락 임계값" 만큼 하락하면, B를 매도하고, 매도한 양만큼 L을 매수합니다 (📉 L←B)</span>
+                    </li>
+                </ol>
+                <p style="margin-top: 10px; font-size: 13px;">아래 매개변수들을 조절하여 원하는 비율로 전략을 백테스트할 수 있습니다.</p>
+            </div>
             
             <div class="input-section">
                 <h2>매개변수</h2>
@@ -141,7 +158,7 @@
                         <input type="number" id="seed" value="10000">
                     </div>
                     <div class="input-group">
-                        <label for="tickerA">티커 A:</label>
+                        <label for="tickerA">티커 L:</label>
                         <input type="text" id="tickerA" value="TQQQ">
                     </div>
                     <div class="input-group">
@@ -149,19 +166,19 @@
                         <input type="text" id="tickerB" value="QQQ">
                     </div>
                     <div class="input-group">
-                        <label for="aIncGap">A 상승 임계값 (%):</label>
+                        <label for="aIncGap">L 상승 임계값 (%):</label>
                         <input type="number" id="aIncGap" value="100">
                     </div>
                     <div class="input-group">
-                        <label for="aIncSell">A 상승시 매도 비율 (%):</label>
+                        <label for="aIncSell">L 상승시 매도 비율 (%):</label>
                         <input type="number" id="aIncSell" value="20">
                     </div>
                     <div class="input-group">
-                        <label for="aDecGap">A 하락 임계값 (%):</label>
+                        <label for="aDecGap">L 하락 임계값 (%):</label>
                         <input type="number" id="aDecGap" value="20">
                     </div>
                     <div class="input-group">
-                        <label for="bDecSell">A 하락시 B 매도 비율 (%):</label>
+                        <label for="bDecSell">L 하락시 B 매도 비율 (%):</label>
                         <input type="number" id="bDecSell" value="20">
                     </div>
                 </div>
@@ -170,12 +187,10 @@
 
             <div id="results" class="results-section" style="display: none;">
                 <div class="chart-container">
-                    <h3>시뮬레이션</h3>
                     <canvas id="simulationChart"></canvas>
                 </div>
                 
                 <div class="chart-container">
-                    <h3>가치</h3>
                     <canvas id="valueChart"></canvas>
                 </div>
                 

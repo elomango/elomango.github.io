@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TQQQ & QQQ Rebalancing Strategy - Elomango</title>
+    <title>Rebalance C2 Trading Strategy - Elomango</title>
     <meta name="description" content="Portfolio backtest simulator using Shannon's rebalancing theory for TQQQ and QQQ">
     <link rel="stylesheet" href="src/css/main.css">
     <link rel="stylesheet" href="../../../assets/css/styles.css">
@@ -123,8 +123,25 @@
         </div>
 
         <div class="container">
-            <h1 id="title">TQQQ & QQQ Rebalancing Strategy</h1>
-            <p id="subtitle">Portfolio backtest simulator using Shannon's rebalancing theory</p>
+            <h1 id="title">Rebalance C2 Trading Strategy</h1>
+            <div id="subtitle" style="color: #5a6c7d; font-size: 14px; line-height: 1.6; margin-bottom: 30px; padding: 0 20px; text-align: left;">
+                <p style="margin-bottom: 8px;">The Rebalance C2 trading strategy maintains a consistent ratio between two assets.</p>
+                <ol style="margin: 10px 0; padding-left: 0; font-size: 13px; list-style: none; counter-reset: item;">
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">1.</span>
+                        <span>L is a leveraged version of B (e.g., L: TQQQ, B: QQQ)</span>
+                    </li>
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">2.</span>
+                        <span>When L rises by the "L Increase Threshold", sell L and buy B with the proceeds (📈 L→B)</span>
+                    </li>
+                    <li style="margin-bottom: 4px; counter-increment: item; display: flex;">
+                        <span style="min-width: 20px;">3.</span>
+                        <span>When L falls by the "L Decrease Threshold", sell B and buy L with the proceeds (📉 L←B)</span>
+                    </li>
+                </ol>
+                <p style="margin-top: 10px; font-size: 13px;">Adjust the parameters below to backtest the strategy with your desired ratios.</p>
+            </div>
             
             <div class="input-section">
                 <h2 id="parameters-title">Parameters</h2>
@@ -142,7 +159,7 @@
                         <input type="number" id="seed" value="10000">
                     </div>
                     <div class="input-group">
-                        <label for="tickerA" id="label-tickerA">Ticker A:</label>
+                        <label for="tickerA" id="label-tickerA">Ticker L:</label>
                         <input type="text" id="tickerA" value="TQQQ">
                     </div>
                     <div class="input-group">
@@ -150,19 +167,19 @@
                         <input type="text" id="tickerB" value="QQQ">
                     </div>
                     <div class="input-group">
-                        <label for="aIncGap" id="label-aIncGap">A Increase Threshold (%):</label>
+                        <label for="aIncGap" id="label-aIncGap">L Increase Threshold (%):</label>
                         <input type="number" id="aIncGap" value="100">
                     </div>
                     <div class="input-group">
-                        <label for="aIncSell" id="label-aIncSell">A Sell Ratio on Increase (%):</label>
+                        <label for="aIncSell" id="label-aIncSell">L Sell Ratio on Increase (%):</label>
                         <input type="number" id="aIncSell" value="20">
                     </div>
                     <div class="input-group">
-                        <label for="aDecGap" id="label-aDecGap">A Decrease Threshold (%):</label>
+                        <label for="aDecGap" id="label-aDecGap">L Decrease Threshold (%):</label>
                         <input type="number" id="aDecGap" value="20">
                     </div>
                     <div class="input-group">
-                        <label for="bDecSell" id="label-bDecSell">B Sell Ratio on A Decrease (%):</label>
+                        <label for="bDecSell" id="label-bDecSell">B Sell Ratio on L Decrease (%):</label>
                         <input type="number" id="bDecSell" value="20">
                     </div>
                 </div>
@@ -171,12 +188,10 @@
 
             <div id="results" class="results-section" style="display: none;">
                 <div class="chart-container">
-                    <h3 id="chart-title-simulation">Simulation</h3>
                     <canvas id="simulationChart"></canvas>
                 </div>
                 
                 <div class="chart-container">
-                    <h3 id="chart-title-value">Value</h3>
                     <canvas id="valueChart"></canvas>
                 </div>
                 
@@ -230,18 +245,18 @@
         const translations = {
             en: {
                 'home-btn': '← Home',
-                'title': 'TQQQ & QQQ Rebalancing Strategy',
-                'subtitle': 'Portfolio backtest simulator using Shannon\'s rebalancing theory',
+                'title': 'Rebalance C2 Trading Strategy',
+                'subtitle': 'Rebalance C2 Trading Strategy',
                 'parameters-title': 'Parameters',
                 'label-dateFrom': 'Period From:',
                 'label-dateTo': 'Period To:',
                 'label-seed': 'Initial Capital:',
-                'label-tickerA': 'Ticker A:',
+                'label-tickerA': 'Ticker L:',
                 'label-tickerB': 'Ticker B:',
-                'label-aIncGap': 'A Increase Threshold (%):',
-                'label-aIncSell': 'A Sell Ratio on Increase (%):',
-                'label-aDecGap': 'A Decrease Threshold (%):',
-                'label-bDecSell': 'B Sell Ratio on A Decrease (%):',
+                'label-aIncGap': 'L Increase Threshold (%):',
+                'label-aIncSell': 'L Sell Ratio on Increase (%):',
+                'label-aDecGap': 'L Decrease Threshold (%):',
+                'label-bDecSell': 'B Sell Ratio on L Decrease (%):',
                 'simulateBtn': 'Start Simulation',
                 'chart-title-simulation': 'Simulation',
                 'chart-title-value': 'Value',

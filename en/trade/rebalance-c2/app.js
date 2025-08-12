@@ -350,8 +350,8 @@ class ChartManager {
                 labels: results.dates,
                 datasets: [
                     this.createDataset('Rebalance', results.portfolioValues, 'rgb(153, 102, 255)'),
-                    this.createDataset(tickerA, results.buyAndHoldA, 'rgb(255, 99, 132)', null, [5, 5]),
-                    this.createDataset(tickerB, results.buyAndHoldB, 'rgb(54, 162, 235)', null, [5, 5]),
+                    this.createDataset(tickerA, results.buyAndHoldA, 'rgb(255, 159, 64)'),
+                    this.createDataset(tickerB, results.buyAndHoldB, 'rgb(54, 162, 235)'),
                     this.createPointDataset('Rebalance (Increase)', valueRebalanceIncrease, 'red'),
                     this.createPointDataset('Rebalance (Decrease)', valueRebalanceDecrease, 'green')
                 ]
@@ -385,9 +385,7 @@ class ChartManager {
             dataset.yAxisID = yAxisID;
         }
         
-        if (borderDash) {
-            dataset.borderDash = borderDash;
-        }
+        // Remove borderDash - use solid lines only (per style guide)
         
         return dataset;
     }
@@ -417,6 +415,60 @@ class ChartManager {
             interaction: {
                 mode: 'index',
                 intersect: false,
+            },
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Simulation',
+                    align: 'start',
+                    font: {
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: {
+                        bottom: 20
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'end',
+                    labels: {
+                        usePointStyle: true,
+                        pointStyleWidth: 15,
+                        boxHeight: 6,
+                        generateLabels: function(chart) {
+                            const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                            const labels = original.call(this, chart);
+                            labels.forEach((label) => {
+                                // Check if it's a rebalance point dataset
+                                if (label.text.includes('Rebalance (')) {
+                                    label.pointStyle = 'circle';
+                                } else {
+                                    label.pointStyle = 'line';
+                                }
+                            });
+                            return labels;
+                        }
+                    },
+                    onClick: function(e, legendItem, legend) {
+                        const index = legendItem.datasetIndex;
+                        const chart = legend.chart;
+                        const meta = chart.getDatasetMeta(index);
+                        meta.hidden = meta.hidden === null ? !chart.data.datasets[index].hidden : null;
+                        chart.update();
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'white',
+                    bodyColor: 'white',
+                    borderColor: 'white',
+                    borderWidth: 1
+                }
             },
             scales: {
                 x: {
@@ -456,6 +508,60 @@ class ChartManager {
     getValueChartOptions() {
         return {
             responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Value',
+                    align: 'start',
+                    font: {
+                        size: 16,
+                        weight: 'bold'
+                    },
+                    padding: {
+                        bottom: 20
+                    }
+                },
+                legend: {
+                    display: true,
+                    position: 'top',
+                    align: 'end',
+                    labels: {
+                        usePointStyle: true,
+                        pointStyleWidth: 15,
+                        boxHeight: 6,
+                        generateLabels: function(chart) {
+                            const original = Chart.defaults.plugins.legend.labels.generateLabels;
+                            const labels = original.call(this, chart);
+                            labels.forEach((label) => {
+                                // Check if it's a rebalance point dataset
+                                if (label.text.includes('Rebalance (')) {
+                                    label.pointStyle = 'circle';
+                                } else {
+                                    label.pointStyle = 'line';
+                                }
+                            });
+                            return labels;
+                        }
+                    },
+                    onClick: function(e, legendItem, legend) {
+                        const index = legendItem.datasetIndex;
+                        const chart = legend.chart;
+                        const meta = chart.getDatasetMeta(index);
+                        meta.hidden = meta.hidden === null ? !chart.data.datasets[index].hidden : null;
+                        chart.update();
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    titleColor: 'white',
+                    bodyColor: 'white',
+                    borderColor: 'white',
+                    borderWidth: 1
+                }
+            },
             scales: {
                 x: {
                     display: true,
@@ -633,11 +739,11 @@ class InputManager {
 
     setDefaultDates() {
         const today = new Date();
-        const oneYearAgo = new Date(today);
-        oneYearAgo.setFullYear(today.getFullYear() - 1);
+        const fourYearsAgo = new Date(today);
+        fourYearsAgo.setFullYear(today.getFullYear() - 4);
         
         this.inputs.dateTo.value = today.toISOString().split('T')[0];
-        this.inputs.dateFrom.value = oneYearAgo.toISOString().split('T')[0];
+        this.inputs.dateFrom.value = fourYearsAgo.toISOString().split('T')[0];
     }
 
     getParameters() {
@@ -674,15 +780,15 @@ class InputManager {
         }
         
         if (isNaN(params.aIncGap) || params.aIncGap <= 0) {
-            errors.push('A Increase Threshold must be a positive number');
+            errors.push('L Increase Threshold must be a positive number');
         }
         
         if (isNaN(params.aIncSell) || params.aIncSell <= 0 || params.aIncSell > 100) {
-            errors.push('A Sell Ratio must be between 0 and 100');
+            errors.push('L Sell Ratio must be between 0 and 100');
         }
         
         if (isNaN(params.aDecGap) || params.aDecGap <= 0) {
-            errors.push('A Decrease Threshold must be a positive number');
+            errors.push('L Decrease Threshold must be a positive number');
         }
         
         if (isNaN(params.bDecSell) || params.bDecSell <= 0 || params.bDecSell > 100) {
@@ -754,8 +860,8 @@ class Application {
     }
 
     updateTitle(tickerA, tickerB) {
-        document.getElementById('title').textContent = 
-            `${tickerA} & ${tickerB} rebalance trading strategy`;
+        // Keep the title fixed as "Rebalance C2 Trading Strategy"
+        // No longer updating based on ticker values
     }
 
     async fetchData(params) {
