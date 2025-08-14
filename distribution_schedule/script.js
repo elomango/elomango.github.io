@@ -8,136 +8,137 @@ class Calendar {
         
         this.distributionDates = {
             target12: [
-                new Date(2025, 0, 7),   // 1/7/25
-                new Date(2025, 1, 4),   // 2/4/25
-                new Date(2025, 2, 4),   // 3/4/25
-                new Date(2025, 3, 1),   // 4/1/25
-                new Date(2025, 4, 6),   // 5/6/25
-                new Date(2025, 5, 3),   // 6/3/25
-                new Date(2025, 6, 1),   // 7/1/25
-                new Date(2025, 7, 5),   // 8/5/25
-                new Date(2025, 8, 2),   // 9/2/25
-                new Date(2025, 9, 7),   // 10/7/25
-                new Date(2025, 10, 4),  // 11/4/25
-                new Date(2025, 11, 2)   // 12/2/25
+                new Date(2025, 0, 8),   // 1/7/25
+                new Date(2025, 1, 5),   // 2/4/25
+                new Date(2025, 2, 5),   // 3/4/25
+                new Date(2025, 3, 2),   // 4/1/25
+                new Date(2025, 4, 7),   // 5/6/25
+                new Date(2025, 5, 4),   // 6/3/25
+                new Date(2025, 6, 2),   // 7/1/25
+                new Date(2025, 7, 6),   // 8/5/25
+                new Date(2025, 8, 3),   // 9/2/25
+                new Date(2025, 9, 8),   // 10/7/25
+                new Date(2025, 10, 5),  // 11/4/25
+                new Date(2025, 11, 3)   // 12/2/25
             ],
             weekly: [],
             groupA: [
-                new Date(2025, 0, 22), // 1/22/25
-                new Date(2025, 1, 19), // 2/19/25
-                new Date(2025, 2, 19), // 3/19/25
-                new Date(2025, 3, 16), // 4/16/25
-                new Date(2025, 4, 14), // 5/14/25
-                new Date(2025, 5, 11), // 6/11/25
-                new Date(2025, 6, 9),  // 7/9/25
-                new Date(2025, 7, 6),  // 8/6/25
-                new Date(2025, 8, 3),  // 9/3/25
-                new Date(2025, 9, 1),  // 10/1/25
-                new Date(2025, 10, 26), // 11/26/25
-                new Date(2025, 11, 24)  // 12/24/25
+                new Date(2025, 0, 23), // 1/22/25
+                new Date(2025, 1, 20), // 2/19/25
+                new Date(2025, 2, 20), // 3/19/25
+                new Date(2025, 3, 17), // 4/16/25
+                new Date(2025, 4, 15), // 5/14/25
+                new Date(2025, 5, 12), // 6/11/25
+                new Date(2025, 6, 10),  // 7/9/25
+                new Date(2025, 7, 7),  // 8/6/25
+                new Date(2025, 8, 4),  // 9/3/25
+                new Date(2025, 9, 2),  // 10/2/25
+                new Date(2025, 9, 30), // 10/30/25
+                new Date(2025, 10, 28), // 11/28/25
+                new Date(2025, 11, 26)  // 12/26/25
             ],
             groupB: [
-                new Date(2025, 0, 2), new Date(2025, 0, 29), // 1/2/25, 1/29/25
-                new Date(2025, 1, 26), new Date(2025, 2, 26), new Date(2025, 3, 23), // 2/26/25, 3/26/25, 4/23/25
-                new Date(2025, 4, 21), new Date(2025, 5, 18), new Date(2025, 6, 16), // 5/21/25, 6/18/25, 7/16/25
-                new Date(2025, 7, 13), new Date(2025, 8, 10), new Date(2025, 9, 8), // 8/13/25, 9/10/25, 10/8/25
-                new Date(2025, 10, 5), new Date(2025, 11, 3), new Date(2025, 11, 31) // 11/5/25, 12/3/25, 12/31/25
+                new Date(2025, 0, 3), new Date(2025, 0, 30), // 1/2/25, 1/29/25
+                new Date(2025, 1, 27), new Date(2025, 2, 27), new Date(2025, 3, 24), // 2/26/25, 3/26/25, 4/23/25
+                new Date(2025, 4, 22), new Date(2025, 5, 19), new Date(2025, 6, 17), // 5/21/25, 6/18/25, 7/16/25
+                new Date(2025, 7, 14), new Date(2025, 8, 11), new Date(2025, 9, 9), // 8/13/25, 9/10/25, 10/8/25
+                new Date(2025, 10, 6), new Date(2025, 11, 4), new Date(2026, 0, 2) // 11/6/25, 12/4/25, 1/2/26
             ],
             groupC: [
-                new Date(2025, 0, 8),  // 1/8/25
-                new Date(2025, 1, 5),  // 2/5/25
-                new Date(2025, 2, 5),  // 3/5/25
-                new Date(2025, 3, 2),  // 4/2/25
-                new Date(2025, 3, 30), // 4/30/25
-                new Date(2025, 4, 28), // 5/28/25
-                new Date(2025, 5, 25), // 6/25/25
-                new Date(2025, 6, 23), // 7/23/25
-                new Date(2025, 7, 20), // 8/20/25
-                new Date(2025, 8, 17), // 9/17/25
-                new Date(2025, 9, 15), // 10/15/25
-                new Date(2025, 10, 12), // 11/12/25
-                new Date(2025, 11, 10)  // 12/10/25
+                new Date(2025, 0, 9),  // 1/8/25
+                new Date(2025, 1, 6),  // 2/5/25
+                new Date(2025, 2, 6),  // 3/5/25
+                new Date(2025, 3, 3),  // 4/2/25
+                new Date(2025, 4, 1), // 4/30/25
+                new Date(2025, 4, 29), // 5/28/25
+                new Date(2025, 5, 26), // 6/25/25
+                new Date(2025, 6, 24), // 7/23/25
+                new Date(2025, 7, 21), // 8/20/25
+                new Date(2025, 8, 18), // 9/17/25
+                new Date(2025, 9, 16), // 10/15/25
+                new Date(2025, 10, 13), // 11/12/25
+                new Date(2025, 11, 11)  // 12/10/25
             ],
             groupD: [
-                new Date(2025, 0, 15), // 1/15/25
-                new Date(2025, 1, 12), // 2/12/25
-                new Date(2025, 2, 12), // 3/12/25
-                new Date(2025, 3, 9),  // 4/9/25
-                new Date(2025, 4, 7),  // 5/7/25
-                new Date(2025, 5, 4),  // 6/4/25
-                new Date(2025, 6, 2),  // 7/2/25
-                new Date(2025, 6, 30), // 7/30/25
-                new Date(2025, 7, 27), // 8/27/25
-                new Date(2025, 8, 24), // 9/24/25
-                new Date(2025, 9, 22), // 10/22/25
-                new Date(2025, 10, 19), // 11/19/25
-                new Date(2025, 11, 17)  // 12/17/25
+                new Date(2025, 0, 16), // 1/15/25
+                new Date(2025, 1, 13), // 2/12/25
+                new Date(2025, 2, 13), // 3/12/25
+                new Date(2025, 3, 10),  // 4/9/25
+                new Date(2025, 4, 8),  // 5/7/25
+                new Date(2025, 5, 5),  // 6/4/25
+                new Date(2025, 6, 3),  // 7/2/25
+                new Date(2025, 6, 31), // 7/30/25
+                new Date(2025, 7, 28), // 8/27/25
+                new Date(2025, 8, 25), // 9/24/25
+                new Date(2025, 9, 23), // 10/22/25
+                new Date(2025, 10, 20), // 11/19/25
+                new Date(2025, 11, 18)  // 12/17/25
             ],
             rex: {
                 BMAX: [
-                    new Date(2025, 11, 29), new Date(2025, 8, 26), new Date(2025, 5, 26), new Date(2026, 2, 27),
-                    new Date(2026, 5, 26), new Date(2026, 8, 28), new Date(2026, 11, 29)
+                    new Date(2025, 11, 30), new Date(2025, 8, 29), new Date(2025, 5, 27), new Date(2026, 2, 30),
+                    new Date(2026, 5, 29), new Date(2026, 8, 29), new Date(2026, 11, 30)
                 ],
                 FEPI: [
-                    new Date(2025, 0, 28), new Date(2025, 1, 25), new Date(2025, 2, 25), new Date(2025, 3, 22),
-                    new Date(2025, 4, 27), new Date(2025, 5, 24), new Date(2025, 6, 22), new Date(2025, 7, 26),
-                    new Date(2025, 8, 23), new Date(2025, 9, 28), new Date(2025, 10, 24), new Date(2025, 11, 23)
+                    new Date(2025, 0, 29), new Date(2025, 1, 26), new Date(2025, 2, 26), new Date(2025, 3, 23),
+                    new Date(2025, 4, 28), new Date(2025, 5, 25), new Date(2025, 6, 23), new Date(2025, 7, 27),
+                    new Date(2025, 8, 24), new Date(2025, 9, 29), new Date(2025, 10, 25), new Date(2025, 11, 24)
                 ],
                 AIPI: [
-                    new Date(2024, 6, 25), new Date(2024, 7, 26), new Date(2024, 8, 25), new Date(2024, 9, 23),
-                    new Date(2024, 10, 25), new Date(2024, 11, 23), new Date(2025, 0, 28), new Date(2025, 1, 25),
-                    new Date(2025, 2, 25), new Date(2025, 3, 22), new Date(2025, 4, 27), new Date(2025, 5, 24),
-                    new Date(2025, 6, 22), new Date(2025, 7, 26), new Date(2025, 8, 23), new Date(2025, 9, 28),
-                    new Date(2025, 10, 24), new Date(2025, 11, 23)
+                    new Date(2024, 6, 26), new Date(2024, 7, 27), new Date(2024, 8, 26), new Date(2024, 9, 24),
+                    new Date(2024, 10, 26), new Date(2024, 11, 24), new Date(2025, 0, 29), new Date(2025, 1, 26),
+                    new Date(2025, 2, 26), new Date(2025, 3, 23), new Date(2025, 4, 28), new Date(2025, 5, 25),
+                    new Date(2025, 6, 23), new Date(2025, 7, 27), new Date(2025, 8, 24), new Date(2025, 9, 29),
+                    new Date(2025, 10, 25), new Date(2025, 11, 24)
                 ],
                 CEPI: [
-                    new Date(2025, 0, 27), new Date(2025, 1, 24), new Date(2025, 2, 24), new Date(2025, 3, 28),
-                    new Date(2025, 4, 28), new Date(2025, 5, 23), new Date(2025, 6, 28), new Date(2025, 7, 25),
-                    new Date(2025, 8, 22), new Date(2025, 9, 27), new Date(2025, 10, 25), new Date(2025, 11, 22)
+                    new Date(2025, 0, 28), new Date(2025, 1, 25), new Date(2025, 2, 25), new Date(2025, 3, 29),
+                    new Date(2025, 4, 29), new Date(2025, 5, 24), new Date(2025, 6, 29), new Date(2025, 7, 26),
+                    new Date(2025, 8, 23), new Date(2025, 9, 28), new Date(2025, 10, 26), new Date(2025, 11, 23)
                 ],
                 COII: [
-                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
-                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
-                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
-                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
-                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
-                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
-                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
-                    new Date(2025, 11, 29)
+                    new Date(2025, 5, 17), new Date(2025, 5, 24), new Date(2025, 6, 1), new Date(2025, 6, 8),
+                    new Date(2025, 6, 15), new Date(2025, 6, 22), new Date(2025, 6, 29), new Date(2025, 7, 5),
+                    new Date(2025, 7, 12), new Date(2025, 7, 19), new Date(2025, 7, 26), new Date(2025, 8, 3),
+                    new Date(2025, 8, 9), new Date(2025, 8, 16), new Date(2025, 8, 23), new Date(2025, 8, 30),
+                    new Date(2025, 9, 7), new Date(2025, 9, 14), new Date(2025, 9, 21), new Date(2025, 9, 28),
+                    new Date(2025, 10, 4), new Date(2025, 10, 11), new Date(2025, 10, 18), new Date(2025, 10, 25),
+                    new Date(2025, 11, 2), new Date(2025, 11, 9), new Date(2025, 11, 16), new Date(2025, 11, 23),
+                    new Date(2025, 11, 30)
                 ],
                 MSII: [
-                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
-                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
-                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
-                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
-                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
-                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
-                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
-                    new Date(2025, 11, 29)
+                    new Date(2025, 5, 17), new Date(2025, 5, 24), new Date(2025, 6, 1), new Date(2025, 6, 8),
+                    new Date(2025, 6, 15), new Date(2025, 6, 22), new Date(2025, 6, 29), new Date(2025, 7, 5),
+                    new Date(2025, 7, 12), new Date(2025, 7, 19), new Date(2025, 7, 26), new Date(2025, 8, 3),
+                    new Date(2025, 8, 9), new Date(2025, 8, 16), new Date(2025, 8, 23), new Date(2025, 8, 30),
+                    new Date(2025, 9, 7), new Date(2025, 9, 14), new Date(2025, 9, 21), new Date(2025, 9, 28),
+                    new Date(2025, 10, 4), new Date(2025, 10, 11), new Date(2025, 10, 18), new Date(2025, 10, 25),
+                    new Date(2025, 11, 2), new Date(2025, 11, 9), new Date(2025, 11, 16), new Date(2025, 11, 23),
+                    new Date(2025, 11, 30)
                 ],
                 NVII: [
-                    new Date(2025, 5, 9), new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30),
-                    new Date(2025, 6, 7), new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28),
-                    new Date(2025, 7, 4), new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25),
-                    new Date(2025, 8, 2), new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22),
-                    new Date(2025, 8, 29), new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20),
-                    new Date(2025, 9, 27), new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17),
-                    new Date(2025, 10, 24), new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15),
-                    new Date(2025, 11, 22), new Date(2025, 11, 29)
+                    new Date(2025, 5, 10), new Date(2025, 5, 17), new Date(2025, 5, 24), new Date(2025, 6, 1),
+                    new Date(2025, 6, 8), new Date(2025, 6, 15), new Date(2025, 6, 22), new Date(2025, 6, 29),
+                    new Date(2025, 7, 5), new Date(2025, 7, 12), new Date(2025, 7, 19), new Date(2025, 7, 26),
+                    new Date(2025, 8, 3), new Date(2025, 8, 9), new Date(2025, 8, 16), new Date(2025, 8, 23),
+                    new Date(2025, 8, 30), new Date(2025, 9, 7), new Date(2025, 9, 14), new Date(2025, 9, 21),
+                    new Date(2025, 9, 28), new Date(2025, 10, 4), new Date(2025, 10, 11), new Date(2025, 10, 18),
+                    new Date(2025, 10, 25), new Date(2025, 11, 2), new Date(2025, 11, 9), new Date(2025, 11, 16),
+                    new Date(2025, 11, 23), new Date(2025, 11, 30)
                 ],
                 TSII: [
-                    new Date(2025, 5, 16), new Date(2025, 5, 23), new Date(2025, 5, 30), new Date(2025, 6, 7),
-                    new Date(2025, 6, 14), new Date(2025, 6, 21), new Date(2025, 6, 28), new Date(2025, 7, 4),
-                    new Date(2025, 7, 11), new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2),
-                    new Date(2025, 8, 8), new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29),
-                    new Date(2025, 9, 6), new Date(2025, 9, 13), new Date(2025, 9, 20), new Date(2025, 9, 27),
-                    new Date(2025, 10, 3), new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24),
-                    new Date(2025, 11, 1), new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22),
-                    new Date(2025, 11, 29)
+                    new Date(2025, 5, 17), new Date(2025, 5, 24), new Date(2025, 6, 1), new Date(2025, 6, 8),
+                    new Date(2025, 6, 15), new Date(2025, 6, 22), new Date(2025, 6, 29), new Date(2025, 7, 5),
+                    new Date(2025, 7, 12), new Date(2025, 7, 19), new Date(2025, 7, 26), new Date(2025, 8, 3),
+                    new Date(2025, 8, 9), new Date(2025, 8, 16), new Date(2025, 8, 23), new Date(2025, 8, 30),
+                    new Date(2025, 9, 7), new Date(2025, 9, 14), new Date(2025, 9, 21), new Date(2025, 9, 28),
+                    new Date(2025, 10, 4), new Date(2025, 10, 11), new Date(2025, 10, 18), new Date(2025, 10, 25),
+                    new Date(2025, 11, 2), new Date(2025, 11, 9), new Date(2025, 11, 16), new Date(2025, 11, 23),
+                    new Date(2025, 11, 30)
                 ],
                 SSK: [
-                    new Date(2025, 6, 30), new Date(2025, 7, 27), new Date(2025, 8, 26), new Date(2025, 9, 29),
-                    new Date(2025, 10, 25), new Date(2025, 11, 29)
+                    new Date(2025, 6, 31), new Date(2025, 7, 28), new Date(2025, 8, 29), new Date(2025, 9, 30),
+                    new Date(2025, 10, 26), new Date(2025, 11, 30)
                 ]
             }
         };
