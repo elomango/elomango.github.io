@@ -155,6 +155,38 @@ header p {
     color: #6b7280;
 }
 
+/* Roundhill button styles */
+.roundhill-btn {
+    background: #333 !important;
+    color: white !important;
+    border-color: #333 !important;
+}
+
+.roundhill-btn.active {
+    background: #000 !important;
+    color: white !important;
+    border-color: #000 !important;
+}
+
+.roundhill-btn:hover {
+    background: #444 !important;
+    border-color: #444 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.distribution-tag.roundhill-income {
+    background-color: #333;
+    color: white;
+    font-weight: 600;
+}
+
+.distribution-tag.roundhill-weekly {
+    background-color: #555;
+    color: white;
+    font-weight: 600;
+}
+
 .calendar-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -288,6 +320,23 @@ header p {
     background: #f8f9fa;
     border-radius: 15px;
     border: 2px solid #6b7280;
+}
+
+/* Roundhill Section */
+.roundhill-section {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px solid #6b7280;
+}
+
+.roundhill-section h3 {
+    color: #374151;
+    text-align: center;
+    font-size: 1.4rem;
+    margin-bottom: 20px;
+    font-weight: 600;
 }
 
 .rex-section h3 {

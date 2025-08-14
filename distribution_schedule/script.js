@@ -5,6 +5,7 @@ class Calendar {
         this.currentYear = this.currentDate.getFullYear();
         this.showYieldMax = true;
         this.showRex = true;
+        this.showRoundhill = true;
         
         this.distributionDates = {
             target12: [
@@ -140,6 +141,160 @@ class Calendar {
                     new Date(2025, 6, 31), new Date(2025, 7, 28), new Date(2025, 8, 29), new Date(2025, 9, 30),
                     new Date(2025, 10, 26), new Date(2025, 11, 30)
                 ]
+            },
+            roundhill: {
+                // Income ETFs
+                MAGY: [
+                    new Date(2025, 7, 22), new Date(2025, 7, 29), new Date(2025, 8, 5), new Date(2025, 8, 12),
+                    new Date(2025, 8, 19), new Date(2025, 8, 26), new Date(2025, 9, 3), new Date(2025, 9, 10),
+                    new Date(2025, 9, 17), new Date(2025, 9, 24), new Date(2025, 9, 31), new Date(2025, 10, 7),
+                    new Date(2025, 10, 14), new Date(2025, 10, 21), new Date(2025, 10, 28), new Date(2025, 11, 5),
+                    new Date(2025, 11, 12), new Date(2025, 11, 19), new Date(2025, 11, 26)
+                ],
+                QDTE: [
+                    new Date(2025, 7, 21), new Date(2025, 7, 28), new Date(2025, 8, 4), new Date(2025, 8, 11),
+                    new Date(2025, 8, 18), new Date(2025, 8, 25), new Date(2025, 9, 2), new Date(2025, 9, 9),
+                    new Date(2025, 9, 16), new Date(2025, 9, 23), new Date(2025, 9, 30), new Date(2025, 10, 6),
+                    new Date(2025, 10, 13), new Date(2025, 10, 20), new Date(2025, 10, 26), new Date(2025, 11, 4),
+                    new Date(2025, 11, 11), new Date(2025, 11, 18), new Date(2025, 11, 24)
+                ],
+                RDTE: [
+                    new Date(2025, 7, 21), new Date(2025, 7, 28), new Date(2025, 8, 4), new Date(2025, 8, 11),
+                    new Date(2025, 8, 18), new Date(2025, 8, 25), new Date(2025, 9, 2), new Date(2025, 9, 9),
+                    new Date(2025, 9, 16), new Date(2025, 9, 23), new Date(2025, 9, 30), new Date(2025, 10, 6),
+                    new Date(2025, 10, 13), new Date(2025, 10, 20), new Date(2025, 10, 26), new Date(2025, 11, 4),
+                    new Date(2025, 11, 11), new Date(2025, 11, 18), new Date(2025, 11, 24)
+                ],
+                XDTE: [
+                    new Date(2025, 7, 21), new Date(2025, 7, 28), new Date(2025, 8, 4), new Date(2025, 8, 11),
+                    new Date(2025, 8, 18), new Date(2025, 8, 25), new Date(2025, 9, 2), new Date(2025, 9, 9),
+                    new Date(2025, 9, 16), new Date(2025, 9, 23), new Date(2025, 9, 30), new Date(2025, 10, 6),
+                    new Date(2025, 10, 13), new Date(2025, 10, 20), new Date(2025, 10, 26), new Date(2025, 11, 4),
+                    new Date(2025, 11, 11), new Date(2025, 11, 18), new Date(2025, 11, 24)
+                ],
+                XPAY: [
+                    new Date(2025, 8, 10), new Date(2025, 9, 8), new Date(2025, 10, 12), new Date(2025, 11, 10)
+                ],
+                YBTC: [
+                    new Date(2025, 7, 20), new Date(2025, 7, 27), new Date(2025, 8, 3), new Date(2025, 8, 10),
+                    new Date(2025, 8, 17), new Date(2025, 8, 24), new Date(2025, 9, 1), new Date(2025, 9, 8),
+                    new Date(2025, 9, 15), new Date(2025, 9, 22), new Date(2025, 9, 29), new Date(2025, 10, 5),
+                    new Date(2025, 10, 12), new Date(2025, 10, 19), new Date(2025, 10, 26), new Date(2025, 11, 3),
+                    new Date(2025, 11, 10), new Date(2025, 11, 17), new Date(2025, 11, 24), new Date(2025, 11, 31)
+                ],
+                YETH: [
+                    new Date(2025, 7, 20), new Date(2025, 7, 27), new Date(2025, 8, 3), new Date(2025, 8, 10),
+                    new Date(2025, 8, 17), new Date(2025, 8, 24), new Date(2025, 9, 1), new Date(2025, 9, 8),
+                    new Date(2025, 9, 15), new Date(2025, 9, 22), new Date(2025, 9, 29), new Date(2025, 10, 5),
+                    new Date(2025, 10, 12), new Date(2025, 10, 19), new Date(2025, 10, 26), new Date(2025, 11, 3),
+                    new Date(2025, 11, 10), new Date(2025, 11, 17), new Date(2025, 11, 24), new Date(2025, 11, 31)
+                ],
+                // Weekly ETFs (most have same schedule)
+                AAPW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                AMDW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                AMZW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                AVGW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                BRKW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                COIW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                GOOW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                HOOW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                METW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                MSFW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                MSTW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                NFLW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                NVW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                PLTW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ],
+                TSLW: [
+                    new Date(2025, 7, 18), new Date(2025, 7, 25), new Date(2025, 8, 2), new Date(2025, 8, 8),
+                    new Date(2025, 8, 15), new Date(2025, 8, 22), new Date(2025, 8, 29), new Date(2025, 9, 6),
+                    new Date(2025, 9, 14), new Date(2025, 9, 20), new Date(2025, 9, 27), new Date(2025, 10, 3),
+                    new Date(2025, 10, 10), new Date(2025, 10, 17), new Date(2025, 10, 24), new Date(2025, 11, 1),
+                    new Date(2025, 11, 8), new Date(2025, 11, 15), new Date(2025, 11, 22), new Date(2025, 11, 29)
+                ]
             }
         };
 
@@ -165,6 +320,7 @@ class Calendar {
         document.getElementById('today-btn').addEventListener('click', () => this.goToToday());
         document.getElementById('yieldmax-btn').addEventListener('click', () => this.toggleYieldMax());
         document.getElementById('rex-btn').addEventListener('click', () => this.toggleRex());
+        document.getElementById('roundhill-btn').addEventListener('click', () => this.toggleRoundhill());
     }
 
     toggleYieldMax() {
@@ -185,6 +341,19 @@ class Calendar {
         const btn = document.getElementById('rex-btn');
         
         if (this.showRex) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+        
+        this.renderCalendar();
+    }
+
+    toggleRoundhill() {
+        this.showRoundhill = !this.showRoundhill;
+        const btn = document.getElementById('roundhill-btn');
+        
+        if (this.showRoundhill) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
@@ -375,6 +544,41 @@ class Calendar {
             rexTickers.forEach(label => {
                 distributions.push({ type: 'rex', label: label });
             });
+        }
+
+        // Show Roundhill distributions if the filter is active
+        if (this.showRoundhill) {
+            // 0DTE Income ETFs
+            const odteTickers = ['QDTE', 'RDTE', 'XDTE'];
+            const hasOdteDistribution = odteTickers.some(ticker => 
+                this.distributionDates.roundhill[ticker] && 
+                this.distributionDates.roundhill[ticker].some(d => d.toDateString() === dateStr)
+            );
+            
+            if (hasOdteDistribution) {
+                distributions.push({ type: 'roundhill-income', label: 'RH 0DTE' });
+            }
+            
+            // Other Income ETFs
+            const otherIncomeTickers = ['MAGY', 'XPAY', 'YBTC', 'YETH'];
+            otherIncomeTickers.forEach(ticker => {
+                if (this.distributionDates.roundhill[ticker] && 
+                    this.distributionDates.roundhill[ticker].some(d => d.toDateString() === dateStr)) {
+                    distributions.push({ type: 'roundhill-income', label: `RH ${ticker}` });
+                }
+            });
+            
+            // Weekly ETFs - check if any weekly ticker has distribution on this date
+            const weeklyTickers = ['AAPW', 'AMDW', 'AMZW', 'AVGW', 'BRKW', 'COIW', 'GOOW', 'HOOW', 
+                                 'METW', 'MSFW', 'MSTW', 'NFLW', 'NVW', 'PLTW', 'TSLW'];
+            const hasWeeklyDistribution = weeklyTickers.some(ticker => 
+                this.distributionDates.roundhill[ticker] && 
+                this.distributionDates.roundhill[ticker].some(d => d.toDateString() === dateStr)
+            );
+            
+            if (hasWeeklyDistribution) {
+                distributions.push({ type: 'roundhill-weekly', label: 'RH Weekly' });
+            }
         }
 
         return distributions;
