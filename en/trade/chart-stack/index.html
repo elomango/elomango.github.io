@@ -20,49 +20,65 @@
             min-height: 100vh;
             margin: 0;
             padding: 0;
-            color: #444;
         }
         
-        .header {
-            background: white;
+        .advertisement-banner {
+            text-align: center;
             padding: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: rgba(255,255,255,0.95);
+            margin-bottom: 20px;
         }
         
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .nav-btn {
-            background: #fdcb6e;
-            color: #444;
-            padding: 8px 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        
-        .nav-btn:hover {
-            background: #e17055;
-            color: white;
-        }
-        
-        .container {
+        .main-container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
             margin-top: 20px;
             margin-bottom: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .back-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 2px 8px rgba(253,203,110,0.3);
+        }
+        
+        .back-btn:hover {
+            background: #e17055;
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(225,112,85,0.3);
+        }
+        
+        .container {
+            
         }
         
         h1 {
@@ -139,17 +155,56 @@
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
         }
+        
+        .purchase-info-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .purchase-item {
+            padding: 8px 12px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #333;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <button class="nav-btn" onclick="goHome()">← Home</button>
-        <div class="nav-buttons">
-            <button class="nav-btn" onclick="changeLanguage('ko')">한국어</button>
-        </div>
+    <!-- Language Selector at the very top right of the page -->
+    <div class="language-selector" style="position: fixed; top: 20px; right: 20px; z-index: 10000;">
+        <select id="langSelect" onchange="changeLanguage(this.value)" style="padding: 8px 12px; border: 1px solid #e5e5e7; border-radius: 8px; font-size: 14px; cursor: pointer; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <option value="ko" >🇰🇷 한국어</option>
+            <option value="en" selected>🇺🇸 English</option>
+        </select>
     </div>
 
-    <div class="page-container">
+    <!-- Top Ad Banner -->
+    <div class="advertisement-banner">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-6475131530037931"
+             data-ad-slot="1234567890"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="main-container">
+        <!-- Header with back button -->
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goHome()">← Home</button>
+            </div>
+        </div>
+
         <div class="container">
             <h1 id="title">Chart Stack Tool</h1>
             <div id="subtitle" style="color: #5a6c7d; font-size: 14px; line-height: 1.6; margin-bottom: 30px; padding: 0 20px; text-align: left;">
@@ -186,6 +241,12 @@
                 <div class="chart-container" style="height: 400px; margin: 20px 0;">
                     <canvas id="simulationChart"></canvas>
                 </div>
+                
+                <!-- Purchase Info Display -->
+                <div id="purchaseInfo" class="purchase-info-container" style="margin-top: 20px;">
+                    <h3 style="color: #333; font-size: 16px; margin-bottom: 10px;">Stock Purchase Information</h3>
+                    <div id="purchaseList" class="purchase-list"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -193,6 +254,7 @@
     <script>
         let chart = null;
         let existingTickers = []; // Track existing added tickers
+        let purchaseHistory = []; // Store stock purchase information
 
         function changeLanguage(lang) {
             if (lang === 'ko') {
@@ -422,7 +484,19 @@
                 existingTickers.push(ticker);
             }
             
+            // Add stock purchase information
+            const purchaseInfo = {
+                ticker: ticker,
+                date: result.labels[0],
+                shares: result.initialShares,
+                price: result.initialPrice
+            };
+            
+            purchaseHistory.push(purchaseInfo);
+            updatePurchaseDisplay();
+            
             console.log('Line added for', ticker);
+            console.log('Purchase info:', purchaseInfo);
             console.log('Current tickers:', existingTickers);
             } catch (error) {
                 console.error('Error fetching stock data:', error);
@@ -513,7 +587,28 @@
                 
                 // Update chart
                 chart.update();
-                console.log('All lines updated successfully');
+                // Update purchase information as well
+            purchaseHistory = [];
+            for (let i = 0; i < existingTickers.length; i++) {
+                const ticker = existingTickers[i];
+                try {
+                    const result = await fetchStockData(ticker, dateFrom, dateTo);
+                    if (result && result.data.length > 0) {
+                        const purchaseInfo = {
+                            ticker: ticker,
+                            date: result.labels[0],
+                            shares: result.initialShares,
+                            price: result.initialPrice
+                        };
+                        purchaseHistory.push(purchaseInfo);
+                    }
+                } catch (error) {
+                    console.warn(`Failed to update purchase info for ${ticker}`);
+                }
+            }
+            updatePurchaseDisplay();
+            
+            console.log('All lines updated successfully');
                 
             } catch (error) {
                 console.error('Error updating lines:', error);
@@ -523,6 +618,28 @@
                 updateBtn.textContent = originalText;
                 updateBtn.disabled = false;
             }
+        }
+        
+        function updatePurchaseDisplay() {
+            const purchaseList = document.getElementById('purchaseList');
+            purchaseList.innerHTML = '';
+            
+            if (purchaseHistory.length === 0) {
+                purchaseList.innerHTML = '<p style="color: #666; font-style: italic;">No stocks added yet.</p>';
+                return;
+            }
+            
+            purchaseHistory.forEach(purchase => {
+                const purchaseItem = document.createElement('div');
+                purchaseItem.className = 'purchase-item';
+                
+                const formattedShares = purchase.shares.toFixed(2);
+                const formattedPrice = purchase.price.toFixed(2);
+                
+                purchaseItem.innerHTML = `${purchase.ticker} ${purchase.date} ${formattedShares} shares @$${formattedPrice} BUY`;
+                
+                purchaseList.appendChild(purchaseItem);
+            });
         }
 
         async function fetchStockData(ticker, startDate, endDate) {
@@ -570,7 +687,7 @@
                 }
                 
                 console.log(`Fetched ${data.length} real data points for ${ticker}`);
-                return { data, labels };
+                return { data, labels, initialPrice, initialShares }; // Add first day price and share count
                 
             } catch (error) {
                 console.error(`Failed to fetch real data for ${ticker}:`, error);
