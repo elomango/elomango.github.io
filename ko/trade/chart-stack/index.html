@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Stack Trading Strategy - Elomango</title>
+    <meta name="description" content="Chart Stack 전략 포트폴리오 백테스트 시뮬레이터">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131530037931"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #444;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: #e17055;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #fdcb6e;
+        }
+        
+        .add-line-btn, .update-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .update-btn {
+            background: #28a745;
+        }
+        
+        .add-line-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        
+        .update-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+        
+        .add-line-btn:disabled, .update-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="nav-btn" onclick="goHome()">← 홈</button>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="changeLanguage('en')">English</button>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <div class="container">
+            <h1 id="title">챠트 스택 도구</h1>
+            <div id="subtitle" style="color: #5a6c7d; font-size: 14px; line-height: 1.6; margin-bottom: 30px; padding: 0 20px; text-align: left;">
+                <p style="margin-bottom: 8px; font-size: 14px; color: #666;">같은 잔고와 기간으로 투자 할때를 비교 합니다.</p>
+                <p style="margin-bottom: 20px; font-size: 14px; color: #666;">초기 자본금은 10,000 USD 입니다.</p>
+            </div>
+            
+            <div class="input-section">
+                <div style="display: flex; gap: 8px; align-items: end; margin-bottom: 12px;">
+                    <div class="input-group" style="min-width: 140px;">
+                        <label for="dateFrom">시작 기간:</label>
+                        <input type="date" id="dateFrom" value="">
+                    </div>
+                    <div class="input-group" style="min-width: 140px;">
+                        <label for="dateTo">종료 기간:</label>
+                        <input type="date" id="dateTo" value="">
+                    </div>
+                    <div>
+                        <button id="updateBtn" class="update-btn">업데이트</button>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: end; margin-bottom: 20px;">
+                    <div class="input-group" style="min-width: 100px;">
+                        <label for="ticker">티커:</label>
+                        <input type="text" id="ticker" value="" placeholder="예: AAPL, TSLA, SPY">
+                    </div>
+                    <div>
+                        <button id="addLineBtn" class="add-line-btn">라인 추가하기</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="results-section">
+                <div class="chart-container" style="height: 400px; margin: 20px 0;">
+                    <canvas id="simulationChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart = null;
+        let existingTickers = []; // 기존에 추가된 티커들을 추적
+
+        function changeLanguage(lang) {
+            if (lang === 'en') {
+                window.location.href = '../../../en/trade/chart-stack/index.html';
+            }
+        }
+
+        function goHome() {
+            window.location.href = '../../index.html';
+        }
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            console.log('Window loaded');
+            console.log('Chart.js available:', typeof Chart !== 'undefined');
+            
+            // Set default dates
+            const today = new Date();
+            const oneYearAgo = new Date();
+            oneYearAgo.setFullYear(today.getFullYear() - 1);
+            
+            document.getElementById('dateFrom').value = oneYearAgo.toISOString().split('T')[0];
+            document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+            
+            // Test button first
+            const btn = document.getElementById('addLineBtn');
+            console.log('Button found:', !!btn);
+            
+            if (btn) {
+                btn.onclick = function() {
+                    console.log('Add Line button clicked!');
+                    addLine();
+                };
+            }
+            
+            // Update 버튼 이벤트 리스너 추가
+            const updateBtn = document.getElementById('updateBtn');
+            if (updateBtn) {
+                updateBtn.onclick = function() {
+                    console.log('Update button clicked!');
+                    updateAllLines();
+                };
+            }
+            
+            // Initialize chart
+            setTimeout(function() {
+                initChart();
+            }, 100);
+        });
+
+        function initChart() {
+            console.log('Initializing chart...');
+            const canvas = document.getElementById('simulationChart');
+            
+            if (!canvas) {
+                console.error('Canvas not found');
+                return;
+            }
+
+            console.log('Canvas found:', canvas);
+            const ctx = canvas.getContext('2d');
+            console.log('Context:', ctx);
+            
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js not loaded');
+                alert('Chart.js가 로드되지 않았습니다!');
+                return;
+            }
+            
+            try {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: []
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: '포트폴리오 성과 비교',
+                                position: 'top',
+                                align: 'start',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    bottom: 20
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                onClick: function(e, legendItem, legend) {
+                                    const index = legendItem.datasetIndex;
+                                    const chart = legend.chart;
+                                    const meta = chart.getDatasetMeta(index);
+                                    meta.hidden = !meta.hidden;
+                                    chart.update();
+                                },
+                                labels: {
+                                    usePointStyle: false,
+                                    boxWidth: 20,
+                                    boxHeight: 2,
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(context) {
+                                        return '날짜: ' + context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.dataset.label + ': $' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grid: { display: true },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: '포트폴리오 가치 (USD)'
+                                }
+                            },
+                            x: {
+                                type: 'category',
+                                grid: { display: true },
+                                title: {
+                                    display: true,
+                                    text: '날짜'
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+                
+                console.log('Chart created successfully:', chart);
+                
+            } catch (error) {
+                console.error('Chart creation failed:', error);
+                alert('차트 생성 실패: ' + error.message);
+            }
+        }
+
+        async function addLine() {
+            console.log('addLine called');
+            
+            if (!chart) {
+                console.error('Chart not initialized');
+                alert('차트가 준비되지 않았습니다!');
+                return;
+            }
+            
+            const ticker = document.getElementById('ticker').value.trim().toUpperCase();
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            if (!ticker || !dateFrom || !dateTo) {
+                alert('모든 필드를 입력해주세요.');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.getElementById('addLineBtn');
+            const originalText = btn.textContent;
+            btn.textContent = '데이터 로딩 중...';
+            btn.disabled = true;
+
+            try {
+                // Fetch real stock data
+                const result = await fetchStockData(ticker, dateFrom, dateTo);
+                console.log('Fetched data:', result);
+                
+                if (!result || result.data.length === 0) {
+                    alert('해당 티커의 데이터를 찾을 수 없습니다. 티커를 확인해주세요.');
+                    return;
+                }
+                
+                // Set chart labels if this is the first dataset or update existing
+                if (chart.data.datasets.length === 0) {
+                    chart.data.labels = result.labels;
+                }
+                
+                // Add to chart
+                const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+                const color = colors[chart.data.datasets.length % colors.length];
+                
+                chart.data.datasets.push({
+                    label: ticker,
+                    data: result.data,
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+                
+                chart.update();
+                
+                // Clear ticker input
+                document.getElementById('ticker').value = '';
+                
+                // 기존 티커 목록에 추가
+            if (!existingTickers.includes(ticker)) {
+                existingTickers.push(ticker);
+            }
+            
+            console.log('Line added for', ticker);
+            console.log('Current tickers:', existingTickers);
+            } catch (error) {
+                console.error('Error fetching stock data:', error);
+                alert('주가 데이터를 가져오는 중 오류가 발생했습니다.');
+            } finally {
+                // Reset button state
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        async function updateAllLines() {
+            console.log('updateAllLines called');
+            
+            if (!chart) {
+                console.error('Chart not initialized');
+                alert('차트가 준비되지 않았습니다!');
+                return;
+            }
+            
+            if (existingTickers.length === 0) {
+                alert('업데이트할 라인이 없습니다. 먼저 티커를 추가해주세요.');
+                return;
+            }
+            
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            if (!dateFrom || !dateTo) {
+                alert('날짜 범위를 설정해주세요.');
+                return;
+            }
+            
+            // 버튼 로딩 상태
+            const updateBtn = document.getElementById('updateBtn');
+            const originalText = updateBtn.textContent;
+            updateBtn.textContent = '업데이트 중...';
+            updateBtn.disabled = true;
+            
+            try {
+                // 기존 차트 데이터 초기화
+                chart.data.datasets = [];
+                chart.data.labels = [];
+                
+                // 모든 기존 티커에 대해 데이터 다시 가져오기
+                const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+                
+                for (let i = 0; i < existingTickers.length; i++) {
+                    const ticker = existingTickers[i];
+                    console.log(`Updating data for ${ticker}`);
+                    
+                    try {
+                        const result = await fetchStockData(ticker, dateFrom, dateTo);
+                        
+                        if (!result || result.data.length === 0) {
+                            console.warn(`No data for ${ticker}, skipping`);
+                            continue;
+                        }
+                        
+                        // 첫 번째 데이터셋인 경우 레이블 설정
+                        if (chart.data.datasets.length === 0) {
+                            chart.data.labels = result.labels;
+                        }
+                        
+                        const color = colors[i % colors.length];
+                        
+                        chart.data.datasets.push({
+                            label: ticker,
+                            data: result.data,
+                            borderColor: color,
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            pointBackgroundColor: color,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1
+                        });
+                        
+                    } catch (error) {
+                        console.error(`Failed to update ${ticker}:`, error);
+                        // 개별 티커 업데이트 실패시 경고만 표시하고 계속
+                        alert(`${ticker} 데이터 업데이트에 실패했습니다.`);
+                    }
+                }
+                
+                // 차트 업데이트
+                chart.update();
+                console.log('All lines updated successfully');
+                
+            } catch (error) {
+                console.error('Error updating lines:', error);
+                alert('라인 업데이트 중 오류가 발생했습니다.');
+            } finally {
+                // 버튼 상태 복원
+                updateBtn.textContent = originalText;
+                updateBtn.disabled = false;
+            }
+        }
+
+        async function fetchStockData(ticker, startDate, endDate) {
+            try {
+                console.log(`Fetching real data for ${ticker} from ${startDate} to ${endDate}`);
+                
+                // Yahoo Finance API를 사용 (Rebalance C2와 동일한 방식)
+                const from = Math.floor(new Date(startDate).getTime() / 1000);
+                const to = Math.floor(new Date(endDate).getTime() / 1000);
+                
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?period1=${from}&period2=${to}&interval=1d`;
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+                
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error('Failed to fetch data');
+                
+                const apiData = await response.json();
+                const quotes = apiData.chart.result[0];
+                const timestamps = quotes.timestamp;
+                const closes = quotes.indicators.quote[0].close;
+                
+                // 실제 데이터를 포트폴리오 가치로 변환
+                const data = [];
+                const labels = [];
+                let initialPrice = null;
+                let initialShares = null;
+                
+                for (let i = 0; i < timestamps.length; i++) {
+                    if (closes[i] !== null) {
+                        const date = new Date(timestamps[i] * 1000).toISOString().split('T')[0];
+                        const price = closes[i];
+                        
+                        // 첫날 기준으로 주식수 계산
+                        if (initialPrice === null) {
+                            initialPrice = price;
+                            initialShares = 10000 / initialPrice;
+                        }
+                        
+                        // 포트폴리오 가치 = 주식수 × 현재 주가
+                        const portfolioValue = initialShares * price;
+                        
+                        labels.push(date);
+                        data.push(Math.round(portfolioValue * 100) / 100);
+                    }
+                }
+                
+                console.log(`Fetched ${data.length} real data points for ${ticker}`);
+                return { data, labels };
+                
+            } catch (error) {
+                console.error(`Failed to fetch real data for ${ticker}:`, error);
+                
+                // 실제 데이터를 가져올 수 없을 때 오류 반환
+                throw new Error(`${ticker} 데이터를 가져올 수 없습니다.`);
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>

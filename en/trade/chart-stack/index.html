@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Stack Trading Strategy - Elomango</title>
+    <meta name="description" content="Chart Stack strategy portfolio backtest simulator">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="../../../assets/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6475131530037931"
+            crossorigin="anonymous"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffeaa7 50%, #fdcb6e 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            color: #444;
+        }
+        
+        .header {
+            background: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .nav-btn {
+            background: #fdcb6e;
+            color: #444;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: #e17055;
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .input-section {
+            margin-bottom: 30px;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .input-group label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #555;
+        }
+        
+        .input-group input {
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #fdcb6e;
+        }
+        
+        .add-line-btn, .update-btn {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .update-btn {
+            background: #28a745;
+        }
+        
+        .add-line-btn:hover {
+            background: #5a6fd8;
+            transform: translateY(-1px);
+        }
+        
+        .update-btn:hover {
+            background: #218838;
+            transform: translateY(-1px);
+        }
+        
+        .add-line-btn:disabled, .update-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <button class="nav-btn" onclick="goHome()">← Home</button>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="changeLanguage('ko')">한국어</button>
+        </div>
+    </div>
+
+    <div class="page-container">
+        <div class="container">
+            <h1 id="title">Chart Stack Tool</h1>
+            <div id="subtitle" style="color: #5a6c7d; font-size: 14px; line-height: 1.6; margin-bottom: 30px; padding: 0 20px; text-align: left;">
+                <p style="margin-bottom: 8px; font-size: 14px; color: #666;">Compare investments with the same balance and time period.</p>
+                <p style="margin-bottom: 20px; font-size: 14px; color: #666;">Initial capital is 10,000 USD.</p>
+            </div>
+            
+            <div class="input-section">
+                <div style="display: flex; gap: 8px; align-items: end; margin-bottom: 12px;">
+                    <div class="input-group" style="min-width: 140px;">
+                        <label for="dateFrom">Period From:</label>
+                        <input type="date" id="dateFrom" value="">
+                    </div>
+                    <div class="input-group" style="min-width: 140px;">
+                        <label for="dateTo">Period To:</label>
+                        <input type="date" id="dateTo" value="">
+                    </div>
+                    <div>
+                        <button id="updateBtn" class="update-btn">Update</button>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 8px; align-items: end; margin-bottom: 20px;">
+                    <div class="input-group" style="min-width: 100px;">
+                        <label for="ticker">Ticker:</label>
+                        <input type="text" id="ticker" value="" placeholder="e.g. AAPL, TSLA, SPY">
+                    </div>
+                    <div>
+                        <button id="addLineBtn" class="add-line-btn">Add Line</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="results-section">
+                <div class="chart-container" style="height: 400px; margin: 20px 0;">
+                    <canvas id="simulationChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let chart = null;
+        let existingTickers = []; // Track existing added tickers
+
+        function changeLanguage(lang) {
+            if (lang === 'ko') {
+                window.location.href = '../../../ko/trade/chart-stack/index.html';
+            }
+        }
+
+        function goHome() {
+            window.location.href = '../../index.html';
+        }
+
+        // Initialize page
+        window.addEventListener('load', function() {
+            console.log('Window loaded');
+            console.log('Chart.js available:', typeof Chart !== 'undefined');
+            
+            // Set default dates
+            const today = new Date();
+            const oneYearAgo = new Date();
+            oneYearAgo.setFullYear(today.getFullYear() - 1);
+            
+            document.getElementById('dateFrom').value = oneYearAgo.toISOString().split('T')[0];
+            document.getElementById('dateTo').value = today.toISOString().split('T')[0];
+            
+            // Test button first
+            const btn = document.getElementById('addLineBtn');
+            console.log('Button found:', !!btn);
+            
+            if (btn) {
+                btn.onclick = function() {
+                    console.log('Add Line button clicked!');
+                    addLine();
+                };
+            }
+            
+            // Add Update button event listener
+            const updateBtn = document.getElementById('updateBtn');
+            if (updateBtn) {
+                updateBtn.onclick = function() {
+                    console.log('Update button clicked!');
+                    updateAllLines();
+                };
+            }
+            
+            // Initialize chart
+            setTimeout(function() {
+                initChart();
+            }, 100);
+        });
+
+        function initChart() {
+            console.log('Initializing chart...');
+            const canvas = document.getElementById('simulationChart');
+            
+            if (!canvas) {
+                console.error('Canvas not found');
+                return;
+            }
+
+            console.log('Canvas found:', canvas);
+            const ctx = canvas.getContext('2d');
+            console.log('Context:', ctx);
+            
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js not loaded');
+                alert('Chart.js not loaded!');
+                return;
+            }
+            
+            try {
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: []
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Portfolio Performance Comparison',
+                                position: 'top',
+                                align: 'start',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    bottom: 20
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                onClick: function(e, legendItem, legend) {
+                                    const index = legendItem.datasetIndex;
+                                    const chart = legend.chart;
+                                    const meta = chart.getDatasetMeta(index);
+                                    meta.hidden = !meta.hidden;
+                                    chart.update();
+                                },
+                                labels: {
+                                    usePointStyle: false,
+                                    boxWidth: 20,
+                                    boxHeight: 2,
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(context) {
+                                        return 'Date: ' + context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.dataset.label + ': $' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false,
+                                grid: { display: true },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Portfolio Value (USD)'
+                                }
+                            },
+                            x: {
+                                type: 'category',
+                                grid: { display: true },
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+                
+                console.log('Chart created successfully:', chart);
+                
+            } catch (error) {
+                console.error('Chart creation failed:', error);
+                alert('Chart creation failed: ' + error.message);
+            }
+        }
+
+        async function addLine() {
+            console.log('addLine called');
+            
+            if (!chart) {
+                console.error('Chart not initialized');
+                alert('Chart not ready!');
+                return;
+            }
+            
+            const ticker = document.getElementById('ticker').value.trim().toUpperCase();
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            if (!ticker || !dateFrom || !dateTo) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Show loading state
+            const btn = document.getElementById('addLineBtn');
+            const originalText = btn.textContent;
+            btn.textContent = 'Loading data...';
+            btn.disabled = true;
+
+            try {
+                // Fetch real stock data
+                const result = await fetchStockData(ticker, dateFrom, dateTo);
+                console.log('Fetched data:', result);
+                
+                if (!result || result.data.length === 0) {
+                    alert('Could not find data for this ticker. Please check the ticker symbol.');
+                    return;
+                }
+                
+                // Set chart labels if this is the first dataset or update existing
+                if (chart.data.datasets.length === 0) {
+                    chart.data.labels = result.labels;
+                }
+                
+                // Add to chart
+                const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+                const color = colors[chart.data.datasets.length % colors.length];
+                
+                chart.data.datasets.push({
+                    label: ticker,
+                    data: result.data,
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+                
+                chart.update();
+                
+                // Clear ticker input
+                document.getElementById('ticker').value = '';
+                
+                // Add to existing tickers list
+            if (!existingTickers.includes(ticker)) {
+                existingTickers.push(ticker);
+            }
+            
+            console.log('Line added for', ticker);
+            console.log('Current tickers:', existingTickers);
+            } catch (error) {
+                console.error('Error fetching stock data:', error);
+                alert('An error occurred while fetching stock data.');
+            } finally {
+                // Reset button state
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+        
+        async function updateAllLines() {
+            console.log('updateAllLines called');
+            
+            if (!chart) {
+                console.error('Chart not initialized');
+                alert('Chart not ready!');
+                return;
+            }
+            
+            if (existingTickers.length === 0) {
+                alert('No lines to update. Please add tickers first.');
+                return;
+            }
+            
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            if (!dateFrom || !dateTo) {
+                alert('Please set date range.');
+                return;
+            }
+            
+            // Button loading state
+            const updateBtn = document.getElementById('updateBtn');
+            const originalText = updateBtn.textContent;
+            updateBtn.textContent = 'Updating...';
+            updateBtn.disabled = true;
+            
+            try {
+                // Clear existing chart data
+                chart.data.datasets = [];
+                chart.data.labels = [];
+                
+                // Re-fetch data for all existing tickers
+                const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+                
+                for (let i = 0; i < existingTickers.length; i++) {
+                    const ticker = existingTickers[i];
+                    console.log(`Updating data for ${ticker}`);
+                    
+                    try {
+                        const result = await fetchStockData(ticker, dateFrom, dateTo);
+                        
+                        if (!result || result.data.length === 0) {
+                            console.warn(`No data for ${ticker}, skipping`);
+                            continue;
+                        }
+                        
+                        // Set labels for first dataset
+                        if (chart.data.datasets.length === 0) {
+                            chart.data.labels = result.labels;
+                        }
+                        
+                        const color = colors[i % colors.length];
+                        
+                        chart.data.datasets.push({
+                            label: ticker,
+                            data: result.data,
+                            borderColor: color,
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            pointBackgroundColor: color,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1
+                        });
+                        
+                    } catch (error) {
+                        console.error(`Failed to update ${ticker}:`, error);
+                        // Show warning for individual ticker update failure but continue
+                        alert(`Failed to update ${ticker} data.`);
+                    }
+                }
+                
+                // Update chart
+                chart.update();
+                console.log('All lines updated successfully');
+                
+            } catch (error) {
+                console.error('Error updating lines:', error);
+                alert('An error occurred while updating lines.');
+            } finally {
+                // Reset button state
+                updateBtn.textContent = originalText;
+                updateBtn.disabled = false;
+            }
+        }
+
+        async function fetchStockData(ticker, startDate, endDate) {
+            try {
+                console.log(`Fetching real data for ${ticker} from ${startDate} to ${endDate}`);
+                
+                // Using Yahoo Finance API (same method as Rebalance C2)
+                const from = Math.floor(new Date(startDate).getTime() / 1000);
+                const to = Math.floor(new Date(endDate).getTime() / 1000);
+                
+                const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?period1=${from}&period2=${to}&interval=1d`;
+                const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+                
+                const response = await fetch(proxyUrl);
+                if (!response.ok) throw new Error('Failed to fetch data');
+                
+                const apiData = await response.json();
+                const quotes = apiData.chart.result[0];
+                const timestamps = quotes.timestamp;
+                const closes = quotes.indicators.quote[0].close;
+                
+                // Convert real data to portfolio values
+                const data = [];
+                const labels = [];
+                let initialPrice = null;
+                let initialShares = null;
+                
+                for (let i = 0; i < timestamps.length; i++) {
+                    if (closes[i] !== null) {
+                        const date = new Date(timestamps[i] * 1000).toISOString().split('T')[0];
+                        const price = closes[i];
+                        
+                        // Calculate shares based on first day
+                        if (initialPrice === null) {
+                            initialPrice = price;
+                            initialShares = 10000 / initialPrice;
+                        }
+                        
+                        // Portfolio value = Number of shares × Current stock price
+                        const portfolioValue = initialShares * price;
+                        
+                        labels.push(date);
+                        data.push(Math.round(portfolioValue * 100) / 100);
+                    }
+                }
+                
+                console.log(`Fetched ${data.length} real data points for ${ticker}`);
+                return { data, labels };
+                
+            } catch (error) {
+                console.error(`Failed to fetch real data for ${ticker}:`, error);
+                
+                // Return error when real data cannot be fetched
+                throw new Error(`Unable to fetch ${ticker} data.`);
+            }
+        }
+        
+    </script>
+    
+</body>
+</html>
