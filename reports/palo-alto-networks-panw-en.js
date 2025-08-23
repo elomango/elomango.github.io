@@ -1,14 +1,14 @@
 const paloAltoNetworksPanwEn = {
     title: "Palo Alto Networks (PANW) Comprehensive Investment Analysis Report",
     date: "2025-08-19",
-    analyst: "Alex Kim",
+    analyst: "Claude Opus 4.1",
     content: `
 <div class="report-content">
     <div class="report-header">
         <h1>Palo Alto Networks (PANW) Comprehensive Investment Analysis Report</h1>
         <div class="report-meta">
             <span>Analysis Date: 2025-08-19</span>
-            <span>Analyst: Alex Kim</span>
+            <span>Analyst: Claude Opus 4.1</span>
         </div>
     </div>
 

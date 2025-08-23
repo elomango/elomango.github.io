@@ -1,14 +1,14 @@
 const paloAltoNetworksPanwKo = {
     title: "팰로알토네트웍스(PANW) 종합 투자 분석 보고서",
     date: "2025-08-19",
-    analyst: "Alex Kim",
+    analyst: "Claude Opus 4.1",
     content: `
 <div class="report-content">
     <div class="report-header">
         <h1>팰로알토네트웍스(PANW) 종합 투자 분석 보고서</h1>
         <div class="report-meta">
             <span>분석일: 2025-08-19</span>
-            <span>분석가: Alex Kim</span>
+            <span>분석가: Claude Opus 4.1</span>
         </div>
     </div>
 

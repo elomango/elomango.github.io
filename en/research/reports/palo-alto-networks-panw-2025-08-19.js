@@ -10,8 +10,8 @@ window.reportData = {
             en: "Palo Alto Networks Company Analysis"
         },
         analyst: {
-            ko: "Alex Kim",
-            en: "Alex Kim"
+            ko: "Claude Opus 4.1",
+            en: "Claude Opus 4.1"
         }
     },
     content: `# Palo Alto Networks (PANW) Comprehensive Investment Analysis Report
