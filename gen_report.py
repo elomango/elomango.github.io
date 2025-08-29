@@ -208,6 +208,19 @@ def process_report(markdown_file, args):
     with open(markdown_file, 'r', encoding='utf-8') as f:
         content = f.read()
     
+    # 영어 번역 파일 자동 탐색
+    # 규칙: a.md -> a_en.md
+    base_name = os.path.splitext(markdown_file)[0]
+    english_file = f"{base_name}_en.md"
+    
+    if os.path.exists(english_file):
+        print(f"\n✓ 영어 번역 파일 발견: {english_file}")
+        with open(english_file, 'r', encoding='utf-8') as f:
+            content_en = f.read()
+    else:
+        print(f"\n✗ 영어 번역 파일 없음 ({english_file}), 원본 사용")
+        content_en = content
+    
     # 명령줄 인자로부터 메타데이터 생성
     metadata = create_metadata(args)
     
@@ -247,8 +260,7 @@ def process_report(markdown_file, args):
     # 영어 버전 처리
     print("\n=== 영어 버전 생성 중 ===")
     
-    # 영어 버전은 같은 내용 사용 (번역은 사용자가 제공해야 함)
-    content_en = content
+    # content_en은 이미 위에서 설정됨 (번역 파일이 있으면 그것을, 없으면 원본 사용)
     metadata_en = metadata.copy()
     metadata_en['title'] = metadata['title'].replace('기업 분석', 'Company Analysis').replace('ETF 분석', 'ETF Analysis')
     
