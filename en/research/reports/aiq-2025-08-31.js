@@ -1,13 +1,13 @@
-// aiq 보고서 데이터 (영어)
+// AIQ Report Data (English)
 window.reportData = {
     metadata: {
-        id: "aiq-aiq, 0700.hk, googl, aapl, meta, nvda, msft, amzn, amd, avgo, botz, robo, chat, thnq-2025-08-31",
-        company: "aiq",
-        ticker: "AIQ, 0700.HK, GOOGL, AAPL, META, NVDA, MSFT, AMZN, AMD, AVGO, BOTZ, ROBO, CHAT, THNQ",
+        id: "aiq-2025-08-31",
+        company: "AIQ",
+        ticker: "AIQ",
         date: "2025-08-31",
         title: {
-            ko: "aiq ETF Analysis",
-            en: "aiq ETF Analysis"
+            ko: "AIQ ETF Analysis",
+            en: "AIQ ETF Analysis"
         },
         analyst: {
             ko: "Claude Opus 4.1",
