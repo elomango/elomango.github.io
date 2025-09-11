@@ -242,6 +242,11 @@
                     <canvas id="simulationChart"></canvas>
                 </div>
                 
+                <!-- Trading Volume Chart -->
+                <div class="chart-container" style="height: 400px; margin: 20px 0;">
+                    <canvas id="tradingVolumeChart"></canvas>
+                </div>
+                
                 <!-- Purchase Info Display -->
                 <div id="purchaseInfo" class="purchase-info-container" style="margin-top: 20px;">
                     <h3 style="color: #333; font-size: 16px; margin-bottom: 10px;">Stock Purchase Information</h3>
@@ -253,6 +258,7 @@
 
     <script>
         let chart = null;
+        let volumeChart = null;
         let existingTickers = []; // Track existing added tickers
         let purchaseHistory = []; // Store stock purchase information
 
@@ -299,9 +305,10 @@
                 };
             }
             
-            // Initialize chart
+            // Initialize charts
             setTimeout(function() {
                 initChart();
+                initVolumeChart();
             }, 100);
         });
 
@@ -416,12 +423,120 @@
             }
         }
 
+        function initVolumeChart() {
+            console.log('Initializing volume chart...');
+            const canvas = document.getElementById('tradingVolumeChart');
+            
+            if (!canvas) {
+                console.error('Volume canvas not found');
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            
+            if (typeof Chart === 'undefined') {
+                console.error('Chart.js not loaded for volume chart');
+                return;
+            }
+            
+            try {
+                volumeChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: []
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Trading Volume',
+                                position: 'top',
+                                align: 'start',
+                                font: {
+                                    size: 16,
+                                    weight: 'bold'
+                                },
+                                padding: {
+                                    bottom: 20
+                                }
+                            },
+                            legend: {
+                                display: true,
+                                position: 'top',
+                                onClick: function(e, legendItem, legend) {
+                                    const index = legendItem.datasetIndex;
+                                    const chart = legend.chart;
+                                    const meta = chart.getDatasetMeta(index);
+                                    meta.hidden = !meta.hidden;
+                                    chart.update();
+                                },
+                                labels: {
+                                    usePointStyle: false,
+                                    boxWidth: 20,
+                                    boxHeight: 2,
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(context) {
+                                        return 'Date: ' + context[0].label;
+                                    },
+                                    label: function(context) {
+                                        return context.dataset.label + ': $' + context.parsed.y.toLocaleString();
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { display: true },
+                                ticks: {
+                                    callback: function(value) {
+                                        return '$' + value.toLocaleString();
+                                    }
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Trading Volume (USD)'
+                                }
+                            },
+                            x: {
+                                type: 'category',
+                                grid: { display: true },
+                                title: {
+                                    display: true,
+                                    text: 'Date'
+                                }
+                            }
+                        },
+                        interaction: {
+                            mode: 'nearest',
+                            axis: 'x',
+                            intersect: false
+                        }
+                    }
+                });
+                
+                console.log('Volume chart created successfully:', volumeChart);
+                
+            } catch (error) {
+                console.error('Volume chart creation failed:', error);
+                alert('Volume chart creation failed: ' + error.message);
+            }
+        }
+
         async function addLine() {
             console.log('addLine called');
             
-            if (!chart) {
-                console.error('Chart not initialized');
-                alert('Chart not ready!');
+            if (!chart || !volumeChart) {
+                console.error('Charts not initialized');
+                alert('Charts not ready!');
                 return;
             }
             
@@ -453,12 +568,14 @@
                 // Set chart labels if this is the first dataset or update existing
                 if (chart.data.datasets.length === 0) {
                     chart.data.labels = result.labels;
+                    volumeChart.data.labels = result.labels;
                 }
                 
-                // Add to chart
+                // Add to both charts
                 const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
                 const color = colors[chart.data.datasets.length % colors.length];
                 
+                // Portfolio chart
                 chart.data.datasets.push({
                     label: ticker,
                     data: result.data,
@@ -474,7 +591,24 @@
                     pointBorderWidth: 1
                 });
                 
+                // Volume chart
+                volumeChart.data.datasets.push({
+                    label: ticker,
+                    data: result.volumeData,
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+                
                 chart.update();
+                volumeChart.update();
                 
                 // Clear ticker input
                 document.getElementById('ticker').value = '';
@@ -511,9 +645,9 @@
         async function updateAllLines() {
             console.log('updateAllLines called');
             
-            if (!chart) {
-                console.error('Chart not initialized');
-                alert('Chart not ready!');
+            if (!chart || !volumeChart) {
+                console.error('Charts not initialized');
+                alert('Charts not ready!');
                 return;
             }
             
@@ -540,6 +674,8 @@
                 // Clear existing chart data
                 chart.data.datasets = [];
                 chart.data.labels = [];
+                volumeChart.data.datasets = [];
+                volumeChart.data.labels = [];
                 
                 // Re-fetch data for all existing tickers
                 const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
@@ -559,13 +695,31 @@
                         // Set labels for first dataset
                         if (chart.data.datasets.length === 0) {
                             chart.data.labels = result.labels;
+                            volumeChart.data.labels = result.labels;
                         }
                         
                         const color = colors[i % colors.length];
                         
+                        // Portfolio chart
                         chart.data.datasets.push({
                             label: ticker,
                             data: result.data,
+                            borderColor: color,
+                            backgroundColor: 'transparent',
+                            borderWidth: 2,
+                            fill: false,
+                            tension: 0,
+                            pointRadius: 0,
+                            pointHoverRadius: 4,
+                            pointBackgroundColor: color,
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 1
+                        });
+                        
+                        // Volume chart
+                        volumeChart.data.datasets.push({
+                            label: ticker,
+                            data: result.volumeData,
                             borderColor: color,
                             backgroundColor: 'transparent',
                             borderWidth: 2,
@@ -585,8 +739,9 @@
                     }
                 }
                 
-                // Update chart
+                // Update charts
                 chart.update();
+                volumeChart.update();
                 // Update purchase information as well
             purchaseHistory = [];
             for (let i = 0; i < existingTickers.length; i++) {
@@ -661,16 +816,19 @@
                 const timestamps = quotes.timestamp;
                 const closes = quotes.indicators.quote[0].close;
                 
-                // Convert real data to portfolio values
+                // Convert real data to portfolio values and trading volume
                 const data = [];
+                const volumeData = [];
                 const labels = [];
+                const volumes = quotes.indicators.quote[0].volume;
                 let initialPrice = null;
                 let initialShares = null;
                 
                 for (let i = 0; i < timestamps.length; i++) {
-                    if (closes[i] !== null) {
+                    if (closes[i] !== null && volumes[i] !== null) {
                         const date = new Date(timestamps[i] * 1000).toISOString().split('T')[0];
                         const price = closes[i];
+                        const volume = volumes[i];
                         
                         // Calculate shares based on first day
                         if (initialPrice === null) {
@@ -681,13 +839,17 @@
                         // Portfolio value = Number of shares × Current stock price
                         const portfolioValue = initialShares * price;
                         
+                        // Trading volume = Close price × Volume
+                        const tradingValue = price * volume;
+                        
                         labels.push(date);
                         data.push(Math.round(portfolioValue * 100) / 100);
+                        volumeData.push(Math.round(tradingValue));
                     }
                 }
                 
                 console.log(`Fetched ${data.length} real data points for ${ticker}`);
-                return { data, labels, initialPrice, initialShares }; // Add first day price and share count
+                return { data, volumeData, labels, initialPrice, initialShares }; // Add trading volume data
                 
             } catch (error) {
                 console.error(`Failed to fetch real data for ${ticker}:`, error);
