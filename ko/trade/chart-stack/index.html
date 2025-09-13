@@ -172,6 +172,33 @@
             font-family: 'Courier New', monospace;
             font-size: 14px;
             color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .purchase-text {
+            flex: 1;
+        }
+        
+        .delete-btn {
+            background: transparent;
+            color: #dc3545;
+            border: none;
+            border-radius: 4px;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+            margin-left: 10px;
+        }
+        
+        .delete-btn:hover {
+            background: rgba(220, 53, 69, 0.1);
         }
     </style>
 </head>
@@ -227,9 +254,9 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px; align-items: end; margin-bottom: 20px;">
-                    <div class="input-group" style="min-width: 100px;">
+                    <div class="input-group" style="min-width: 220px;">
                         <label for="ticker">티커:</label>
-                        <input type="text" id="ticker" value="" placeholder="예: AAPL, TSLA, SPY">
+                        <input type="text" id="ticker" value="" placeholder="예: AAPL, TSLA, BTC-USD, XRP-USD">
                     </div>
                     <div>
                         <button id="addLineBtn" class="add-line-btn">라인 추가하기</button>
@@ -565,7 +592,7 @@
                     return;
                 }
                 
-                // Set chart labels if this is the first dataset or update existing
+                // Set chart labels if this is the first dataset
                 if (chart.data.datasets.length === 0) {
                     chart.data.labels = result.labels;
                     volumeChart.data.labels = result.labels;
@@ -607,9 +634,6 @@
                     pointBorderWidth: 1
                 });
                 
-                chart.update();
-                volumeChart.update();
-                
                 // Clear ticker input
                 document.getElementById('ticker').value = '';
                 
@@ -632,6 +656,16 @@
             console.log('Line added for', ticker);
             console.log('Purchase info:', purchaseInfo);
             console.log('Current tickers:', existingTickers);
+            
+            // Check if synchronization is needed
+            if (existingTickers.length > 1) {
+                console.log('Multiple tickers detected, synchronizing to common dates');
+                await synchronizeAllDataToCommonDates();
+            } else {
+                // Only update charts if this is the first dataset (no sync needed)
+                chart.update();
+                volumeChart.update();
+            }
             } catch (error) {
                 console.error('Error fetching stock data:', error);
                 alert('주가 데이터를 가져오는 중 오류가 발생했습니다.');
@@ -784,17 +818,243 @@
                 return;
             }
             
-            purchaseHistory.forEach(purchase => {
+            purchaseHistory.forEach((purchase, index) => {
                 const purchaseItem = document.createElement('div');
                 purchaseItem.className = 'purchase-item';
                 
                 const formattedShares = purchase.shares.toFixed(2);
                 const formattedPrice = purchase.price.toFixed(2);
                 
-                purchaseItem.innerHTML = `${purchase.ticker} ${purchase.date} ${formattedShares}주 @$${formattedPrice} BUY`;
+                purchaseItem.innerHTML = `
+                    <span class="purchase-text">${purchase.ticker} ${purchase.date} ${formattedShares}주 @$${formattedPrice} BUY</span>
+                    <button class="delete-btn" onclick="removeLine('${purchase.ticker}')" title="라인 삭제">🗑️</button>
+                `;
                 
                 purchaseList.appendChild(purchaseItem);
             });
+        }
+        
+        function findCommonDates(datasets) {
+            if (datasets.length === 0) return [];
+            
+            // Get all date sets
+            let commonDates = new Set(datasets[0].labels);
+            
+            // Find intersection with all other datasets
+            for (let i = 1; i < datasets.length; i++) {
+                const currentDates = new Set(datasets[i].labels);
+                commonDates = new Set([...commonDates].filter(date => currentDates.has(date)));
+            }
+            
+            // Convert back to sorted array
+            return [...commonDates].sort();
+        }
+        
+        function filterDataToCommonDates(data, labels, commonDates) {
+            const filteredData = [];
+            const filteredVolumeData = [];
+            
+            for (let i = 0; i < labels.length; i++) {
+                if (commonDates.includes(labels[i])) {
+                    filteredData.push(data[i]);
+                    if (arguments.length > 3 && arguments[3]) {
+                        filteredVolumeData.push(arguments[3][i]);
+                    }
+                }
+            }
+            
+            return arguments.length > 3 ? {data: filteredData, volumeData: filteredVolumeData} : filteredData;
+        }
+        
+        async function synchronizeAllDataToCommonDates() {
+            console.log('Synchronizing all data to common trading dates');
+            
+            if (chart.data.datasets.length <= 1) return; // No need to sync single dataset
+            
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            // Collect all datasets with their labels
+            const allDatasets = [];
+            
+            for (let i = 0; i < existingTickers.length; i++) {
+                const ticker = existingTickers[i];
+                try {
+                    const result = await fetchStockData(ticker, dateFrom, dateTo);
+                    if (result && result.data.length > 0) {
+                        allDatasets.push({
+                            ticker: ticker,
+                            labels: result.labels,
+                            data: result.data,
+                            volumeData: result.volumeData,
+                            initialPrice: result.initialPrice,
+                            initialShares: result.initialShares
+                        });
+                    }
+                } catch (error) {
+                    console.warn(`Failed to sync ${ticker}:`, error);
+                }
+            }
+            
+            if (allDatasets.length <= 1) return;
+            
+            // Find common dates
+            const commonDates = findCommonDates(allDatasets);
+            console.log(`Found ${commonDates.length} common trading dates`);
+            
+            if (commonDates.length === 0) {
+                alert('선택한 종목들 간에 공통 거래일이 없습니다.');
+                return;
+            }
+            
+            // Update charts with synchronized data
+            chart.data.labels = commonDates;
+            volumeChart.data.labels = commonDates;
+            chart.data.datasets = [];
+            volumeChart.data.datasets = [];
+            purchaseHistory = [];
+            
+            const colors = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'];
+            
+            for (let i = 0; i < allDatasets.length; i++) {
+                const dataset = allDatasets[i];
+                const color = colors[i % colors.length];
+                
+                // Filter data to common dates
+                const filtered = filterDataToCommonDates(
+                    dataset.data, 
+                    dataset.labels, 
+                    commonDates, 
+                    dataset.volumeData
+                );
+                
+                // Add to portfolio chart
+                chart.data.datasets.push({
+                    label: dataset.ticker,
+                    data: filtered.data,
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+                
+                // Add to volume chart
+                volumeChart.data.datasets.push({
+                    label: dataset.ticker,
+                    data: filtered.volumeData,
+                    borderColor: color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 4,
+                    pointBackgroundColor: color,
+                    pointBorderColor: '#fff',
+                    pointBorderWidth: 1
+                });
+                
+                // Update purchase history
+                purchaseHistory.push({
+                    ticker: dataset.ticker,
+                    date: commonDates[0],
+                    shares: dataset.initialShares,
+                    price: dataset.initialPrice
+                });
+            }
+            
+            // Update charts and display
+            chart.update();
+            volumeChart.update();
+            updatePurchaseDisplay();
+            
+            console.log('Synchronization completed');
+        }
+        
+        async function updateExistingDatasets() {
+            console.log('Updating existing datasets for new date range');
+            const dateFrom = document.getElementById('dateFrom').value;
+            const dateTo = document.getElementById('dateTo').value;
+            
+            // Re-fetch data for all existing tickers with new date range
+            for (let i = 0; i < existingTickers.length; i++) {
+                const ticker = existingTickers[i];
+                try {
+                    console.log(`Re-fetching data for ${ticker}`);
+                    const result = await fetchStockData(ticker, dateFrom, dateTo);
+                    
+                    if (result && result.data.length > 0) {
+                        // Update both charts
+                        chart.data.datasets[i].data = result.data;
+                        volumeChart.data.datasets[i].data = result.volumeData;
+                        
+                        // Update purchase history
+                        const purchaseIndex = purchaseHistory.findIndex(p => p.ticker === ticker);
+                        if (purchaseIndex >= 0) {
+                            purchaseHistory[purchaseIndex] = {
+                                ticker: ticker,
+                                date: result.labels[0],
+                                shares: result.initialShares,
+                                price: result.initialPrice
+                            };
+                        }
+                    }
+                } catch (error) {
+                    console.warn(`Failed to re-fetch ${ticker}:`, error);
+                }
+            }
+            
+            updatePurchaseDisplay();
+        }
+        
+        function removeLine(ticker) {
+            console.log(`Removing line for ${ticker}`);
+            
+            if (!chart || !volumeChart) {
+                alert('차트가 준비되지 않았습니다!');
+                return;
+            }
+            
+            // Find dataset index for the ticker
+            let datasetIndex = -1;
+            for (let i = 0; i < chart.data.datasets.length; i++) {
+                if (chart.data.datasets[i].label === ticker) {
+                    datasetIndex = i;
+                    break;
+                }
+            }
+            
+            if (datasetIndex === -1) {
+                alert(`${ticker} 라인을 찾을 수 없습니다.`);
+                return;
+            }
+            
+            // Remove from both charts
+            chart.data.datasets.splice(datasetIndex, 1);
+            volumeChart.data.datasets.splice(datasetIndex, 1);
+            
+            // Remove from existing tickers array
+            const tickerIndex = existingTickers.indexOf(ticker);
+            if (tickerIndex > -1) {
+                existingTickers.splice(tickerIndex, 1);
+            }
+            
+            // Remove from purchase history
+            purchaseHistory = purchaseHistory.filter(purchase => purchase.ticker !== ticker);
+            
+            // Update charts and display
+            chart.update();
+            volumeChart.update();
+            updatePurchaseDisplay();
+            
+            console.log(`Successfully removed ${ticker}`);
+            console.log('Remaining tickers:', existingTickers);
         }
 
         async function fetchStockData(ticker, startDate, endDate) {
