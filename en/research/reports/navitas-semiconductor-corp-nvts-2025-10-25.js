@@ -1,9 +1,9 @@
 // Navitas Semiconductor Corp 보고서 데이터 (영어)
 window.reportData = {
     metadata: {
-        id: "navitas-semiconductor-corp-보고서를 분석한 결과, 이 문서에서 언급된 ticker는 **nvts**입니다.-2025-10-25",
+        id: "navitas-semiconductor-corp-nvts-2025-10-25",
         company: "Navitas Semiconductor Corp",
-        ticker: "보고서를 분석한 결과, 이 문서에서 언급된 TICKER는 **NVTS**입니다.",
+        ticker: "NVTS",
         date: "2025-10-25",
         title: {
             ko: "Navitas Semiconductor Corp Company Analysis",
