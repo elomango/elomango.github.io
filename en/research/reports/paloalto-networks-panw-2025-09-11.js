@@ -1,20 +1,5 @@
-// Paloalto networks 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "paloalto-networks-panw-2025-09-11",
-        company: "Paloalto networks",
-        ticker: "PANW",
-        date: "2025-09-11",
-        title: {
-            ko: "Paloalto networks Company Analysis",
-            en: "Paloalto networks Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Palo Alto Networks Comprehensive Investment Analysis: Growth Prospects and Risks of the Cybersecurity Platform Leader
+// Paloalto networks 보고서 콘텐츠 (영어)
+window.reportContent = `# Palo Alto Networks Comprehensive Investment Analysis: Growth Prospects and Risks of the Cybersecurity Platform Leader
 
 ## 1. Listing Information and Company Overview
 
@@ -138,5 +123,4 @@ If currently holding, **maintain long-term position**, but consider partial prof
 
 Palo Alto Networks stands as the **strongest player in cybersecurity platform consolidation** with excellent long-term growth potential. While high valuation is burdensome, industry-leading platform strategy execution, AI technology leadership, and strong customer base justify it.
 
-Short-term volatility is expected due to growth deceleration and intensifying competition, but from a 3-5 year perspective, it will be the primary beneficiary of structural growth in the cybersecurity market and platform consolidation trends. While it presents **an attractive opportunity for patient long-term investors**, careful position management considering high valuation is essential.`
-};
+Short-term volatility is expected due to growth deceleration and intensifying competition, but from a 3-5 year perspective, it will be the primary beneficiary of structural growth in the cybersecurity market and platform consolidation trends. While it presents **an attractive opportunity for patient long-term investors**, careful position management considering high valuation is essential.`;

@@ -1,20 +1,5 @@
-// Roundhill Income ETFs Report Data (English)
-window.reportData = {
-    metadata: {
-        id: "roundhill-income-etfs-2025-08-18",
-        company: "Roundhill Income ETFs",
-        ticker: "YBTC, YETH, QDTE, XDTE, RDTE, XPAY, MAGY",
-        date: "2025-08-18",
-        title: {
-            ko: "라운드힐 인컴 ETF 포트폴리오 분석",
-            en: "Roundhill Income ETFs Portfolio Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Complete Analysis of 7 Roundhill Income ETFs
+// Roundhill Income ETFs Report Content (English)
+window.reportContent = `# Complete Analysis of 7 Roundhill Income ETFs
 
 ## Overview of Roundhill's Innovative High-Yield Strategy
 
@@ -187,5 +172,4 @@ Cryptocurrency-based funds (YBTC, YETH) offer the highest yields but come with e
 
 Roundhill's income ETF suite represents innovative evolution in income generation, particularly with market-first 0DTE strategies that have attracted over $1 billion in assets. However, these are complex products best suited for sophisticated investors who understand that high distribution yields come primarily from return of principal rather than true income generation.
 
-The sustainability of current distribution rates remains uncertain, and investors must carefully weigh income benefits against principal erosion, tax implications, and strategy-specific risks. For investors seeking regular cash flow and willing to accept these tradeoffs, Roundhill's products offer unique access to innovative income strategies previously unavailable in ETF form.`
-};
+The sustainability of current distribution rates remains uncertain, and investors must carefully weigh income benefits against principal erosion, tax implications, and strategy-specific risks. For investors seeking regular cash flow and willing to accept these tradeoffs, Roundhill's products offer unique access to innovative income strategies previously unavailable in ETF form.`;

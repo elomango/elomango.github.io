@@ -1,20 +1,5 @@
-// CoreWeave Report Data (English)
-window.reportData = {
-    metadata: {
-        id: "coreweave-2025-08-14",
-        company: "CoreWeave",
-        ticker: "CRWV",
-        date: "2025-08-14",
-        title: {
-            ko: "코어위브 기업 분석",
-            en: "CoreWeave Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# CoreWeave Investment Analysis: High-Risk, High-Reward AI Infrastructure Opportunity
+// CoreWeave Report Content (English)
+window.reportContent = `# CoreWeave Investment Analysis: High-Risk, High-Reward AI Infrastructure Opportunity
 
 CoreWeave has risen <span style="color: #ff6b35; font-weight: bold;">225% since its March 2025 IPO</span>, positioning itself at the center of the AI infrastructure boom, yet carries a critical risk with <span style="color: #ff6b35; font-weight: bold;">77% revenue dependence on its top 2 customers</span>. While revenue grew 737% year-over-year to $1.92 billion in 2024, the company recorded a net loss of $860 million, and its $17.2 billion debt burden significantly limits its investment appeal. If AI computing demand persists and customer diversification succeeds, high returns are possible, but Microsoft dependency and GPU technology obsolescence risks remain key investment variables.
 
@@ -82,5 +67,4 @@ CoreWeave represents a <span style="color: #ff6b35; font-weight: bold;">high-ris
 
 <span style="color: #ff6b35; font-weight: bold;">Key monitoring metrics</span> include Microsoft revenue share changes, quarterly new customer contracts, net loss improvement trends, and GPU technology upgrade progress. Investment appeal significantly impaired if Microsoft dependency not reduced below 50% by 2026.
 
-Final assessment is <span style="color: #ff6b35; font-weight: bold;">HOLD/Cautious Watch</span>. Current price assumes perfect execution, with downside from execution risk more likely than further upside. While long-term AI infrastructure market growth certain, whether CoreWeave can fully capture benefits remains uncertain.`
-};
+Final assessment is <span style="color: #ff6b35; font-weight: bold;">HOLD/Cautious Watch</span>. Current price assumes perfect execution, with downside from execution risk more likely than further upside. While long-term AI infrastructure market growth certain, whether CoreWeave can fully capture benefits remains uncertain.`;

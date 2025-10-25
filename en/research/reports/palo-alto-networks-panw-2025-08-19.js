@@ -1,20 +1,5 @@
-// Palo Alto Networks Report Data (English)
-window.reportData = {
-    metadata: {
-        id: "palo-alto-networks-panw-2025-08-19",
-        company: "Palo Alto Networks",
-        ticker: "PANW",
-        date: "2025-08-19",
-        title: {
-            ko: "팰로알토네트웍스 기업 분석",
-            en: "Palo Alto Networks Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Palo Alto Networks (PANW) Comprehensive Investment Analysis Report
+// Palo Alto Networks Report Content (English)
+window.reportContent = `# Palo Alto Networks (PANW) Comprehensive Investment Analysis Report
 
 ## Executive Summary
 
@@ -105,5 +90,4 @@ While short-term volatility is expected due to high valuation and intensified co
 Despite burden from high valuation, considering **annual FCF generation capability of over $3 billion and market opportunity with only 4% penetration of $110 billion TAM**, long-term growth potential is sufficient. Continuous increase in cyber threats and accelerated digital transformation provide structural growth drivers, while AI security field leadership ensures differentiated competitive advantage.
 
 Investors who can tolerate short-term volatility will be able to secure quality exposure to the rapidly growing cybersecurity market through Palo Alto Networks.
-`
-};
+`;

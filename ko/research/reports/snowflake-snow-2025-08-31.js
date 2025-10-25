@@ -1,20 +1,5 @@
-// Snowflake 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "snowflake-snow-2025-08-31",
-        company: "Snowflake",
-        ticker: "SNOW",
-        date: "2025-08-31",
-        title: {
-            ko: "Snowflake 기업 분석",
-            en: "Snowflake Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Snowflake Inc. (SNOW) 기업 분석 레포트
+// Snowflake 보고서 콘텐츠 (한국어)
+window.reportContent = `# Snowflake Inc. (SNOW) 기업 분석 레포트
 
 ## 기본 정보
 - **상장 시장**: NYSE (뉴욕증권거래소)
@@ -186,5 +171,4 @@ Snowflake는 AI 데이터 클라우드 시장의 선도 기업으로, 강력한 
 
 **투자 판단: Hold/Accumulate** (조정 시 매수 기회)
 
-*본 레포트는 2025년 8월 31일 기준으로 작성되었습니다.*`
-};
+*본 레포트는 2025년 8월 31일 기준으로 작성되었습니다.*`;

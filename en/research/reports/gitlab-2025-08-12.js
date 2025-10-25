@@ -1,20 +1,5 @@
-// GitLab 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "gitlab-2025-08-12",
-        company: "GitLab",
-        ticker: "GTLB",
-        date: "2025-08-12",
-        title: {
-            ko: "GitLab 기업 분석",
-            en: "GitLab Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# GitLab Comprehensive Investment Analysis Report
+// GitLab 보고서 콘텐츠 (영어)
+window.reportContent = `# GitLab Comprehensive Investment Analysis Report
 
 GitLab (NASDAQ: GTLB) is a leading company in the AI-powered DevSecOps platform market, showing 31% annual revenue growth and improved profitability metrics as of Q4 FY2025. Despite fierce competition with Microsoft's GitHub, the company is expanding its enterprise market share through differentiated positioning, and its current stock price is trading at a 40% discount from its 52-week high.
 
@@ -119,6 +104,5 @@ GitLab is a **high-quality SaaS company** with strong market positioning and gro
 Key monitoring points include quarterly margin improvement trends, AI product adoption rates, security issue resolution, and competitive dynamics with GitHub. For risk management, we recommend portfolio allocation below 5% and preparation for technology stock volatility.
 
 ---
-*Date: August 12, 2025*  
-*Analyst: Claude Opus 4.1*`
-};
+*Date: August 12, 2025*
+*Analyst: Claude Opus 4.1*`;

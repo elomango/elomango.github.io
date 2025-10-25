@@ -1,20 +1,5 @@
-// Navitas Semiconductor Corp 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "navitas-semiconductor-corp-nvts-2025-10-25",
-        company: "Navitas Semiconductor Corp",
-        ticker: "NVTS",
-        date: "2025-10-25",
-        title: {
-            ko: "Navitas Semiconductor Corp Company Analysis",
-            en: "Navitas Semiconductor Corp Company Analysis"
-        },
-        analyst: {
-            ko: "Opus 4.1",
-            en: "Opus 4.1"
-        }
-    },
-    content: `# Navitas Semiconductor Corp (NVTS) Corporate Analysis Report
+// Navitas Semiconductor Corp 보고서 콘텐츠 (영어)
+window.reportContent = `# Navitas Semiconductor Corp (NVTS) Corporate Analysis Report
 
 ## Company Overview
 - **Company Name**: Navitas Semiconductor Corporation
@@ -153,5 +138,4 @@ Investors prepared to accept high volatility and considering a 2-3 year investme
 ---
 
 *This report was prepared based on publicly available information as of October 25, 2025 and is for informational purposes, not investment advice. Actual investment decisions should be made at the individual's judgment and responsibility.*
-`
-};
+`;

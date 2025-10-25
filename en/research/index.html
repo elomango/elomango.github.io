@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corporate Analysis Reports</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../../assets/js/reports-data.js"></script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -253,82 +254,25 @@
         const urlParams = new URLSearchParams(window.location.search);
         const reportId = urlParams.get('id');
 
-        // 보고서 메타데이터 (간단한 목록만)
-        const reportMetadata = {
-            'roundhill-income-etfs-2025-08-18': {
-                title: 'Roundhill Income ETFs Portfolio Analysis',
-                filename: 'roundhill-income-etfs-2025-08-18.js'
-            },
-            'coreweave-2025-08-14': {
-                title: 'CoreWeave Company Analysis',
-                filename: 'coreweave-2025-08-14.js'
-            },
-            'iai-2025-08-13': {
-                title: 'IAI ETF Comprehensive Investment Analysis',
-                filename: 'iai-2025-08-13.js'
-            },
-            'gitlab-2025-08-12': {
-                title: 'GitLab Company Analysis',
-                filename: 'gitlab-2025-08-12.js'
-            },
-            'circle-20250811': {
-                title: 'Circle Comprehensive Analysis',
-                filename: 'circle-20250811.js'
-            },
-            'palo-alto-networks-panw-2025-08-19': {
-                title: 'Palo Alto Networks Company Analysis',
-                filename: 'palo-alto-networks-panw-2025-08-19.js'
-            },
-            'snowflake-snow-2025-08-31': {
-                title: 'Snowflake Company Analysis',
-                filename: 'snowflake-snow-2025-08-31.js'
-            },
-            'aiq-2025-08-31': {
-                title: 'AIQ ETF Analysis',
-                filename: 'aiq-2025-08-31.js'
-            },
-            'broadcom-avgo-2025-09-06': {
-                title: 'Broadcom Company Analysis',
-                filename: 'broadcom-avgo-2025-09-06.js'
-            },
-            'newmont-nem-2025-09-09': {
-                title: 'Newmont Company Analysis',
-                filename: 'newmont-nem-2025-09-09.js'
-            },
-            'paloalto-networks-panw-2025-09-11': {
-                title: 'Paloalto networks Company Analysis',
-                filename: 'paloalto-networks-panw-2025-09-11.js'
-            },
-            'oklo-oklo-2025-09-23': {
-                title: 'Oklo Company Analysis',
-                filename: 'oklo-oklo-2025-09-23.js'
-            },
-            'ai-bbai-2025-10-05': {
-                title: '빅베어AI Company Analysis',
-                filename: 'ai-bbai-2025-10-05.js'
-            },
-            'joby-aviation-joby-2025-10-15': {
-                title: 'Joby Aviation Company Analysis',
-                filename: 'joby-aviation-joby-2025-10-15.js'
-            },
-            'navitas-semiconductor-corp-nvts-2025-10-25': {
-                title: 'Navitas Semiconductor Corp Company Analysis',
-                filename: 'navitas-semiconductor-corp-nvts-2025-10-25.js'
-            },
-        };
-
-        // 동적 보고서 로딩
+        // 동적 보고서 로딩 (reports-data.js 사용)
         function loadReport() {
             console.log('Report ID:', reportId);
-            
+
             if (!reportId) {
                 console.log('No report ID provided');
                 showError();
                 return;
             }
 
-            const reportInfo = reportMetadata[reportId];
-            if (!reportInfo) {
+            // reports-data.js에서 메타데이터 가져오기
+            if (!window.REPORTS_METADATA || !window.REPORTS_METADATA.reports) {
+                console.error('Reports metadata not loaded');
+                showError();
+                return;
+            }
+
+            const report = window.REPORTS_METADATA.reports.find(r => r.id === reportId);
+            if (!report) {
                 console.log('Invalid report ID:', reportId);
                 showError();
                 return;
@@ -336,40 +280,35 @@
 
             // 동적으로 보고서 JS 파일 로드
             const script = document.createElement('script');
-            script.src = `./reports/${reportInfo.filename}`;
+            script.src = `./reports/${report.filename}`;
             script.onload = function() {
                 // 로드 완료 후 렌더링
-                if (window.reportData) {
-                    renderReport(window.reportData);
+                if (window.reportContent) {
+                    renderReport(report, window.reportContent);
+                    window.reportContent = null;
                 } else {
-                    console.error('Report data not found in loaded script');
+                    console.error('Report content not found in loaded script');
                     showError();
                 }
             };
             script.onerror = function() {
-                console.error('Failed to load report script:', reportInfo.filename);
+                console.error('Failed to load report script:', report.filename);
                 showError();
             };
-            
-            // 기존 보고서 데이터 클리어
-            window.reportData = null;
-            
+
             // 스크립트 추가하여 로드 시작
             document.head.appendChild(script);
         }
 
         // 보고서 렌더링
-        function renderReport(data) {
-            const metadata = data.metadata;
-            const content = data.content;
-
+        function renderReport(metadata, content) {
             // 페이지 메타데이터 업데이트
             document.getElementById('reportTitle').textContent = metadata.title.en;
             document.getElementById('companyName').textContent = metadata.company;
             document.getElementById('ticker').textContent = metadata.ticker;
             document.getElementById('reportDate').textContent = metadata.date;
-            document.getElementById('analyst').textContent = metadata.analyst.en;
-            
+            document.getElementById('analyst').textContent = metadata.analyst;
+
             // 페이지 제목 업데이트
             document.title = metadata.company + ' - ' + metadata.title.en;
 

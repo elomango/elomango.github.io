@@ -88,7 +88,7 @@
 
         <section class="features">
             <h2>분석 보고서</h2>
-            <div id="research-reports">
+            <div id="research-reports-new">
                 <table class="reports-table">
                     <thead>
                         <tr>
@@ -132,6 +132,7 @@
     </div>
 
     <script src="../assets/js/fear-greed-index.js"></script>
+    <script src="../assets/js/reports-data.js"></script>
     <script>
         function changeLanguage(lang) {
             // Simply go to the other language folder
@@ -190,386 +191,26 @@
             }
         }
 
-        // Load research reports
-        async function loadResearchReports() {
+        // Load research reports from shared data file
+        function loadResearchReports() {
             try {
-                // Embedded data for simplicity (works with file:// protocol)
-                const data = {
-                    "reports": [
-                        {
-                            "id": "navitas-semiconductor-corp-nvts-2025-10-25",
-                            "year": 2025,
-                            "month": 10,
-                            "day": 25,
-                            "company": "Navitas Semiconductor Corp",
-                            "ticker": "NVTS",
-                            "date": "2025-10-25",
-                            "title": {
-                                "ko": "Navitas Semiconductor Corp 기업 분석",
-                                "en": "Navitas Semiconductor Corp Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Navitas Semiconductor Corp 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Navitas Semiconductor Corp Company Analysis"
-                            },
-                            "path": "./research/index.html?id=navitas-semiconductor-corp-nvts-2025-10-25",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Opus 4.1",
-                                "en": "Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "joby-aviation-joby-2025-10-15",
-                            "year": 2025,
-                            "month": 10,
-                            "day": 15,
-                            "company": "Joby Aviation",
-                            "ticker": "JOBY",
-                            "date": "2025-10-15",
-                            "title": {
-                                "ko": "Joby Aviation 기업 분석",
-                                "en": "Joby Aviation Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Joby Aviation 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Joby Aviation Company Analysis"
-                            },
-                            "path": "./research/index.html?id=joby-aviation-joby-2025-10-15",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Opus 4.1",
-                                "en": "Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "ai-bbai-2025-10-05",
-                            "year": 2025,
-                            "month": 10,
-                            "day": 05,
-                            "company": "빅베어AI",
-                            "ticker": "BBAI",
-                            "date": "2025-10-05",
-                            "title": {
-                                "ko": "빅베어AI 기업 분석",
-                                "en": "빅베어AI Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "빅베어AI 기업 분석 상세 분석",
-                                "en": "Detailed analysis of 빅베어AI Company Analysis"
-                            },
-                            "path": "./research/index.html?id=ai-bbai-2025-10-05",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Opus 4.1",
-                                "en": "Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "oklo-oklo-2025-09-23",
-                            "year": 2025,
-                            "month": 09,
-                            "day": 23,
-                            "company": "Oklo",
-                            "ticker": "OKLO",
-                            "date": "2025-09-23",
-                            "title": {
-                                "ko": "Oklo 기업 분석",
-                                "en": "Oklo Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Oklo 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Oklo Company Analysis"
-                            },
-                            "path": "./research/index.html?id=oklo-oklo-2025-09-23",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Opus 4.1",
-                                "en": "Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "paloalto-networks-panw-2025-09-11",
-                            "year": 2025,
-                            "month": 09,
-                            "day": 11,
-                            "company": "Paloalto networks",
-                            "ticker": "PANW",
-                            "date": "2025-09-11",
-                            "title": {
-                                "ko": "Paloalto networks 기업 분석",
-                                "en": "Paloalto networks Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Paloalto networks 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Paloalto networks Company Analysis"
-                            },
-                            "path": "./research/index.html?id=paloalto-networks-panw-2025-09-11",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "newmont-nem-2025-09-09",
-                            "year": 2025,
-                            "month": 09,
-                            "day": 09,
-                            "company": "Newmont",
-                            "ticker": "NEM",
-                            "date": "2025-09-09",
-                            "title": {
-                                "ko": "Newmont 기업 분석",
-                                "en": "Newmont Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Newmont 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Newmont Company Analysis"
-                            },
-                            "path": "./research/index.html?id=newmont-nem-2025-09-09",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "broadcom-avgo-2025-09-06",
-                            "year": 2025,
-                            "month": 09,
-                            "day": 06,
-                            "company": "Broadcom",
-                            "ticker": "AVGO",
-                            "date": "2025-09-06",
-                            "title": {
-                                "ko": "Broadcom 기업 분석",
-                                "en": "Broadcom Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Broadcom 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Broadcom Company Analysis"
-                            },
-                            "path": "./research/index.html?id=broadcom-avgo-2025-09-06",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "aiq-2025-08-31",
-                            "year": 2025,
-                            "month": 08,
-                            "day": 31,
-                            "company": "AIQ",
-                            "ticker": "AIQ",
-                            "date": "2025-08-31",
-                            "title": {
-                                "ko": "AIQ ETF 분석",
-                                "en": "AIQ ETF Analysis"
-                            },
-                            "summary": {
-                                "ko": "AIQ ETF 분석 상세 분석",
-                                "en": "Detailed analysis of AIQ ETF Analysis"
-                            },
-                            "path": "./research/index.html?id=aiq-2025-08-31",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "snowflake-snow-2025-08-31",
-                            "year": 2025,
-                            "month": 08,
-                            "day": 31,
-                            "company": "Snowflake",
-                            "ticker": "SNOW",
-                            "date": "2025-08-31",
-                            "title": {
-                                "ko": "Snowflake 기업 분석",
-                                "en": "Snowflake Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "Snowflake 기업 분석 상세 분석",
-                                "en": "Detailed analysis of Snowflake Company Analysis"
-                            },
-                            "path": "./research/index.html?id=snowflake-snow-2025-08-31",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "palo-alto-networks-panw-2025-08-19",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 19,
-                            "company": "팰로알토네트웍스",
-                            "ticker": "PANW",
-                            "date": "2025-08-19",
-                            "title": {
-                                "ko": "팰로알토네트웍스 기업 분석",
-                                "en": "Palo Alto Networks Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "사이버보안 리더의 AI 플랫폼 전략과 250억 달러 CyberArk 인수 분석",
-                                "en": "Analysis of cybersecurity leader's AI platform strategy and $25B CyberArk acquisition"
-                            },
-                            "path": "./research/index.html?id=palo-alto-networks-panw-2025-08-19",
-                            "rating": "Buy",
-                            "tags": ["cybersecurity", "AI", "SaaS", "cloud", "enterprise"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "roundhill-income-etfs-2025-08-18",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 18,
-                            "company": "라운드힐 인컴 ETF",
-                            "ticker": "YBTC, YETH, QDTE, XDTE, RDTE, XPAY, MAGY",
-                            "date": "2025-08-18",
-                            "title": {
-                                "ko": "라운드힐 인컴 ETF 포트폴리오 분석",
-                                "en": "Roundhill Income ETFs Portfolio Analysis"
-                            },
-                            "summary": {
-                                "ko": "연 8%~80% 수익률 제공하는 7개 혁신적 인컴 ETF의 완전 분석",
-                                "en": "Complete analysis of 7 innovative income ETFs offering 8%-80% annual yields"
-                            },
-                            "path": "./research/roundhill-income-etfs-2025-08-18.md",
-                            "rating": "Hold",
-                            "tags": ["ETF", "income", "covered-call", "cryptocurrency", "0DTE"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "coreweave-2025-08-14",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 14,
-                            "company": "CoreWeave",
-                            "ticker": "CRWV",
-                            "date": "2025-08-14",
-                            "title": {
-                                "ko": "코어위브 기업 분석",
-                                "en": "CoreWeave Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "AI 인프라의 고위험 고수익 GPU 클라우드 선도 기업 분석",
-                                "en": "Analysis of high-risk high-reward GPU cloud leader in AI infrastructure"
-                            },
-                            "path": "./research/coreweave-2025-08-14.md",
-                            "rating": "Hold",
-                            "tags": ["AI", "infrastructure", "GPU", "cloud", "datacenter"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "iai-2025-08-13",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 13,
-                            "company": "iShares U.S. Broker-Dealers & Securities Exchanges ETF",
-                            "ticker": "IAI",
-                            "date": "2025-08-13",
-                            "title": {
-                                "ko": "IAI ETF 종합 투자 분석",
-                                "en": "IAI ETF Comprehensive Investment Analysis"
-                            },
-                            "summary": {
-                                "ko": "미국 증권 중개업체와 거래소에 집중 투자하는 금융 섹터 ETF 분석",
-                                "en": "Analysis of financial sector ETF focused on U.S. securities brokers and exchanges"
-                            },
-                            "path": "./research/iai-2025-08-13.md",
-                            "rating": "Conditional Buy",
-                            "tags": ["ETF", "finance", "broker-dealers", "exchanges", "investment"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "gitlab-2025-08-12",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 12,
-                            "company": "GitLab",
-                            "ticker": "GTLB",
-                            "date": "2025-08-12",
-                            "title": {
-                                "ko": "GitLab 기업 분석",
-                                "en": "GitLab Company Analysis"
-                            },
-                            "summary": {
-                                "ko": "AI 기반 DevSecOps 플랫폼 선도 기업의 종합 투자 분석",
-                                "en": "Comprehensive investment analysis of leading AI-powered DevSecOps platform company"
-                            },
-                            "path": "./research/gitlab-2025-08-12.md",
-                            "rating": "Buy",
-                            "tags": ["technology", "DevOps", "AI", "software", "enterprise"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        },
-                        {
-                            "id": "circle-20250811",
-                            "year": 2025,
-                            "month": 8,
-                            "day": 11,
-                            "company": "Circle Internet Group",
-                            "ticker": "CRCL",
-                            "date": "2025-08-11",
-                            "title": {
-                                "ko": "Circle 종합 분석",
-                                "en": "Circle Comprehensive Analysis",
-                                "ja": "Circle総合分析"
-                            },
-                            "summary": {
-                                "ko": "스테이블코인 USDC 발행사의 IPO 성공과 GENIUS Act 통과로 인한 성장 전망 분석",
-                                "en": "Analysis of USDC stablecoin issuer's IPO success and growth prospects following GENIUS Act passage",
-                                "ja": "ステーブルコインUSDC発行会社のIPO成功とGENIUS Act通과による成長見通し분석"
-                            },
-                            "path": "/research/reports/2025/08/circle-20250811/",
-                            "rating": "Buy",
-                            "tags": ["fintech", "cryptocurrency", "stablecoin", "IPO", "regulation"],
-                            "analyst": {
-                                "ko": "Claude Opus 4.1",
-                                "en": "Claude Opus 4.1"
-                            }
-                        }
-                    ]
-                };
+                // Use data from reports-data.js
+                const data = window.REPORTS_METADATA;
+
+                if (!data || !data.reports) {
+                    throw new Error('Reports metadata not loaded');
+                }
+
                 const tbody = document.getElementById('reports-tbody');
-                
+
                 data.reports.forEach(report => {
                     const row = document.createElement('tr');
                     const date = new Date(report.date);
                     const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-                    
+
                     row.innerHTML = `
                         <td style="font-size: 0.85rem;">${formattedDate}</td>
-                        <td style="font-size: 0.85rem;"><a href="./research/index.html?id=${report.id}" style="color: #667eea; text-decoration: none;">${report.title.ko || report.title.en}</a></td>
+                        <td style="font-size: 0.85rem;"><a href="${report.path}" style="color: #667eea; text-decoration: none;">${report.title.ko || report.title.en}</a></td>
                         <td style="font-size: 0.85rem;"><strong>${report.ticker}</strong></td>
                     `;
                     tbody.appendChild(row);

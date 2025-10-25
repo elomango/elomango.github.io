@@ -1,20 +1,5 @@
-// Oklo 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "oklo-oklo-2025-09-23",
-        company: "Oklo",
-        ticker: "OKLO",
-        date: "2025-09-23",
-        title: {
-            ko: "Oklo Company Analysis",
-            en: "Oklo Company Analysis"
-        },
-        analyst: {
-            ko: "Opus 4.1",
-            en: "Opus 4.1"
-        }
-    },
-    content: `# Oklo Inc. Detailed Corporate Analysis Report
+// Oklo 보고서 콘텐츠 (영어)
+window.reportContent = `# Oklo Inc. Detailed Corporate Analysis Report
 
 ## A Next-Generation Nuclear Company with Dramatic Growth and High Risk
 
@@ -160,5 +145,4 @@ Current price levels ($135-142) are in speculative bubble territory. Key observa
 
 ## Conclusion
 
-While Oklo stands as a leader in next-generation nuclear technology perfectly timed with the AI era's power demand explosion and government support, the current stock price reflects extreme optimism about future potential. The company must overcome regulatory, technical, and financial challenges before its first commercial operation in 2027, and investors need to be prepared for high volatility and downside risk. While the long-term nuclear renaissance theme remains valid, new entry at current valuations is not recommended.`
-};
+While Oklo stands as a leader in next-generation nuclear technology perfectly timed with the AI era's power demand explosion and government support, the current stock price reflects extreme optimism about future potential. The company must overcome regulatory, technical, and financial challenges before its first commercial operation in 2027, and investors need to be prepared for high volatility and downside risk. While the long-term nuclear renaissance theme remains valid, new entry at current valuations is not recommended.`;

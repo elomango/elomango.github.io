@@ -1,20 +1,5 @@
-// AIQ 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "aiq-2025-08-31",
-        company: "AIQ",
-        ticker: "AIQ",
-        date: "2025-08-31",
-        title: {
-            ko: "AIQ ETF 분석",
-            en: "AIQ ETF Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Global X Artificial Intelligence & Technology ETF (AIQ) 투자 분석 레포트
+// AIQ 보고서 콘텐츠 (한국어)
+window.reportContent = `# Global X Artificial Intelligence & Technology ETF (AIQ) 투자 분석 레포트
 
 ## 📊 Executive Summary
 
@@ -200,5 +185,4 @@ AIQ는 AI/빅데이터 혁명에 투자할 수 있는 검증된 투자 수단으
 
 ---
 
-*본 레포트는 2025년 8월 31일 기준으로 작성되었으며, 투자 결정 전 개인의 투자 목표와 위험 감내 수준을 고려하시기 바랍니다.*`
-};
+*본 레포트는 2025년 8월 31일 기준으로 작성되었으며, 투자 결정 전 개인의 투자 목표와 위험 감내 수준을 고려하시기 바랍니다.*`;

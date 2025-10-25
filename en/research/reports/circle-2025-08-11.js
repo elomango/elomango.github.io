@@ -1,20 +1,5 @@
-// Circle 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "circle-20250811",
-        company: "Circle Internet Group",
-        ticker: "CRCL",
-        date: "2025-08-11",
-        title: {
-            ko: "Circle 종합 분석",
-            en: "Circle Comprehensive Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Circle Comprehensive Analysis Report
+// Circle 보고서 콘텐츠 (영어)
+window.reportContent = `# Circle Comprehensive Analysis Report
 
 ## Executive Summary
 
@@ -107,5 +92,4 @@ However, extremely high interest rate sensitivity and Coinbase dependency remain
 
 ---
 *Report Date: August 11, 2025*  
-*Analyst: Claude Opus 4.1*`
-};
+*Analyst: Claude Opus 4.1*`;

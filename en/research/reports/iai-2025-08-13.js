@@ -1,20 +1,5 @@
-// IAI ETF Report Data (English)
-window.reportData = {
-    metadata: {
-        id: "iai-2025-08-13",
-        company: "iShares U.S. Broker-Dealers & Securities Exchanges ETF",
-        ticker: "IAI",
-        date: "2025-08-13",
-        title: {
-            ko: "IAI ETF 종합 투자 분석",
-            en: "IAI ETF Comprehensive Investment Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# IAI ETF Comprehensive Investment Analysis Report
+// IAI ETF Report Content (English)
+window.reportContent = `# IAI ETF Comprehensive Investment Analysis Report
 
 ## Investment Summary
 
@@ -159,5 +144,4 @@ However, considering <span style="color: #ff6b35; font-weight: bold;">extreme vo
 <span style="color: #ff6b35; font-weight: bold;">Final Investment Rating: Conditional Buy</span>
 - Aggressive Investors: Strong Buy (add on corrections)
 - Neutral Investors: Wait and buy small amounts on corrections
-- Conservative Investors: Not Recommended`
-};
+- Conservative Investors: Not Recommended`;

@@ -1,20 +1,5 @@
-// Paloalto networks 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "paloalto-networks-panw-2025-09-11",
-        company: "Paloalto networks",
-        ticker: "PANW",
-        date: "2025-09-11",
-        title: {
-            ko: "Paloalto networks 기업 분석",
-            en: "Paloalto networks Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Palo Alto Networks 종합 투자 분석: 사이버보안 플랫폼 리더의 성장 전망과 리스크
+// Paloalto networks 보고서 콘텐츠 (한국어)
+window.reportContent = `# Palo Alto Networks 종합 투자 분석: 사이버보안 플랫폼 리더의 성장 전망과 리스크
 
 ## 1. 상장 정보 및 기업 개요
 
@@ -138,5 +123,4 @@ PANW의 P/S 14.3배는 사이버보안 상장기업 평균 14.2배와 유사하�
 
 Palo Alto Networks는 **사이버보안 플랫폼 통합의 최강자**로서 장기적 성장 잠재력이 뛰어난 기업입니다. 높은 밸류에이션은 부담이지만, 업계 최고의 플랫폼 전략 실행력, AI 기술 리더십, 강력한 고객 기반은 이를 정당화합니다.
 
-단기적으로는 성장률 둔화와 경쟁 심화로 변동성이 예상되지만, 3-5년 관점에서는 사이버보안 시장의 구조적 성장과 플랫폼 통합 트렌드의 최대 수혜자가 될 것으로 판단됩니다. **인내심 있는 장기 투자자에게는 매력적인 기회**이지만, 높은 밸류에이션을 감안한 신중한 포지션 관리가 필수적입니다.`
-};
+단기적으로는 성장률 둔화와 경쟁 심화로 변동성이 예상되지만, 3-5년 관점에서는 사이버보안 시장의 구조적 성장과 플랫폼 통합 트렌드의 최대 수혜자가 될 것으로 판단됩니다. **인내심 있는 장기 투자자에게는 매력적인 기회**이지만, 높은 밸류에이션을 감안한 신중한 포지션 관리가 필수적입니다.`;

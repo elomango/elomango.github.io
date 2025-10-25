@@ -1,20 +1,5 @@
-// CoreWeave 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "coreweave-2025-08-14",
-        company: "CoreWeave",
-        ticker: "CRWV",
-        date: "2025-08-14",
-        title: {
-            ko: "코어위브 기업 분석",
-            en: "CoreWeave Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# 코어위브 투자 분석: AI 인프라의 고위험 고수익 기회
+// CoreWeave 보고서 콘텐츠 (한국어)
+window.reportContent = `# 코어위브 투자 분석: AI 인프라의 고위험 고수익 기회
 
 코어위브(CoreWeave)는 <span style="color: #ff6b35; font-weight: bold;">2025년 3월 IPO 이후 225% 상승</span>하며 AI 인프라 붐의 중심에 있지만, <span style="color: #ff6b35; font-weight: bold;">상위 2개 고객 의존도 77%</span>라는 치명적 리스크를 안고 있습니다. 2024년 매출 19.2억 달러로 전년 대비 737% 성장했으나 8.6억 달러의 순손실을 기록했으며, 172억 달러의 부채 부담이 투자 매력을 크게 제한하고 있습니다. AI 컴퓨팅 수요가 지속되고 고객 다변화에 성공한다면 높은 수익을 기대할 수 있지만, 마이크로소프트 의존도와 GPU 기술 진부화 리스크가 투자의 핵심 변수입니다.
 
@@ -82,5 +67,4 @@ DCF 분석은 불확실성이 매우 높습니다. 2027년 수익성 전환을 �
 
 <span style="color: #ff6b35; font-weight: bold;">핵심 모니터링 지표</span>는 마이크로소프트 매출 비중 변화, 분기별 신규 고객 계약, 순손실 개선 추이, GPU 기술 업그레이드 진행 상황입니다. 특히 2026년까지 마이크로소프트 의존도를 50% 이하로 낮추지 못하면 투자 매력이 크게 훼손될 것입니다.
 
-최종 평가는 <span style="color: #ff6b35; font-weight: bold;">HOLD/신중 관망</span>입니다. 현재 주가는 완벽한 실행을 가정한 수준으로, 추가 상승보다는 실행 리스크에 따른 하락 가능성이 큽니다. AI 인프라 시장의 장기 성장은 확실하지만, 코어위브가 그 수혜를 온전히 누릴 수 있을지는 불확실합니다.`
-};
+최종 평가는 <span style="color: #ff6b35; font-weight: bold;">HOLD/신중 관망</span>입니다. 현재 주가는 완벽한 실행을 가정한 수준으로, 추가 상승보다는 실행 리스크에 따른 하락 가능성이 큽니다. AI 인프라 시장의 장기 성장은 확실하지만, 코어위브가 그 수혜를 온전히 누릴 수 있을지는 불확실합니다.`;

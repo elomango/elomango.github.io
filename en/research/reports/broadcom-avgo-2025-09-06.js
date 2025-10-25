@@ -1,20 +1,5 @@
-// Broadcom 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "broadcom-avgo-2025-09-06",
-        company: "Broadcom",
-        ticker: "AVGO",
-        date: "2025-09-06",
-        title: {
-            ko: "Broadcom Company Analysis",
-            en: "Broadcom Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Broadcom Comprehensive Investment Analysis Report
+// Broadcom 보고서 콘텐츠 (영어)
+window.reportContent = `# Broadcom Comprehensive Investment Analysis Report
 
 Broadcom (NASDAQ: AVGO) has transformed into a technology giant spanning from semiconductors to software through the AI boom and VMware acquisition, recording $51.6 billion in revenue in 2024 and surpassing a market cap of $1.5 trillion. While the current stock price shows high valuation compared to historical levels, **AI revenue grew 220% year-over-year to $12.2 billion**, demonstrating strong growth momentum. Investors should pay attention to Broadcom's unique positioning as the second-largest player in the AI infrastructure market after Nvidia, its custom AI chip design capabilities, and stable software revenue base through VMware.
 
@@ -88,5 +73,4 @@ Broadcom has established itself as a core infrastructure company in the AI era. 
 
 **A long-term hold strategy is recommended** for investors. While there will be short-term volatility, structural growth in AI infrastructure demand and Broadcom's exclusive customer relationships support long-term performance. Given current high valuations, **dollar-cost averaging or buying on corrections** is advisable. For risk management, limiting portfolio allocation to 5-10% is recommended, and it should be considered as a core AI portfolio holding alongside Nvidia.
 
-Particularly important to monitor are **VMware transformation success and new AI customer acquisition**. Major milestones are scheduled including OpenAI chip production in 2026 and Apple Baltra launch, with execution determining stock performance. Regulatory risks and geopolitical tensions are also variables to watch. Overall, Broadcom is a core AI beneficiary with high barriers to entry and strong growth drivers, offering attractive opportunities for long-term investors.`
-};
+Particularly important to monitor are **VMware transformation success and new AI customer acquisition**. Major milestones are scheduled including OpenAI chip production in 2026 and Apple Baltra launch, with execution determining stock performance. Regulatory risks and geopolitical tensions are also variables to watch. Overall, Broadcom is a core AI beneficiary with high barriers to entry and strong growth drivers, offering attractive opportunities for long-term investors.`;

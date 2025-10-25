@@ -1,20 +1,5 @@
-// Joby Aviation 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "joby-aviation-joby-2025-10-15",
-        company: "Joby Aviation",
-        ticker: "JOBY",
-        date: "2025-10-15",
-        title: {
-            ko: "Joby Aviation Company Analysis",
-            en: "Joby Aviation Company Analysis"
-        },
-        analyst: {
-            ko: "Opus 4.1",
-            en: "Opus 4.1"
-        }
-    },
-    content: `# Joby Aviation Company Analysis Report
+// Joby Aviation 보고서 콘텐츠 (영어)
+window.reportContent = `# Joby Aviation Company Analysis Report
 
 **Date: October 15, 2025**
 
@@ -225,5 +210,4 @@ Joby Aviation is a **leader in the eVTOL industry** with advanced technology and
 It can be an opportunity for **risk-tolerant long-term investors** who believe in the future of urban air mobility, but unsuitable for investors seeking stable returns.
 
 **2026 FAA certification completion and first commercial operations** are expected to be the critical inflection points that will determine the company's and stock's direction.
-`
-};
+`;

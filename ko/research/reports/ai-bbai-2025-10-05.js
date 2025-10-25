@@ -1,20 +1,5 @@
-// 빅베어AI 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "ai-bbai-2025-10-05",
-        company: "빅베어AI",
-        ticker: "BBAI",
-        date: "2025-10-05",
-        title: {
-            ko: "빅베어AI 기업 분석",
-            en: "빅베어AI Company Analysis"
-        },
-        analyst: {
-            ko: "Opus 4.1",
-            en: "Opus 4.1"
-        }
-    },
-    content: `# 빅베어AI (BigBear.ai) 기업분석 레포트
+// 빅베어AI 보고서 콘텐츠 (한국어)
+window.reportContent = `# 빅베어AI (BigBear.ai) 기업분석 레포트
 
 ## 기본 정보
 - **회사명**: BigBear.ai Holdings, Inc.
@@ -172,5 +157,4 @@ BigBear.ai는 AI 국방 분야의 성장 잠재력을 보유했으나, 단기적
 
 ---
 
-*본 리포트는 2025년 10월 5일 기준으로 작성되었으며, 투자 결정은 개인의 판단과 책임하에 이루어져야 합니다.*`
-};
+*본 리포트는 2025년 10월 5일 기준으로 작성되었으며, 투자 결정은 개인의 판단과 책임하에 이루어져야 합니다.*`;

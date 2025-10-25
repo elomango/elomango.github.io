@@ -1,20 +1,5 @@
-// AIQ Report Data (English)
-window.reportData = {
-    metadata: {
-        id: "aiq-2025-08-31",
-        company: "AIQ",
-        ticker: "AIQ",
-        date: "2025-08-31",
-        title: {
-            ko: "AIQ ETF Analysis",
-            en: "AIQ ETF Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Global X Artificial Intelligence & Technology ETF (AIQ) Investment Analysis Report
+// AIQ Report Content (English)
+window.reportContent = `# Global X Artificial Intelligence & Technology ETF (AIQ) Investment Analysis Report
 
 ## 📊 Executive Summary
 
@@ -200,5 +185,4 @@ AIQ is a proven investment vehicle for investing in the AI/big data revolution, 
 
 ---
 
-*This report was prepared as of August 31, 2025. Please consider your personal investment objectives and risk tolerance before making investment decisions.*`
-};
+*This report was prepared as of August 31, 2025. Please consider your personal investment objectives and risk tolerance before making investment decisions.*`;

@@ -1,20 +1,5 @@
-// Navitas Semiconductor Corp 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "navitas-semiconductor-corp-nvts-2025-10-25",
-        company: "Navitas Semiconductor Corp",
-        ticker: "NVTS",
-        date: "2025-10-25",
-        title: {
-            ko: "Navitas Semiconductor Corp 기업 분석",
-            en: "Navitas Semiconductor Corp Company Analysis"
-        },
-        analyst: {
-            ko: "Opus 4.1",
-            en: "Opus 4.1"
-        }
-    },
-    content: `# Navitas Semiconductor Corp (NVTS) 기업 분석 레포트
+// Navitas Semiconductor Corp 보고서 콘텐츠 (한국어)
+window.reportContent = `# Navitas Semiconductor Corp (NVTS) 기업 분석 레포트
 
 ## 기업 개요
 - **회사명**: Navitas Semiconductor Corporation
@@ -152,5 +137,4 @@ Navitas Semiconductor는 AI 데이터센터 전력 반도체라는 거대한 성
 
 ---
 
-*본 보고서는 2025년 10월 25일 기준 공개 정보를 바탕으로 작성되었으며, 투자 권유가 아닌 정보 제공 목적입니다. 실제 투자 결정은 개인의 판단과 책임 하에 이루어져야 합니다.*`
-};
+*본 보고서는 2025년 10월 25일 기준 공개 정보를 바탕으로 작성되었으며, 투자 권유가 아닌 정보 제공 목적입니다. 실제 투자 결정은 개인의 판단과 책임 하에 이루어져야 합니다.*`;

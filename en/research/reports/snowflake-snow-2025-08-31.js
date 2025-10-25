@@ -1,20 +1,5 @@
-// Snowflake 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "snowflake-snow-2025-08-31",
-        company: "Snowflake",
-        ticker: "SNOW",
-        date: "2025-08-31",
-        title: {
-            ko: "Snowflake Company Analysis",
-            en: "Snowflake Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Snowflake Inc. (SNOW) Company Analysis Report
+// Snowflake 보고서 콘텐츠 (영어)
+window.reportContent = `# Snowflake Inc. (SNOW) Company Analysis Report
 
 ## Basic Information
 - **Listed Market**: NYSE (New York Stock Exchange)
@@ -186,5 +171,4 @@ However, the current stock price reflects significant premium, and short-term co
 
 **Investment Decision: Hold/Accumulate** (buying opportunity on corrections)
 
-*This report was prepared as of August 31, 2025.*`
-};
+*This report was prepared as of August 31, 2025.*`;

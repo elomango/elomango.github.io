@@ -1,20 +1,5 @@
-// Newmont 보고서 데이터 (영어)
-window.reportData = {
-    metadata: {
-        id: "newmont-nem-2025-09-09",
-        company: "Newmont",
-        ticker: "NEM",
-        date: "2025-09-09",
-        title: {
-            ko: "Newmont Company Analysis",
-            en: "Newmont Company Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# Newmont Corporation Comprehensive Investment Analysis Report
+// Newmont 보고서 콘텐츠 (영어)
+window.reportContent = `# Newmont Corporation Comprehensive Investment Analysis Report
 
 ## Investment Value Assessment of the World's Largest Gold Producer
 
@@ -86,5 +71,4 @@ Newmont offers an **attractive investment opportunity** in the current gold pric
 
 **Core risk factors** include regulatory sanctions and reputational damage if safety improvements fail, political instability in key operating countries, high sensitivity to gold price declines, and execution risks in Newcrest integration. The 2024 fatalities and related litigation may negatively impact stock price in the short term.
 
-Investors should consider this as a **core holding** to maximize benefits from the gold price upcycle from a long-term perspective. However, close monitoring of safety performance improvements and portfolio diversification against gold price volatility are necessary. At current price levels, risk-reward is favorable, with significant upside potential particularly if gold prices move toward $4,000.`
-};
+Investors should consider this as a **core holding** to maximize benefits from the gold price upcycle from a long-term perspective. However, close monitoring of safety performance improvements and portfolio diversification against gold price volatility are necessary. At current price levels, risk-reward is favorable, with significant upside potential particularly if gold prices move toward $4,000.`;

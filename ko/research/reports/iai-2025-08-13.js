@@ -1,20 +1,5 @@
-// IAI ETF 보고서 데이터 (한국어)
-window.reportData = {
-    metadata: {
-        id: "iai-2025-08-13",
-        company: "iShares U.S. Broker-Dealers & Securities Exchanges ETF",
-        ticker: "IAI",
-        date: "2025-08-13",
-        title: {
-            ko: "IAI ETF 종합 투자 분석",
-            en: "IAI ETF Comprehensive Investment Analysis"
-        },
-        analyst: {
-            ko: "Claude Opus 4.1",
-            en: "Claude Opus 4.1"
-        }
-    },
-    content: `# IAI ETF 종합 투자 분석 보고서
+// IAI ETF 보고서 콘텐츠 (한국어)
+window.reportContent = `# IAI ETF 종합 투자 분석 보고서
 
 ## 투자 핵심 요약
 
@@ -159,5 +144,4 @@ IAI ETF는 <span style="color: #ff6b35; font-weight: bold;">미국 자본시장�
 <span style="color: #ff6b35; font-weight: bold;">최종 투자 등급: 조건부 매수 (Conditional Buy)</span>
 - 공격적 투자자: 적극 매수 (조정 시 추가 매수)
 - 중립적 투자자: 관망 후 조정 시 소량 매수
-- 보수적 투자자: 투자 비추천`
-};
+- 보수적 투자자: 투자 비추천`;
