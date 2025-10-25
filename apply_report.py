@@ -63,139 +63,58 @@ def generate_report_id(metadata):
 
 def create_report_js(report_id, metadata, content, lang='ko'):
     """보고서 JS 파일 생성"""
-    
+
     # 내용 정제 - JavaScript 문자열로 안전하게 변환
     content = content.replace('\\', '\\\\')
     content = content.replace('`', '\\`')
     content = content.replace('${', '\\${')
-    
-    # 영어 제목 생성 - 단순히 한국어 키워드를 영어로 변경
-    if lang == 'en':
-        title_en = metadata['title'].replace('기업 분석', 'Company Analysis').replace('ETF 분석', 'ETF Analysis')
-    else:
-        title_en = metadata['title'].replace('기업 분석', 'Company Analysis').replace('ETF 분석', 'ETF Analysis')
-    
-    js_content = f"""// {metadata['company']} 보고서 데이터 ({'한국어' if lang == 'ko' else '영어'})
-window.reportData = {{
-    metadata: {{
-        id: "{report_id}",
-        company: "{metadata['company']}",
-        ticker: "{metadata['ticker'] or 'N/A'}",
-        date: "{metadata['date']}",
-        title: {{
-            ko: "{metadata['title']}",
-            en: "{title_en}"
-        }},
-        analyst: {{
-            ko: "{metadata['analyst']}",
-            en: "{metadata['analyst']}"
-        }}
-    }},
-    content: `{content}`
-}};
+
+    js_content = f"""// {metadata['company']} 보고서 콘텐츠 ({'한국어' if lang == 'ko' else '영어'})
+window.reportContent = `{content}`;
 """
     return js_content
 
-def update_report_index_metadata(report_id, metadata, lang='ko'):
-    """research/index.html의 reportMetadata 업데이트"""
-    
-    index_path = f"{lang}/research/index.html"
-    
-    with open(index_path, 'r', encoding='utf-8') as f:
-        content = f.read()
-    
-    # reportMetadata 객체 찾기 - 더 정확한 패턴 사용
-    # 중첩된 객체를 처리하기 위해 }; 까지 찾기
-    metadata_pattern = r'(const reportMetadata = \{)(.*?)(}\s*;)'
-    
-    # 새 메타데이터 항목
-    new_entry = f"""            '{report_id}': {{
-                title: '{metadata['title']}',
-                filename: '{report_id}.js'
-            }},"""
-    
-    # 기존 메타데이터에 추가
-    def replacer(match):
-        opening = match.group(1)  # const reportMetadata = {
-        existing_content = match.group(2)  # 기존 내용
-        closing = match.group(3)  # };
-        
-        # 기존 내용의 마지막 } 뒤에 콤마 추가 (필요한 경우)
-        existing_content = existing_content.rstrip()
-        if not existing_content.endswith(','):
-            # 마지막 항목 찾아서 콤마 추가
-            lines = existing_content.split('\n')
-            for i in range(len(lines) - 1, -1, -1):
-                if '}' in lines[i] and not lines[i].strip().startswith('//'):
-                    lines[i] = lines[i].rstrip() + ','
-                    break
-            existing_content = '\n'.join(lines)
-        
-        # 새 항목 추가
-        return opening + existing_content + '\n' + new_entry + '\n        ' + closing
-    
-    content = re.sub(metadata_pattern, replacer, content, flags=re.DOTALL)
-    
-    with open(index_path, 'w', encoding='utf-8') as f:
-        f.write(content)
+def update_reports_data(report_id, metadata):
+    """assets/js/reports-data.js 업데이트"""
 
-def update_homepage_table(report_id, metadata, lang='ko'):
-    """홈페이지 테이블에 보고서 추가"""
-    
-    homepage_path = f"{lang}/index.html"
-    
-    with open(homepage_path, 'r', encoding='utf-8') as f:
+    reports_data_path = "assets/js/reports-data.js"
+
+    with open(reports_data_path, 'r', encoding='utf-8') as f:
         content = f.read()
-    
-    # 날짜 파싱
-    date_parts = metadata['date'].split('-')
-    year = date_parts[0]
-    month = date_parts[1]
-    day = date_parts[2]
-    
+
     # 영어 제목 생성
     title_en = metadata['title'].replace('기업 분석', 'Company Analysis').replace('ETF 분석', 'ETF Analysis')
-    
-    # 새로운 보고서 객체 생성 (JavaScript 객체 형식)
-    new_report = f"""                        {{
-                            "id": "{report_id}",
-                            "year": {year},
-                            "month": {month},
-                            "day": {day},
-                            "company": "{metadata['company']}",
-                            "ticker": "{metadata['ticker'] or 'N/A'}",
-                            "date": "{metadata['date']}",
-                            "title": {{
-                                "ko": "{metadata['title']}",
-                                "en": "{title_en}"
-                            }},
-                            "summary": {{
-                                "ko": "{metadata['title']} 상세 분석",
-                                "en": "Detailed analysis of {title_en}"
-                            }},
-                            "path": "./research/index.html?id={report_id}",
-                            "rating": "TBD",
-                            "tags": ["analysis"],
-                            "analyst": {{
-                                "ko": "{metadata['analyst']}",
-                                "en": "{metadata['analyst']}"
-                            }}
-                        }},"""
-    
-    # reports 배열 찾기 및 업데이트
-    reports_pattern = r'("reports":\s*\[)([^]]*)(])'
-    
+
+    # 새로운 보고서 객체 생성 (JSON 형식)
+    new_report = f"""        {{
+            "id": "{report_id}",
+            "company": "{metadata['company']}",
+            "ticker": "{metadata['ticker']}",
+            "date": "{metadata['date']}",
+            "title": {{
+                "ko": "{metadata['title']}",
+                "en": "{title_en}"
+            }},
+            "summary": {{
+                "ko": "{metadata['title']} 상세 분석",
+                "en": "Detailed analysis of {title_en}"
+            }},
+            "path": "./research/index.html?id={report_id}",
+            "filename": "{report_id}.js",
+            "analyst": "{metadata['analyst']}"
+        }},"""
+
+    # "reports": [ 배열 찾기 및 업데이트
+    reports_pattern = r'("reports":\s*\[)'
+
     def replacer(match):
         opening = match.group(1)
-        existing_content = match.group(2)
-        closing = match.group(3)
-        
         # 새 보고서를 배열의 시작 부분에 추가 (최신 보고서가 위에 오도록)
-        return opening + '\n' + new_report + existing_content + closing
-    
-    content = re.sub(reports_pattern, replacer, content, flags=re.DOTALL)
-    
-    with open(homepage_path, 'w', encoding='utf-8') as f:
+        return opening + '\n' + new_report
+
+    content = re.sub(reports_pattern, replacer, content, count=1)
+
+    with open(reports_data_path, 'w', encoding='utf-8') as f:
         f.write(content)
 
 def process_report(markdown_file, args):
@@ -234,7 +153,12 @@ def process_report(markdown_file, args):
     # 보고서 ID 생성
     report_id = generate_report_id(metadata)
     print(f"\n생성된 보고서 ID: {report_id}")
-    
+
+    # reports-data.js 업데이트
+    update_reports_data(report_id, metadata)
+    print(f"✓ assets/js/reports-data.js 업데이트")
+    modified_files.append("assets/js/reports-data.js")
+
     # 한국어 버전 처리
     print("\n=== 한국어 버전 생성 중 ===")
     
@@ -246,17 +170,7 @@ def process_report(markdown_file, args):
         f.write(js_content_ko)
     print(f"✓ JS 파일 생성: {js_path_ko}")
     modified_files.append(js_path_ko)
-    
-    # reportMetadata 업데이트
-    update_report_index_metadata(report_id, metadata, 'ko')
-    print(f"✓ ko/research/index.html 메타데이터 업데이트")
-    modified_files.append("ko/research/index.html")
-    
-    # 홈페이지 테이블 업데이트
-    update_homepage_table(report_id, metadata, 'ko')
-    print(f"✓ ko/index.html 테이블 업데이트")
-    modified_files.append("ko/index.html")
-    
+
     # 영어 버전 처리
     print("\n=== 영어 버전 생성 중 ===")
     
@@ -272,17 +186,7 @@ def process_report(markdown_file, args):
         f.write(js_content_en)
     print(f"✓ JS 파일 생성: {js_path_en}")
     modified_files.append(js_path_en)
-    
-    # reportMetadata 업데이트
-    update_report_index_metadata(report_id, metadata_en, 'en')
-    print(f"✓ en/research/index.html 메타데이터 업데이트")
-    modified_files.append("en/research/index.html")
-    
-    # 홈페이지 테이블 업데이트
-    update_homepage_table(report_id, metadata_en, 'en')
-    print(f"✓ en/index.html 테이블 업데이트")
-    modified_files.append("en/index.html")
-    
+
     print(f"\n✅ 보고서 생성 완료!")
     print(f"한국어: https://elomango.github.io/ko/research/?id={report_id}")
     print(f"영어: https://elomango.github.io/en/research/?id={report_id}")

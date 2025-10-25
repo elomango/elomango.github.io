@@ -5,6 +5,23 @@
 window.REPORTS_METADATA = {
     "reports": [
         {
+            "id": "vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25",
+            "company": "Vertiv Holdings Co",
+            "ticker": "이 보고서에서 추출한 TICKER는 다음과 같습니다:",
+            "date": "2025-10-25",
+            "title": {
+                "ko": "Vertiv Holdings Co 기업 분석",
+                "en": "Vertiv Holdings Co Company Analysis"
+            },
+            "summary": {
+                "ko": "Vertiv Holdings Co 기업 분석 상세 분석",
+                "en": "Detailed analysis of Vertiv Holdings Co Company Analysis"
+            },
+            "path": "./research/index.html?id=vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25",
+            "filename": "vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25.js",
+            "analyst": "Opus 4.1"
+        },
+        {
             "id": "navitas-semiconductor-corp-nvts-2025-10-25",
             "company": "Navitas Semiconductor Corp",
             "ticker": "NVTS",
