@@ -5,9 +5,9 @@
 window.REPORTS_METADATA = {
     "reports": [
         {
-            "id": "vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25",
+            "id": "vertiv-holdings-co-vrt-2025-10-25",
             "company": "Vertiv Holdings Co",
-            "ticker": "이 보고서에서 추출한 TICKER는 다음과 같습니다:",
+            "ticker": "VRT",
             "date": "2025-10-25",
             "title": {
                 "ko": "Vertiv Holdings Co 기업 분석",
@@ -17,8 +17,8 @@ window.REPORTS_METADATA = {
                 "ko": "Vertiv Holdings Co 기업 분석 상세 분석",
                 "en": "Detailed analysis of Vertiv Holdings Co Company Analysis"
             },
-            "path": "./research/index.html?id=vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25",
-            "filename": "vertiv-holdings-co-이 보고서에서 추출한 ticker는 다음과 같습니다:-2025-10-25.js",
+            "path": "./research/index.html?id=vertiv-holdings-co-vrt-2025-10-25",
+            "filename": "vertiv-holdings-co-vrt-2025-10-25.js",
             "analyst": "Opus 4.1"
         },
         {
