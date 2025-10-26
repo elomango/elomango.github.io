@@ -19,7 +19,11 @@ window.REPORTS_METADATA = {
             },
             "path": "./research/index.html?id=vertiv-holdings-co-vrt-2025-10-25",
             "filename": "vertiv-holdings-co-vrt-2025-10-25.js",
-            "analyst": "Opus 4.1"
+            "analyst": "Opus 4.1",
+            "youtube": {
+                "ko": "https://www.youtube.com/watch?v=5Xc84y7m4Hw",
+                "en": "https://www.youtube.com/watch?v=-EkLtuPkcyc"
+            }
         },
         {
             "id": "navitas-semiconductor-corp-nvts-2025-10-25",
