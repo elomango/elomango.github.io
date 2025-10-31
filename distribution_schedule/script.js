@@ -24,56 +24,75 @@ class Calendar {
             ],
             weekly: [],
             groupA: [
-                new Date(2025, 0, 23), // 1/22/25
-                new Date(2025, 1, 20), // 2/19/25
-                new Date(2025, 2, 20), // 3/19/25
-                new Date(2025, 3, 17), // 4/16/25
-                new Date(2025, 4, 15), // 5/14/25
-                new Date(2025, 5, 12), // 6/11/25
-                new Date(2025, 6, 10),  // 7/9/25
-                new Date(2025, 7, 7),  // 8/6/25
-                new Date(2025, 8, 4),  // 9/3/25
-                new Date(2025, 9, 2),  // 10/2/25
-                new Date(2025, 9, 30), // 10/30/25
-                new Date(2025, 10, 28), // 11/28/25
-                new Date(2025, 11, 26)  // 12/26/25
+                new Date(2025, 0, 23), // 1/23/25
+                new Date(2025, 1, 20), // 2/20/25
+                new Date(2025, 2, 20), // 3/20/25
+                new Date(2025, 3, 17), // 4/17/25
+                new Date(2025, 4, 15), // 5/15/25
+                new Date(2025, 5, 12), // 6/12/25
+                new Date(2025, 6, 10), // 7/10/25
+                new Date(2025, 7, 7),  // 8/7/25
+                new Date(2025, 8, 4),  // 9/4/25
+                new Date(2025, 9, 2)   // 10/2/25 (last date before transition)
             ],
             groupB: [
-                new Date(2025, 0, 3), new Date(2025, 0, 30), // 1/2/25, 1/29/25
-                new Date(2025, 1, 27), new Date(2025, 2, 27), new Date(2025, 3, 24), // 2/26/25, 3/26/25, 4/23/25
-                new Date(2025, 4, 22), new Date(2025, 5, 19), new Date(2025, 6, 17), // 5/21/25, 6/18/25, 7/16/25
-                new Date(2025, 7, 14), new Date(2025, 8, 11), new Date(2025, 9, 9), // 8/13/25, 9/10/25, 10/8/25
-                new Date(2025, 10, 6), new Date(2025, 11, 4), new Date(2026, 0, 2) // 11/6/25, 12/4/25, 1/2/26
+                new Date(2025, 0, 3), new Date(2025, 0, 30), // 1/3/25, 1/30/25
+                new Date(2025, 1, 27), new Date(2025, 2, 27), new Date(2025, 3, 24), // 2/27/25, 3/27/25, 4/24/25
+                new Date(2025, 4, 22), new Date(2025, 5, 19), new Date(2025, 6, 17), // 5/22/25, 6/19/25, 7/17/25
+                new Date(2025, 7, 14), new Date(2025, 8, 11), new Date(2025, 9, 9) // 8/14/25, 9/11/25, 10/9/25 (last date before transition)
             ],
             groupC: [
-                new Date(2025, 0, 9),  // 1/8/25
-                new Date(2025, 1, 6),  // 2/5/25
-                new Date(2025, 2, 6),  // 3/5/25
-                new Date(2025, 3, 3),  // 4/2/25
-                new Date(2025, 4, 1), // 4/30/25
-                new Date(2025, 4, 29), // 5/28/25
-                new Date(2025, 5, 26), // 6/25/25
-                new Date(2025, 6, 24), // 7/23/25
-                new Date(2025, 7, 21), // 8/20/25
-                new Date(2025, 8, 18), // 9/17/25
-                new Date(2025, 9, 16), // 10/15/25
-                new Date(2025, 10, 13), // 11/12/25
-                new Date(2025, 11, 11)  // 12/10/25
+                new Date(2025, 0, 9),  // 1/9/25
+                new Date(2025, 1, 6),  // 2/6/25
+                new Date(2025, 2, 6),  // 3/6/25
+                new Date(2025, 3, 3),  // 4/3/25
+                new Date(2025, 4, 1),  // 5/1/25
+                new Date(2025, 4, 29), // 5/29/25
+                new Date(2025, 5, 26), // 6/26/25
+                new Date(2025, 6, 24), // 7/24/25
+                new Date(2025, 7, 21), // 8/21/25
+                new Date(2025, 8, 18), // 9/18/25
+                new Date(2025, 9, 9)   // 10/9/25 (last date before transition)
             ],
             groupD: [
-                new Date(2025, 0, 16), // 1/15/25
-                new Date(2025, 1, 13), // 2/12/25
-                new Date(2025, 2, 13), // 3/12/25
-                new Date(2025, 3, 10),  // 4/9/25
-                new Date(2025, 4, 8),  // 5/7/25
-                new Date(2025, 5, 5),  // 6/4/25
-                new Date(2025, 6, 3),  // 7/2/25
-                new Date(2025, 6, 31), // 7/30/25
-                new Date(2025, 7, 28), // 8/27/25
-                new Date(2025, 8, 25), // 9/24/25
-                new Date(2025, 9, 23), // 10/22/25
-                new Date(2025, 10, 20), // 11/19/25
-                new Date(2025, 11, 18)  // 12/17/25
+                new Date(2025, 0, 16), // 1/16/25
+                new Date(2025, 1, 13), // 2/13/25
+                new Date(2025, 2, 13), // 3/13/25
+                new Date(2025, 3, 10), // 4/10/25
+                new Date(2025, 4, 8),  // 5/8/25
+                new Date(2025, 5, 5),  // 6/5/25
+                new Date(2025, 6, 3),  // 7/3/25
+                new Date(2025, 6, 31), // 7/31/25
+                new Date(2025, 7, 28), // 8/28/25
+                new Date(2025, 8, 25)  // 9/25/25 (last date before transition)
+            ],
+            group1: [
+                new Date(2025, 9, 15),  // 10/15/25
+                new Date(2025, 9, 22),  // 10/22/25
+                new Date(2025, 9, 29),  // 10/29/25
+                new Date(2025, 10, 5),  // 11/5/25
+                new Date(2025, 10, 12), // 11/12/25
+                new Date(2025, 10, 19), // 11/19/25
+                new Date(2025, 10, 26), // 11/26/25
+                new Date(2025, 11, 3),  // 12/3/25
+                new Date(2025, 11, 10), // 12/10/25
+                new Date(2025, 11, 17), // 12/17/25
+                new Date(2025, 11, 24), // 12/24/25
+                new Date(2025, 11, 31)  // 12/31/25
+            ],
+            group2: [
+                new Date(2025, 9, 16),  // 10/16/25
+                new Date(2025, 9, 23),  // 10/23/25
+                new Date(2025, 9, 30),  // 10/30/25
+                new Date(2025, 10, 6),  // 11/6/25
+                new Date(2025, 10, 13), // 11/13/25
+                new Date(2025, 10, 20), // 11/20/25
+                new Date(2025, 10, 28), // 11/28/25
+                new Date(2025, 11, 4),  // 12/4/25
+                new Date(2025, 11, 11), // 12/11/25
+                new Date(2025, 11, 18), // 12/18/25
+                new Date(2025, 11, 26), // 12/26/25
+                new Date(2026, 0, 2)    // 1/2/26
             ],
             rex: {
                 BMAX: [
@@ -515,6 +534,15 @@ class Calendar {
             // Add Weekly tag if any group is present (since Weekly = Groups A/B/C/D)
             if (distributions.some(d => ['group-a', 'group-b', 'group-c', 'group-d'].includes(d.type))) {
                 distributions.push({ type: 'weekly', label: 'YMX Weekly' });
+            }
+
+            // New groups (from October 2025)
+            if (this.distributionDates.group1.some(d => d.toDateString() === dateStr)) {
+                distributions.push({ type: 'group-1', label: 'YMX Group 1' });
+            }
+
+            if (this.distributionDates.group2.some(d => d.toDateString() === dateStr)) {
+                distributions.push({ type: 'group-2', label: 'YMX Group 2' });
             }
         }
 
