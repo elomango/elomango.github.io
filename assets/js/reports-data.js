@@ -5,6 +5,23 @@
 window.REPORTS_METADATA = {
     "reports": [
         {
+            "id": "arkf-2025-11-26",
+            "company": "ARK Blockchain And Fintech Innovation ETF",
+            "ticker": "ARKF",
+            "date": "2025-11-26",
+            "title": {
+                "ko": "ARKF ETF 분석 보고",
+                "en": "ARKF ETF Analysis"
+            },
+            "summary": {
+                "ko": "ARKF ETF 분석 보고",
+                "en": "ARKF ETF Analysis"
+            },
+            "path": "./research/index.html?id=arkf-2025-11-26",
+            "filename": "arkf-2025-11-26.docx",
+            "analyst": "Opus 4.5",
+        },
+        {
             "id": "vertiv-holdings-co-vrt-2025-10-25",
             "company": "Vertiv Holdings Co",
             "ticker": "VRT",

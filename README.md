@@ -22,12 +22,12 @@ Visit the website at: **https://elomango.github.io**
 
 ### Report Generator Script (`gen_report.py`)
 
-보고서를 자동으로 생성하고 웹사이트에 추가하는 스크립트입니다.
+생성된 보고서를 웹사이트에 추가하는 스크립트입니다.
 
 #### 사용법
 
 ```bash
-python3 gen_report.py <markdown_file> --type=<corp|etf> --name="<name>" --generator="<generator>" --ticker=<ticker>
+python3 apply_report.py <markdown_file> --type=<corp|etf> --name="<name>" --generator="<generator>" --ticker=<ticker>
 ```
 
 #### 필수 인자

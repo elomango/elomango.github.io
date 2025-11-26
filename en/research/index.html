@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corporate Analysis Reports</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
     <script src="../../assets/js/reports-data.js"></script>
     <style>
         body {
@@ -277,7 +278,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const reportId = urlParams.get('id');
 
-        // 동적 보고서 로딩 (reports-data.js 사용)
+        // Dynamic report loading (using reports-data.js)
         function loadReport() {
             console.log('Report ID:', reportId);
 
@@ -287,7 +288,7 @@
                 return;
             }
 
-            // reports-data.js에서 메타데이터 가져오기
+            // Get metadata from reports-data.js
             if (!window.REPORTS_METADATA || !window.REPORTS_METADATA.reports) {
                 console.error('Reports metadata not loaded');
                 showError();
@@ -301,13 +302,49 @@
                 return;
             }
 
-            // 동적으로 보고서 JS 파일 로드
+            // Determine format by file extension
+            const isDocx = report.filename.toLowerCase().endsWith('.docx');
+
+            if (isDocx) {
+                loadDocxReport(report);
+            } else {
+                loadMdReport(report);
+            }
+        }
+
+        // Load DOCX report
+        async function loadDocxReport(report) {
+            const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
+
+            if (isLocal) {
+                // Local: render with mammoth
+                try {
+                    const response = await fetch(`./reports/${report.filename}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch DOCX file');
+                    }
+                    const arrayBuffer = await response.arrayBuffer();
+                    const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                    renderReport(report, result.value, 'docx');
+                } catch (error) {
+                    console.error('Failed to load DOCX report:', error);
+                    showError();
+                }
+            } else {
+                // Production: MS Office Viewer iframe
+                const docxUrl = `https://elomango.github.io/en/research/reports/${report.filename}`;
+                const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(docxUrl)}`;
+                renderReport(report, viewerUrl, 'docx-viewer');
+            }
+        }
+
+        // Load MD report (existing JS file method)
+        function loadMdReport(report) {
             const script = document.createElement('script');
             script.src = `./reports/${report.filename}`;
             script.onload = function() {
-                // 로드 완료 후 렌더링
                 if (window.reportContent) {
-                    renderReport(report, window.reportContent);
+                    renderReport(report, window.reportContent, 'md');
                     window.reportContent = null;
                 } else {
                     console.error('Report content not found in loaded script');
@@ -318,8 +355,6 @@
                 console.error('Failed to load report script:', report.filename);
                 showError();
             };
-
-            // 스크립트 추가하여 로드 시작
             document.head.appendChild(script);
         }
 
@@ -360,17 +395,17 @@
             return embedUrl;
         }
 
-        // 보고서 렌더링
-        function renderReport(metadata, content) {
-            // 페이지 메타데이터 업데이트
+        // Render report
+        function renderReport(metadata, content, format) {
+            // Update page metadata
             document.getElementById('reportTitle').textContent = metadata.title.en;
             document.getElementById('ticker').textContent = metadata.ticker;
             document.getElementById('reportDate').textContent = metadata.date;
 
-            // 페이지 제목 업데이트
+            // Update page title
             document.title = metadata.company + ' - ' + metadata.title.en;
 
-            // YouTube 영상이 있는 경우 추가
+            // Add YouTube video if available
             if (metadata.youtube && metadata.youtube.en) {
                 const embedUrl = convertToEmbedUrl(metadata.youtube.en);
                 if (embedUrl) {
@@ -392,18 +427,30 @@
                 }
             }
 
-            // 마크다운 렌더링
-            marked.setOptions({
-                breaks: true,
-                gfm: true,
-                tables: true,
-                smartLists: true,
-                smartypants: true
-            });
+            // Render based on format
+            if (format === 'docx-viewer') {
+                // MS Office Viewer iframe
+                document.getElementById('reportContent').innerHTML = `
+                    <div class="docx-viewer-container">
+                        <iframe src="${content}" width="100%" height="800px" frameborder="0"></iframe>
+                    </div>
+                `;
+            } else if (format === 'docx') {
+                // DOCX is already converted to HTML (local mammoth)
+                document.getElementById('reportContent').innerHTML = content;
+            } else {
+                // Markdown rendering
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    tables: true,
+                    smartLists: true,
+                    smartypants: true
+                });
+                document.getElementById('reportContent').innerHTML = marked.parse(content);
+            }
 
-            document.getElementById('reportContent').innerHTML = marked.parse(content);
-
-            // 로딩 숨기고 콘텐츠 표시
+            // Hide loading and show content
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportView').style.display = 'block';
         }

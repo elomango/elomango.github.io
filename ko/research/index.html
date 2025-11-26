@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>기업 분석 보고서</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
     <script src="../../assets/js/reports-data.js"></script>
     <style>
         body {
@@ -301,13 +302,49 @@
                 return;
             }
 
-            // 동적으로 보고서 JS 파일 로드
+            // 확장자로 포맷 판단
+            const isDocx = report.filename.toLowerCase().endsWith('.docx');
+
+            if (isDocx) {
+                loadDocxReport(report);
+            } else {
+                loadMdReport(report);
+            }
+        }
+
+        // DOCX 보고서 로드
+        async function loadDocxReport(report) {
+            const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
+
+            if (isLocal) {
+                // 로컬: mammoth로 렌더링
+                try {
+                    const response = await fetch(`./reports/${report.filename}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch DOCX file');
+                    }
+                    const arrayBuffer = await response.arrayBuffer();
+                    const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+                    renderReport(report, result.value, 'docx');
+                } catch (error) {
+                    console.error('Failed to load DOCX report:', error);
+                    showError();
+                }
+            } else {
+                // 배포: MS Office Viewer iframe
+                const docxUrl = `https://elomango.github.io/ko/research/reports/${report.filename}`;
+                const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(docxUrl)}`;
+                renderReport(report, viewerUrl, 'docx-viewer');
+            }
+        }
+
+        // MD 보고서 로드 (기존 JS 파일 방식)
+        function loadMdReport(report) {
             const script = document.createElement('script');
             script.src = `./reports/${report.filename}`;
             script.onload = function() {
-                // 로드 완료 후 렌더링
                 if (window.reportContent) {
-                    renderReport(report, window.reportContent);
+                    renderReport(report, window.reportContent, 'md');
                     window.reportContent = null;
                 } else {
                     console.error('Report content not found in loaded script');
@@ -318,8 +355,6 @@
                 console.error('Failed to load report script:', report.filename);
                 showError();
             };
-
-            // 스크립트 추가하여 로드 시작
             document.head.appendChild(script);
         }
 
@@ -361,7 +396,7 @@
         }
 
         // 보고서 렌더링
-        function renderReport(metadata, content) {
+        function renderReport(metadata, content, format) {
             // 페이지 메타데이터 업데이트
             document.getElementById('reportTitle').textContent = metadata.title.ko;
             document.getElementById('ticker').textContent = metadata.ticker;
@@ -371,12 +406,8 @@
             document.title = metadata.company + ' - ' + metadata.title.ko;
 
             // YouTube 영상이 있는 경우 추가
-            console.log('Metadata:', metadata);
-            console.log('YouTube field:', metadata.youtube);
             if (metadata.youtube && metadata.youtube.ko) {
-                console.log('YouTube URL (ko):', metadata.youtube.ko);
                 const embedUrl = convertToEmbedUrl(metadata.youtube.ko);
-                console.log('Embed URL:', embedUrl);
                 if (embedUrl) {
                     const youtubeSection = document.getElementById('youtubeSection');
                     youtubeSection.innerHTML = `
@@ -396,16 +427,28 @@
                 }
             }
 
-            // 마크다운 렌더링
-            marked.setOptions({
-                breaks: true,
-                gfm: true,
-                tables: true,
-                smartLists: true,
-                smartypants: true
-            });
-
-            document.getElementById('reportContent').innerHTML = marked.parse(content);
+            // 포맷에 따라 렌더링 방식 분기
+            if (format === 'docx-viewer') {
+                // MS Office Viewer iframe
+                document.getElementById('reportContent').innerHTML = `
+                    <div class="docx-viewer-container">
+                        <iframe src="${content}" width="100%" height="800px" frameborder="0"></iframe>
+                    </div>
+                `;
+            } else if (format === 'docx') {
+                // DOCX는 이미 HTML로 변환됨 (로컬용 mammoth)
+                document.getElementById('reportContent').innerHTML = content;
+            } else {
+                // 마크다운 렌더링
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    tables: true,
+                    smartLists: true,
+                    smartypants: true
+                });
+                document.getElementById('reportContent').innerHTML = marked.parse(content);
+            }
 
             // 로딩 숨기고 콘텐츠 표시
             document.getElementById('loading').style.display = 'none';
