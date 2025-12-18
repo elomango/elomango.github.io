@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>문제 해결 테스트</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        button { padding: 10px 20px; margin: 5px; background: #667eea; color: white; border: none; cursor: pointer; }
+        pre { background: #f0f0f0; padding: 10px; overflow: auto; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background: #667eea; color: white; }
+    </style>
+</head>
+<body>
+    <h1>문제 해결 테스트</h1>
+
+    <button onclick="testOriginalCode()">원본 코드 테스트</button>
+    <button onclick="testFixedCode()">수정된 코드 테스트</button>
+
+    <div class="section">
+        <h3>결과:</h3>
+        <pre id="result"></pre>
+    </div>
+
+    <div class="section">
+        <h3>테이블:</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30px;"></th>
+                    <th>날짜</th>
+                    <th>포트폴리오 가치</th>
+                    <th>거래 요약</th>
+                    <th>수익률</th>
+                </tr>
+            </thead>
+            <tbody id="testTable"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // 간단한 Mock Ticker 리스트
+        const mockTickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA', 'JPM', 'V', 'JNJ',
+                           'WMT', 'PG', 'UNH', 'HD', 'MA', 'DIS', 'BAC', 'XOM', 'CVX', 'PFE'];
+
+        function getRandomTickers(count) {
+            const tickers = [];
+            const available = [...mockTickers];
+            for (let i = 0; i < count && i < available.length; i++) {
+                const idx = Math.floor(Math.random() * available.length);
+                tickers.push(available.splice(idx, 1)[0]);
+            }
+            return tickers;
+        }
+
+        function testOriginalCode() {
+            const params = {
+                startDate: '2019-01-01',
+                endDate: '2024-01-01',
+                rebalancingPeriod: 90,
+                initialCapital: 10000,
+                numberOfStocks: 20
+            };
+
+            const startDate = new Date(params.startDate);
+            const endDate = new Date(params.endDate);
+            const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const numRebalances = Math.ceil(totalDays / params.rebalancingPeriod);
+
+            const rebalancingHistory = [];
+            const portfolioValues = [];
+
+            // 포트폴리오 값 생성
+            let currentValue = params.initialCapital;
+            for (let i = 0; i <= numRebalances; i++) {
+                currentValue *= (1 + (Math.random() - 0.3) * 0.15);
+                portfolioValues.push(Math.round(currentValue));
+            }
+
+            // 원본 코드처럼 리밸런싱 히스토리 생성
+            for (let i = 0; i < numRebalances; i++) {
+                const date = new Date(startDate);
+                date.setDate(date.getDate() + (i * params.rebalancingPeriod));
+
+                const buyStocks = getRandomTickers(3);
+                const sellStocks = getRandomTickers(2);
+                const portfolioValue = portfolioValues[i] || params.initialCapital;
+
+                rebalancingHistory.push({
+                    date: date.toISOString().split('T')[0],
+                    portfolioValue: portfolioValue,
+                    buyStocks: buyStocks,
+                    sellStocks: sellStocks,
+                    return: i > 0 ? ((portfolioValue / portfolioValues[i-1] - 1) * 100).toFixed(2) : '0.00'
+                });
+            }
+
+            displayResults('원본 코드', numRebalances, rebalancingHistory);
+        }
+
+        function testFixedCode() {
+            const params = {
+                startDate: '2019-01-01',
+                endDate: '2024-01-01',
+                rebalancingPeriod: 90,
+                initialCapital: 10000,
+                numberOfStocks: 20
+            };
+
+            const startDate = new Date(params.startDate);
+            const endDate = new Date(params.endDate);
+            const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const numRebalances = Math.floor(totalDays / params.rebalancingPeriod); // floor 사용
+
+            const rebalancingHistory = [];
+            const portfolioValues = [];
+
+            // 포트폴리오 값 생성 - numRebalances + 1개 생성
+            let currentValue = params.initialCapital;
+            for (let i = 0; i <= numRebalances; i++) {
+                currentValue *= (1 + (Math.random() - 0.3) * 0.15);
+                portfolioValues.push(Math.round(currentValue));
+            }
+
+            // 모든 리밸런싱 포인트에 대해 히스토리 생성
+            for (let i = 0; i <= numRebalances; i++) { // <= 사용
+                const date = new Date(startDate);
+                date.setDate(date.getDate() + (i * params.rebalancingPeriod));
+
+                // 날짜가 종료일을 넘지 않는 경우에만 추가
+                if (date <= endDate) {
+                    const buyStocks = getRandomTickers(3);
+                    const sellStocks = getRandomTickers(2);
+                    const portfolioValue = portfolioValues[i] || params.initialCapital;
+
+                    rebalancingHistory.push({
+                        date: date.toISOString().split('T')[0],
+                        portfolioValue: portfolioValue,
+                        buyStocks: buyStocks,
+                        sellStocks: sellStocks,
+                        return: i > 0 ? ((portfolioValue / portfolioValues[i-1] - 1) * 100).toFixed(2) : '0.00'
+                    });
+                }
+            }
+
+            displayResults('수정된 코드', numRebalances, rebalancingHistory);
+        }
+
+        function displayResults(title, expected, history) {
+            document.getElementById('result').textContent =
+                `${title}:\n` +
+                `예상 리밸런싱 개수: ${expected}\n` +
+                `실제 생성된 개수: ${history.length}\n` +
+                `차이: ${expected - history.length}\n\n` +
+                `첫 번째 항목: ${JSON.stringify(history[0], null, 2)}\n` +
+                `마지막 항목: ${JSON.stringify(history[history.length - 1], null, 2)}`;
+
+            // 테이블 업데이트
+            const tbody = document.getElementById('testTable');
+            tbody.innerHTML = '';
+
+            history.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                const buyCount = entry.buyStocks ? entry.buyStocks.length : 0;
+                const sellCount = entry.sellStocks ? entry.sellStocks.length : 0;
+                const transactionSummary = `매수 ${buyCount}종목, 매도 ${sellCount}종목`;
+                const returnValue = parseFloat(entry.return || 0);
+
+                row.innerHTML = `
+                    <td><span>▶</span></td>
+                    <td>${entry.date}</td>
+                    <td>$${entry.portfolioValue.toLocaleString()}</td>
+                    <td>${transactionSummary}</td>
+                    <td>${returnValue >= 0 ? '+' : ''}${returnValue.toFixed(2)}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+
+            console.log(`${title} - Generated ${history.length} entries (expected: ${expected})`);
+        }
+    </script>
+</body>
+</html>

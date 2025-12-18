@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>테이블 정렬 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        .debug-info {
+            background: #f0f0f0;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+    </style>
+</head>
+<body>
+    <h1>테이블 정렬 테스트</h1>
+
+    <div class="debug-info" id="debugInfo"></div>
+
+    <button onclick="testCorrectData()">올바른 데이터 테스트</button>
+    <button onclick="testMisalignedData()">잘못된 데이터 테스트</button>
+    <button onclick="clearTable()">테이블 지우기</button>
+
+    <h2>테스트 테이블</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30px;"></th>
+                <th>날짜</th>
+                <th>포트폴리오 가치</th>
+                <th>거래 요약</th>
+                <th>수익률</th>
+            </tr>
+        </thead>
+        <tbody id="testBody"></tbody>
+    </table>
+
+    <h2>원본 데이터 구조</h2>
+    <div class="debug-info" id="dataStructure"></div>
+
+    <script>
+        function testCorrectData() {
+            const tbody = document.getElementById('testBody');
+            tbody.innerHTML = '';
+
+            const testData = [
+                {
+                    date: '2021-02-26',
+                    portfolioValue: 11514,
+                    buyStocks: ['TMO', 'OKE', 'DIS'],
+                    sellStocks: ['RL', 'REGN', 'CCL'],
+                    return: '10.15'
+                },
+                {
+                    date: '2021-05-27',
+                    portfolioValue: 12645,
+                    buyStocks: ['ZTS', 'GE', 'ITW'],
+                    sellStocks: ['COR', 'DXCM', 'LH'],
+                    return: '9.82'
+                }
+            ];
+
+            document.getElementById('dataStructure').textContent = JSON.stringify(testData, null, 2);
+
+            testData.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                const buyCount = entry.buyStocks ? entry.buyStocks.length : 0;
+                const sellCount = entry.sellStocks ? entry.sellStocks.length : 0;
+                const transactionSummary = `매수 ${buyCount}종목, 매도 ${sellCount}종목`;
+                const returnValue = parseFloat(entry.return || 0);
+
+                row.innerHTML = `
+                    <td><span>▶</span></td>
+                    <td>${entry.date}</td>
+                    <td>$${entry.portfolioValue.toLocaleString()}</td>
+                    <td>${transactionSummary}</td>
+                    <td>${returnValue >= 0 ? '+' : ''}${returnValue.toFixed(2)}%</td>
+                `;
+
+                tbody.appendChild(row);
+
+                // Log what we're inserting
+                console.log(`Row ${index}:`, {
+                    date: entry.date,
+                    value: '$' + entry.portfolioValue.toLocaleString(),
+                    summary: transactionSummary,
+                    return: `${returnValue >= 0 ? '+' : ''}${returnValue.toFixed(2)}%`
+                });
+            });
+
+            document.getElementById('debugInfo').textContent =
+                '올바른 데이터 형식으로 테이블 생성됨. 콘솔을 확인하세요.';
+        }
+
+        function testMisalignedData() {
+            const tbody = document.getElementById('testBody');
+            tbody.innerHTML = '';
+
+            // 스크린샷에서 보이는 것처럼 잘못된 데이터를 시뮬레이션
+            const misalignedData = [
+                ['2021-02-26', '$11,514', 'TMO OKE DIS', 'RL REGN CCL', '+10.15%'],
+                ['2021-05-27', '$12,645', 'ZTS GE ITW', 'COR DXCM LH', '+9.82%']
+            ];
+
+            misalignedData.forEach((rowData, index) => {
+                const row = document.createElement('tr');
+
+                // 잘못된 매핑 시뮬레이션
+                row.innerHTML = `
+                    <td>${rowData[0]}</td>
+                    <td>${rowData[1]}</td>
+                    <td>${rowData[2]}</td>
+                    <td>${rowData[3]}</td>
+                    <td>${rowData[4]}</td>
+                `;
+
+                tbody.appendChild(row);
+
+                console.log(`Misaligned Row ${index}:`, rowData);
+            });
+
+            document.getElementById('debugInfo').textContent =
+                '잘못된 데이터 정렬 시뮬레이션. 첫 번째 열(확장 아이콘)이 누락되어 한 칸씩 밀림.';
+
+            document.getElementById('dataStructure').textContent =
+                '잘못된 매핑:\n' +
+                '첫 번째 TD = 날짜 (2021-02-26)\n' +
+                '두 번째 TD = 포트폴리오 가치 ($11,514)\n' +
+                '세 번째 TD = 매수 티커들 (TMO OKE DIS)\n' +
+                '네 번째 TD = 매도 티커들 (RL REGN CCL)\n' +
+                '다섯 번째 TD = 수익률 (+10.15%)';
+        }
+
+        function clearTable() {
+            document.getElementById('testBody').innerHTML = '';
+            document.getElementById('debugInfo').textContent = '테이블을 지웠습니다.';
+            document.getElementById('dataStructure').textContent = '';
+        }
+
+        // 페이지 로드 시 올바른 데이터로 시작
+        window.addEventListener('load', () => {
+            testCorrectData();
+        });
+    </script>
+</body>
+</html>

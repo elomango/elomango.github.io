@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>데이터 구조 검사</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .data-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #667eea;
+        }
+        .data-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .label {
+            font-weight: bold;
+            color: #667eea;
+        }
+        .value {
+            font-family: monospace;
+            color: #333;
+        }
+        .array-value {
+            background: #e8ecff;
+            padding: 5px;
+            border-radius: 3px;
+            display: inline-block;
+            margin: 2px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        .warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 데이터 구조 검사 도구</h1>
+
+        <div class="warning">
+            ⚠️ 이 페이지는 app.js의 generateMockResults 함수가 생성하는 데이터를 검사합니다.
+        </div>
+
+        <button onclick="generateAndInspect()">데이터 생성 및 검사</button>
+        <button onclick="clearAll()">초기화</button>
+
+        <div id="paramSection" class="data-section">
+            <h3>입력 파라미터</h3>
+            <div id="params"></div>
+        </div>
+
+        <div id="dataSection" class="data-section">
+            <h3>생성된 리밸런싱 히스토리 (첫 3개 항목)</h3>
+            <div id="dataInspection"></div>
+        </div>
+
+        <div class="data-section">
+            <h3>테이블 렌더링 결과</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 30px;"></th>
+                        <th>날짜</th>
+                        <th>포트폴리오 가치</th>
+                        <th>거래 요약</th>
+                        <th>수익률</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="rawDataSection" class="data-section">
+            <h3>Raw JSON 데이터</h3>
+            <pre id="rawData" style="background: #f0f0f0; padding: 10px; overflow-x: auto;"></pre>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        async function generateAndInspect() {
+            // 파라미터 설정
+            const params = {
+                initialCapital: 10000,
+                startDate: '2019-01-01',
+                endDate: '2024-01-01',
+                rebalancingPeriod: 90,  // 3개월
+                numberOfStocks: 20,
+                sp500Tickers: ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA', 'JPM', 'V', 'JNJ']
+            };
+
+            // 파라미터 표시
+            document.getElementById('params').innerHTML = `
+                <div class="data-row">
+                    <div class="label">초기 자본:</div>
+                    <div class="value">$${params.initialCapital.toLocaleString()}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">시작일:</div>
+                    <div class="value">${params.startDate}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">종료일:</div>
+                    <div class="value">${params.endDate}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">리밸런싱 주기:</div>
+                    <div class="value">${params.rebalancingPeriod}일 (3개월)</div>
+                </div>
+            `;
+
+            // generateMockResults 함수가 있는지 확인
+            if (typeof generateMockResults !== 'function') {
+                alert('generateMockResults 함수를 찾을 수 없습니다. app.js가 로드되었는지 확인하세요.');
+                return;
+            }
+
+            // 데이터 생성
+            const result = generateMockResults(params);
+            console.log('Generated result:', result);
+
+            // 리밸런싱 히스토리 검사
+            const history = result.rebalancingHistory || [];
+            const inspectionHtml = [];
+
+            for (let i = 0; i < Math.min(3, history.length); i++) {
+                const entry = history[i];
+                inspectionHtml.push(`
+                    <div style="margin: 20px 0; padding: 15px; background: white; border: 2px solid #667eea;">
+                        <h4>항목 ${i + 1}</h4>
+                        <div class="data-row">
+                            <div class="label">date:</div>
+                            <div class="value">${entry.date} (type: ${typeof entry.date})</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="label">portfolioValue:</div>
+                            <div class="value">${entry.portfolioValue} (type: ${typeof entry.portfolioValue})</div>
+                        </div>
+                        <div class="data-row">
+                            <div class="label">buyStocks:</div>
+                            <div class="value">
+                                ${Array.isArray(entry.buyStocks) ?
+                                    entry.buyStocks.map(s => `<span class="array-value">${s}</span>`).join(' ') :
+                                    `${entry.buyStocks} (type: ${typeof entry.buyStocks})`}
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <div class="label">sellStocks:</div>
+                            <div class="value">
+                                ${Array.isArray(entry.sellStocks) ?
+                                    entry.sellStocks.map(s => `<span class="array-value">${s}</span>`).join(' ') :
+                                    `${entry.sellStocks} (type: ${typeof entry.sellStocks})`}
+                            </div>
+                        </div>
+                        <div class="data-row">
+                            <div class="label">return:</div>
+                            <div class="value">${entry.return}% (type: ${typeof entry.return})</div>
+                        </div>
+                    </div>
+                `);
+            }
+
+            document.getElementById('dataInspection').innerHTML =
+                `<p>총 ${history.length}개의 리밸런싱 항목이 생성됨</p>` +
+                inspectionHtml.join('');
+
+            // 테이블 렌더링
+            const tbody = document.getElementById('tableBody');
+            tbody.innerHTML = '';
+
+            history.slice(0, 5).forEach((entry, index) => {
+                const row = document.createElement('tr');
+                const buyCount = entry.buyStocks ? entry.buyStocks.length : 0;
+                const sellCount = entry.sellStocks ? entry.sellStocks.length : 0;
+                const transactionSummary = `매수 ${buyCount}종목, 매도 ${sellCount}종목`;
+                const returnValue = parseFloat(entry.return || 0);
+
+                row.innerHTML = `
+                    <td><span>▶</span></td>
+                    <td>${entry.date}</td>
+                    <td>$${entry.portfolioValue ? entry.portfolioValue.toLocaleString() : '0'}</td>
+                    <td>${transactionSummary}</td>
+                    <td>${returnValue >= 0 ? '+' : ''}${returnValue.toFixed(2)}%</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            // Raw JSON 표시
+            document.getElementById('rawData').textContent = JSON.stringify(history.slice(0, 3), null, 2);
+        }
+
+        function clearAll() {
+            document.getElementById('params').innerHTML = '';
+            document.getElementById('dataInspection').innerHTML = '';
+            document.getElementById('tableBody').innerHTML = '';
+            document.getElementById('rawData').textContent = '';
+        }
+
+        // 페이지 로드 시 자동 실행
+        window.addEventListener('load', () => {
+            setTimeout(generateAndInspect, 500);
+        });
+    </script>
+</body>
+</html>

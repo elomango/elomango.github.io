@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>리밸런싱 테이블 디버그</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .debug-panel {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .debug-info {
+            font-family: monospace;
+            font-size: 12px;
+            color: #666;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #5a6fd8;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        .data-preview {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            background: #f0f0f0;
+            font-family: monospace;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 리밸런싱 테이블 디버그</h1>
+
+        <div class="debug-panel">
+            <h3>테스트 컨트롤</h3>
+            <button onclick="testDefaultParams()">기본 파라미터 테스트 (5년, 30일)</button>
+            <button onclick="testCustomParams()">사용자 정의 테스트 (1년, 14일)</button>
+            <button onclick="clearDebug()">디버그 지우기</button>
+        </div>
+
+        <div class="debug-panel">
+            <h3>파라미터 정보</h3>
+            <div id="paramInfo" class="debug-info">파라미터가 여기 표시됩니다...</div>
+        </div>
+
+        <div class="debug-panel">
+            <h3>생성된 데이터 프리뷰</h3>
+            <div id="dataPreview" class="data-preview">데이터가 여기 표시됩니다...</div>
+        </div>
+
+        <div class="debug-panel">
+            <h3>리밸런싱 히스토리 테이블</h3>
+            <table id="debugTable">
+                <thead>
+                    <tr>
+                        <th>인덱스</th>
+                        <th>날짜</th>
+                        <th>포트폴리오 가치</th>
+                        <th>매수 종목</th>
+                        <th>매도 종목</th>
+                        <th>수익률</th>
+                    </tr>
+                </thead>
+                <tbody id="debugTableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function generateMockResults(params) {
+            const startDate = new Date(params.startDate);
+            const endDate = new Date(params.endDate);
+
+            // Calculate total days and number of rebalancing periods
+            const totalDays = Math.floor((endDate - startDate) / (1000 * 60 * 60 * 24));
+            const numRebalances = Math.floor(totalDays / params.rebalancingPeriod);
+
+            const debugInfo = {
+                startDate: params.startDate,
+                endDate: params.endDate,
+                totalDays: totalDays,
+                rebalancingPeriod: params.rebalancingPeriod,
+                numRebalances: numRebalances,
+                expectedRows: numRebalances
+            };
+
+            document.getElementById('paramInfo').textContent = JSON.stringify(debugInfo, null, 2);
+
+            // Generate portfolio values
+            const portfolioValues = [];
+            let currentValue = params.initialCapital;
+
+            for (let i = 0; i <= numRebalances; i++) {
+                const portfolioReturn = (Math.random() - 0.3) * 0.15;
+                currentValue *= (1 + portfolioReturn);
+                portfolioValues.push(Math.round(currentValue));
+            }
+
+            // Generate rebalancing history
+            const rebalancingHistory = [];
+            for (let i = 0; i < numRebalances; i++) {
+                const date = new Date(startDate);
+                date.setDate(date.getDate() + (i * params.rebalancingPeriod));
+
+                const buyStocks = getRandomTickers(3);
+                const sellStocks = getRandomTickers(2);
+                const portfolioValue = portfolioValues[i] || params.initialCapital;
+
+                rebalancingHistory.push({
+                    index: i,
+                    date: date.toISOString().split('T')[0],
+                    portfolioValue: portfolioValue,
+                    buyStocks: buyStocks,
+                    sellStocks: sellStocks,
+                    return: i > 0 ? ((portfolioValue / portfolioValues[i-1] - 1) * 100).toFixed(2) : '0.00'
+                });
+            }
+
+            return rebalancingHistory;
+        }
+
+        function getRandomTickers(count) {
+            const allTickers = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'NVDA', 'TSLA', 'JPM', 'V', 'JNJ', 'WMT', 'PG'];
+            const selected = [];
+            for (let i = 0; i < count; i++) {
+                const idx = Math.floor(Math.random() * allTickers.length);
+                selected.push(allTickers[idx]);
+            }
+            return selected;
+        }
+
+        function displayData(history) {
+            // Show data preview
+            const preview = document.getElementById('dataPreview');
+            preview.textContent = JSON.stringify(history, null, 2);
+
+            // Fill table
+            const tbody = document.getElementById('debugTableBody');
+            tbody.innerHTML = '';
+
+            history.forEach(entry => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${entry.index}</td>
+                    <td>${entry.date}</td>
+                    <td>$${entry.portfolioValue.toLocaleString()}</td>
+                    <td>${entry.buyStocks.join(', ')}</td>
+                    <td>${entry.sellStocks.join(', ')}</td>
+                    <td>${entry.return}%</td>
+                `;
+            });
+
+            console.log(`테이블에 ${history.length}개 행 생성됨`);
+        }
+
+        function testDefaultParams() {
+            const params = {
+                initialCapital: 10000,
+                startDate: '2019-01-01',
+                endDate: '2024-01-01',
+                rebalancingPeriod: 30,
+                numberOfStocks: 20
+            };
+
+            const history = generateMockResults(params);
+            displayData(history);
+
+            console.log('Default params test:', {
+                generatedRows: history.length,
+                firstDate: history[0]?.date,
+                lastDate: history[history.length - 1]?.date
+            });
+        }
+
+        function testCustomParams() {
+            const params = {
+                initialCapital: 10000,
+                startDate: '2023-01-01',
+                endDate: '2024-01-01',
+                rebalancingPeriod: 14,
+                numberOfStocks: 20
+            };
+
+            const history = generateMockResults(params);
+            displayData(history);
+
+            console.log('Custom params test:', {
+                generatedRows: history.length,
+                firstDate: history[0]?.date,
+                lastDate: history[history.length - 1]?.date
+            });
+        }
+
+        function clearDebug() {
+            document.getElementById('paramInfo').textContent = '파라미터가 여기 표시됩니다...';
+            document.getElementById('dataPreview').textContent = '데이터가 여기 표시됩니다...';
+            document.getElementById('debugTableBody').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

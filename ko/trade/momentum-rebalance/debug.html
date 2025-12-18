@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>디버그 - S&P 500 모멘텀 리밸런싱</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        .status { margin: 10px 0; padding: 10px; background: #2d2d30; }
+        .success { color: #4ec9b0; }
+        .error { color: #f48771; }
+        .warn { color: #dcdcaa; }
+        button { padding: 10px 20px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🔍 디버그 모드</h1>
+    <div id="status"></div>
+
+    <script>
+        const status = document.getElementById('status');
+
+        function log(msg, type = 'info') {
+            const div = document.createElement('div');
+            div.className = `status ${type}`;
+            div.innerHTML = `${new Date().toLocaleTimeString()} - ${msg}`;
+            status.appendChild(div);
+            console.log(msg);
+        }
+
+        // Test 1: Check if files exist
+        async function testFiles() {
+            log('=== 파일 존재 확인 ===');
+
+            // Get current path
+            const currentPath = window.location.pathname;
+            log(`현재 경로: ${currentPath}`, 'info');
+
+            const files = [
+                './src/data/sp500.json',
+                './src/utils/api.js',
+                './src/modules/momentum.js',
+                './src/modules/backtest.js',
+                './app.js',
+                './index.html'
+            ];
+
+            for (const file of files) {
+                try {
+                    const response = await fetch(file);
+                    if (response.ok) {
+                        log(`✓ ${file} - OK`, 'success');
+                    } else {
+                        log(`✗ ${file} - ${response.status}`, 'error');
+                    }
+                } catch (e) {
+                    log(`✗ ${file} - ${e.message}`, 'error');
+                }
+            }
+        }
+
+        // Test 2: Load and check JSON
+        async function testJSON() {
+            log('=== JSON 파일 테스트 ===');
+
+            try {
+                const response = await fetch('./src/data/sp500.json');
+                if (!response.ok) {
+                    log(`HTTP Error: ${response.status}`, 'error');
+                    return;
+                }
+
+                const data = await response.json();
+                log(`✓ JSON 파싱 성공`, 'success');
+                log(`✓ Tickers 개수: ${data.tickers ? data.tickers.length : 0}`, 'success');
+
+                if (data.tickers && data.tickers.length > 0) {
+                    log(`✓ 첫 5개 종목: ${data.tickers.slice(0, 5).join(', ')}`, 'success');
+                }
+            } catch (e) {
+                log(`✗ JSON 오류: ${e.message}`, 'error');
+            }
+        }
+
+        // Test 3: Module loading
+        async function testModules() {
+            log('=== 모듈 로딩 테스트 ===');
+
+            // Create script tag
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = src;
+                    script.onload = () => {
+                        log(`✓ ${src} 로드 성공`, 'success');
+                        resolve();
+                    };
+                    script.onerror = (e) => {
+                        log(`✗ ${src} 로드 실패`, 'error');
+                        reject(e);
+                    };
+                    document.head.appendChild(script);
+                });
+            }
+
+            try {
+                await loadScript('./src/utils/api.js');
+                if (typeof YahooFinanceAPI !== 'undefined') {
+                    log('✓ YahooFinanceAPI 클래스 사용 가능', 'success');
+                } else {
+                    log('✗ YahooFinanceAPI 클래스 없음', 'error');
+                }
+            } catch (e) {
+                log(`API 모듈 로드 실패: ${e}`, 'error');
+            }
+
+            try {
+                await loadScript('./src/modules/momentum.js');
+                if (typeof MomentumCalculator !== 'undefined') {
+                    log('✓ MomentumCalculator 클래스 사용 가능', 'success');
+                } else {
+                    log('✗ MomentumCalculator 클래스 없음', 'error');
+                }
+            } catch (e) {
+                log(`Momentum 모듈 로드 실패: ${e}`, 'error');
+            }
+
+            try {
+                await loadScript('./src/modules/backtest.js');
+                if (typeof BacktestEngine !== 'undefined') {
+                    log('✓ BacktestEngine 클래스 사용 가능', 'success');
+                } else {
+                    log('✗ BacktestEngine 클래스 없음', 'error');
+                }
+            } catch (e) {
+                log(`Backtest 모듈 로드 실패: ${e}`, 'error');
+            }
+        }
+
+        // Test 4: Main app.js
+        async function testApp() {
+            log('=== app.js 로딩 테스트 ===');
+
+            try {
+                await loadScript('./app.js');
+                log('✓ app.js 로드 성공', 'success');
+
+                // Check global variables
+                if (typeof sp500Tickers !== 'undefined') {
+                    log(`✓ sp500Tickers 정의됨 (${sp500Tickers.length} 종목)`, 'success');
+                }
+
+                if (typeof CONFIG !== 'undefined') {
+                    log(`✓ CONFIG 정의됨`, 'success');
+                    log(`  - USE_REAL_DATA: ${CONFIG.USE_REAL_DATA}`, 'info');
+                    log(`  - TEST_MODE: ${CONFIG.TEST_MODE}`, 'info');
+                }
+
+                if (typeof init === 'function') {
+                    log('✓ init 함수 사용 가능', 'success');
+                }
+            } catch (e) {
+                log(`app.js 로드 실패: ${e}`, 'error');
+            }
+        }
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+                const script = document.createElement('script');
+                script.src = src;
+                script.onload = resolve;
+                script.onerror = reject;
+                document.head.appendChild(script);
+            });
+        }
+
+        // Run all tests
+        async function runAllTests() {
+            await testFiles();
+            await testJSON();
+            await testModules();
+            await testApp();
+
+            log('=== 테스트 완료 ===', 'warn');
+            log('콘솔(F12)에서 추가 오류를 확인하세요.', 'warn');
+        }
+
+        // Start tests automatically
+        runAllTests();
+    </script>
+</body>
+</html>

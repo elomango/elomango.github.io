@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>데이터 검증 도구</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        .correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        .incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background: #667eea;
+            color: white;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 데이터 검증 도구</h1>
+
+    <button onclick="runValidation()">검증 실행</button>
+    <button onclick="clearAll()">초기화</button>
+
+    <div class="comparison">
+        <div>
+            <h2>예상 데이터 형식</h2>
+            <div id="expectedData" class="section"></div>
+        </div>
+        <div>
+            <h2>실제 생성된 데이터</h2>
+            <div id="actualData" class="section"></div>
+        </div>
+    </div>
+
+    <h2>예상 테이블 출력</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30px;"></th>
+                <th>날짜</th>
+                <th>포트폴리오 가치</th>
+                <th>거래 요약</th>
+                <th>수익률</th>
+            </tr>
+        </thead>
+        <tbody id="expectedTable"></tbody>
+    </table>
+
+    <h2>실제 테이블 출력</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 30px;"></th>
+                <th>날짜</th>
+                <th>포트폴리오 가치</th>
+                <th>거래 요약</th>
+                <th>수익률</th>
+            </tr>
+        </thead>
+        <tbody id="actualTable"></tbody>
+    </table>
+
+    <div id="validation" class="section"></div>
+
+    <script src="app.js"></script>
+    <script>
+        function runValidation() {
+            // 예상되는 올바른 데이터 형식
+            const expectedHistory = [
+                {
+                    date: '2021-02-26',
+                    portfolioValue: 11514,
+                    buyStocks: ['TMO', 'OKE', 'DIS'],
+                    sellStocks: ['RL', 'REGN', 'CCL'],
+                    return: '10.15'
+                },
+                {
+                    date: '2021-05-27',
+                    portfolioValue: 12645,
+                    buyStocks: ['ZTS', 'GE', 'ITW'],
+                    sellStocks: ['COR', 'DXCM', 'LH'],
+                    return: '9.82'
+                }
+            ];
+
+            // 실제 generateMockResults로 생성된 데이터
+            const params = {
+                initialCapital: 10000,
+                startDate: '2021-01-01',
+                endDate: '2021-12-31',
+                rebalancingPeriod: 90,
+                numberOfStocks: 20,
+                sp500Tickers: sp500Tickers || ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META']
+            };
+
+            const actualResult = generateMockResults(params);
+            const actualHistory = actualResult.rebalancingHistory.slice(0, 2);
+
+            // 데이터 구조 표시
+            document.getElementById('expectedData').innerHTML = `
+                <h4>첫 번째 항목 구조:</h4>
+                <pre>${JSON.stringify(expectedHistory[0], null, 2)}</pre>
+                <h4>타입 체크:</h4>
+                <pre>
+date: ${typeof expectedHistory[0].date}
+portfolioValue: ${typeof expectedHistory[0].portfolioValue}
+buyStocks: ${Array.isArray(expectedHistory[0].buyStocks) ? 'Array' : typeof expectedHistory[0].buyStocks}
+sellStocks: ${Array.isArray(expectedHistory[0].sellStocks) ? 'Array' : typeof expectedHistory[0].sellStocks}
+return: ${typeof expectedHistory[0].return}
+                </pre>
+            `;
+
+            document.getElementById('actualData').innerHTML = `
+                <h4>첫 번째 항목 구조:</h4>
+                <pre>${JSON.stringify(actualHistory[0], null, 2)}</pre>
+                <h4>타입 체크:</h4>
+                <pre>
+date: ${typeof actualHistory[0].date}
+portfolioValue: ${typeof actualHistory[0].portfolioValue}
+buyStocks: ${Array.isArray(actualHistory[0].buyStocks) ? 'Array' : typeof actualHistory[0].buyStocks}
+sellStocks: ${Array.isArray(actualHistory[0].sellStocks) ? 'Array' : typeof actualHistory[0].sellStocks}
+return: ${typeof actualHistory[0].return}
+                </pre>
+            `;
+
+            // 예상 테이블 렌더링
+            renderTable(expectedHistory, 'expectedTable');
+
+            // 실제 테이블 렌더링
+            renderTable(actualHistory, 'actualTable');
+
+            // 데이터 검증
+            validateData(expectedHistory[0], actualHistory[0]);
+        }
+
+        function renderTable(history, tableId) {
+            const tbody = document.getElementById(tableId);
+            tbody.innerHTML = '';
+
+            history.forEach((entry, index) => {
+                const row = document.createElement('tr');
+                const buyCount = entry.buyStocks ? entry.buyStocks.length : 0;
+                const sellCount = entry.sellStocks ? entry.sellStocks.length : 0;
+                const transactionSummary = `매수 ${buyCount}종목, 매도 ${sellCount}종목`;
+                const returnValue = parseFloat(entry.return || 0);
+
+                row.innerHTML = `
+                    <td><span>▶</span></td>
+                    <td>${entry.date}</td>
+                    <td>$${entry.portfolioValue ? entry.portfolioValue.toLocaleString() : '0'}</td>
+                    <td>${transactionSummary}</td>
+                    <td>${returnValue >= 0 ? '+' : ''}${returnValue.toFixed(2)}%</td>
+                `;
+
+                tbody.appendChild(row);
+            });
+
+            console.log(`${tableId} - Rendered ${history.length} rows`);
+        }
+
+        function validateData(expected, actual) {
+            const issues = [];
+
+            // 각 필드 검증
+            if (typeof actual.date !== 'string') {
+                issues.push(`date는 string이어야 하는데 ${typeof actual.date}입니다.`);
+            }
+            if (typeof actual.portfolioValue !== 'number') {
+                issues.push(`portfolioValue는 number여야 하는데 ${typeof actual.portfolioValue}입니다.`);
+            }
+            if (!Array.isArray(actual.buyStocks)) {
+                issues.push(`buyStocks는 배열이어야 하는데 ${typeof actual.buyStocks}입니다.`);
+            }
+            if (!Array.isArray(actual.sellStocks)) {
+                issues.push(`sellStocks는 배열이어야 하는데 ${typeof actual.sellStocks}입니다.`);
+            }
+
+            const validationDiv = document.getElementById('validation');
+            if (issues.length === 0) {
+                validationDiv.className = 'section correct';
+                validationDiv.innerHTML = '<h3>✅ 데이터 구조가 올바릅니다!</h3>';
+            } else {
+                validationDiv.className = 'section incorrect';
+                validationDiv.innerHTML = `
+                    <h3>❌ 데이터 구조 문제 발견:</h3>
+                    <ul>${issues.map(issue => `<li>${issue}</li>`).join('')}</ul>
+                `;
+            }
+        }
+
+        function clearAll() {
+            document.getElementById('expectedData').innerHTML = '';
+            document.getElementById('actualData').innerHTML = '';
+            document.getElementById('expectedTable').innerHTML = '';
+            document.getElementById('actualTable').innerHTML = '';
+            document.getElementById('validation').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
