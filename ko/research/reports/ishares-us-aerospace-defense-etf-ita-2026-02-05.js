@@ -15,10 +15,11 @@ window.reportContent = `# ITA ETF 분석 보고서
 | **운용보수** | **0.38%** | iShares 공식 데이터 기준 |
 | **추종 지수** | Dow Jones U.S. Select Aerospace & Defense Index | |
 | **자산 규모** | **약 $14.59B** | 2026-02-04 기준 (iShares 공식) |
+| **총 보유 종목 수** | **45개** | iShares 기준 (as of Jan 30, 2026) |
 
 ## 투자 전략
 
-ITA는 **Dow Jones U.S. Select Aerospace & Defense Index**를 추종하며, 미국 내 항공우주 및 방위산업 관련 대형주들에 시가총액 가중 방식으로 투자합니다. 
+ITA는 **Dow Jones U.S. Select Aerospace & Defense Index**를 추종하며, 미국 내 항공우주 및 방위산업 관련 대형주들에 **수정 시가총액 가중(Modified Market Cap Weighted)** 방식으로 투자합니다. 
 
 ### 핵심 투자 포인트
 - **안보 수요 증가**: 글로벌 지정학적 긴장 지속에 따른 국방 예산 확대 수혜
@@ -27,7 +28,7 @@ ITA는 **Dow Jones U.S. Select Aerospace & Defense Index**를 추종하며, 미�
 
 ## 주요 보유 종목 (Top 10 - 2026년 1월 30일 기준)
 
-현재 ITA는 GE Aerospace와 RTX를 필두로 상위 종목의 집중도가 매우 높은 포트폴리오를 구성하고 있습니다. 최근 비중 조정으로 **Axon Enterprise(AXON)**가 상위 10위권에 진입했습니다.
+현재 ITA는 GE Aerospace와 RTX를 필두로 상위 종목의 집중도가 매우 높은 포트폴리오를 구성하고 있습니다. **2026-01-30 기준 Axon Enterprise(AXON)가 상위 10위에 포함**되어 있습니다.
 
 | 순위 | 종목 | 티커 | 비중 |
 |------|------|------|------|

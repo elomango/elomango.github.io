@@ -15,10 +15,11 @@ window.reportContent = `# ITA ETF Analysis Report
 | **Expense Ratio** | **0.38%** | Official iShares Data |
 | **Benchmark Index** | Dow Jones U.S. Select Aerospace & Defense Index | |
 | **AUM** | **Approx. $14.59B** | As of Feb 4, 2026 (Official) |
+| **Total Holdings** | **45** | Per iShares (as of Jan 30, 2026) |
 
 ## Investment Strategy
 
-ITA tracks the **Dow Jones U.S. Select Aerospace & Defense Index** and invests in large-cap U.S. aerospace and defense stocks using a market-cap weighting methodology.
+ITA tracks the **Dow Jones U.S. Select Aerospace & Defense Index** and invests in large-cap U.S. aerospace and defense stocks using a **Modified Market Cap Weighting** methodology.
 
 ### Key Investment Points
 - **Rising Defense Demand**: Benefits from expanding defense budgets due to persistent global geopolitical tensions.
@@ -27,7 +28,7 @@ ITA tracks the **Dow Jones U.S. Select Aerospace & Defense Index** and invests i
 
 ## Top 10 Holdings (As of January 30, 2026)
 
-ITA maintains a portfolio with high concentration in top holdings, led by GE Aerospace and RTX. **Axon Enterprise (AXON)** has recently entered the top 10 list.
+ITA maintains a portfolio with high concentration in top holdings, led by GE Aerospace and RTX. **As of Jan 30, 2026, Axon Enterprise (AXON) is included in the top 10.**
 
 | Rank | Company | Ticker | Weight |
 |------|---------|--------|--------|
