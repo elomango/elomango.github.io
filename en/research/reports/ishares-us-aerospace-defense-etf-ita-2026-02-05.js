@@ -1,5 +1,5 @@
 // iShares U.S. Aerospace & Defense ETF 보고서 콘텐츠 (영어)
-window.reportContent = `# ITA ETF Analysis Report (V2 - Fact-Checked)
+window.reportContent = `# ITA ETF Analysis Report
 
 ## Overview
 
