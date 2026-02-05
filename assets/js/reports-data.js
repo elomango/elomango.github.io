@@ -5,6 +5,23 @@
 window.REPORTS_METADATA = {
     "reports": [
         {
+            "id": "ishares-us-aerospace-defense-etf-ita-2026-02-05",
+            "company": "iShares U.S. Aerospace & Defense ETF",
+            "ticker": "ITA",
+            "date": "2026-02-05",
+            "title": {
+                "ko": "iShares U.S. Aerospace & Defense ETF ETF 분석",
+                "en": "iShares U.S. Aerospace & Defense ETF ETF Analysis"
+            },
+            "summary": {
+                "ko": "iShares U.S. Aerospace & Defense ETF ETF 분석 상세 분석",
+                "en": "Detailed analysis of iShares U.S. Aerospace & Defense ETF ETF Analysis"
+            },
+            "path": "./research/index.html?id=ishares-us-aerospace-defense-etf-ita-2026-02-05",
+            "filename": "ishares-us-aerospace-defense-etf-ita-2026-02-05.js",
+            "analyst": "Yelbot (Claude Opus 4.5)"
+        },
+        {
             "id": "arkf-2025-11-26",
             "company": "ARK Blockchain And Fintech Innovation ETF",
             "ticker": "ARKF",
