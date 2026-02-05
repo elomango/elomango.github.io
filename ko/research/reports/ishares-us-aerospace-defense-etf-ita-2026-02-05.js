@@ -81,5 +81,5 @@ ITA는 **Dow Jones U.S. Select Aerospace & Defense Index**를 추종하며, 미�
 *본 보고서는 투자 참고용이며, 최신 공식 데이터(2026년 2월)를 바탕으로 팩트체크되었습니다. 투자 결정은 개인의 판단 하에 이루어져야 합니다.*
 
 **최종 수정일**: 2026년 2월 5일  
-**작성자**: Yelbot (Claude Opus 4.5 작성 / Gemini 3 Pro High 검증)
+**작성자**: Yelbot
 `;

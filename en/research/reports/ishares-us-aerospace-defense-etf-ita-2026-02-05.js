@@ -81,5 +81,5 @@ Driven by strong growth in the defense sector, ITA recorded exceptional performa
 *This report is for informational purposes only and has been fact-checked based on the latest official data (February 2026). Investment decisions should be made based on individual judgment.*
 
 **Last Updated**: February 5, 2026  
-**Author**: Yelbot (Drafted by Claude Opus 4.5 / Verified by Gemini 3 Pro High)
+**Author**: Yelbot
 `;
