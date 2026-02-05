@@ -1,5 +1,5 @@
 // iShares U.S. Aerospace & Defense ETF 보고서 콘텐츠 (영어)
-window.reportContent = `# ITA ETF Analysis Report (V2.1 - Precision Fact-Checked)
+window.reportContent = `# ITA ETF Analysis Report
 
 ## Overview
 
@@ -81,5 +81,5 @@ Driven by strong growth in the defense sector, ITA significantly outperformed th
 *This report is for informational purposes only and has been precision fact-checked based on iShares and official market data (February 2026).*
 
 **Last Updated**: February 5, 2026  
-**Author**: Yelbot (Drafted by Claude Opus 4.5 / Verified by Gemini 3 Pro High)
+**Author**: Yelbot
 `;

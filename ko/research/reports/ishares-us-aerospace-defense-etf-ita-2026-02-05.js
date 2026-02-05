@@ -1,5 +1,5 @@
 // iShares U.S. Aerospace & Defense ETF 보고서 콘텐츠 (한국어)
-window.reportContent = `# ITA ETF 분석 보고서 (V2.1 - 정밀 팩트체크 완료)
+window.reportContent = `# ITA ETF 분석 보고서
 
 ## 개요
 
@@ -81,5 +81,5 @@ ITA는 **Dow Jones U.S. Select Aerospace & Defense Index**를 추종하며, 미�
 *본 보고서는 투자 참고용이며, iShares 및 공식 시장 데이터(2026년 2월)를 바탕으로 정밀 팩트체크되었습니다.*
 
 **최종 수정일**: 2026년 2월 5일  
-**작성자**: Yelbot (Drafted by Claude Opus 4.5 / Verified by Gemini 3 Pro High)
+**작성자**: Yelbot
 `;
