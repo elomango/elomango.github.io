@@ -89,6 +89,7 @@ python3 gen_report.py loctemp/report.md --type=corp --name="회사명" --generat
 
 For inquiries, please contact: elomango7@gmail.com
 
+
 ---
 
 © 2025 Elomango. All rights reserved. 
