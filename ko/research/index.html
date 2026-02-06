@@ -258,6 +258,11 @@
                 <!-- YouTube embed will be inserted here -->
             </div>
 
+            <!-- Chart Section -->
+            <div id="chartSection" style="display: none; margin-bottom: 30px;">
+                <!-- TradingView charts will be inserted here -->
+            </div>
+
             <div id="reportContent" class="report-content">
                 <!-- Markdown content will be rendered here -->
             </div>
@@ -425,6 +430,52 @@
                     `;
                     youtubeSection.style.display = 'block';
                 }
+            }
+
+            // 차트 섹션 추가 (티커가 있는 경우)
+            if (metadata.ticker) {
+                const chartSection = document.getElementById('chartSection');
+                chartSection.innerHTML = ''; // 초기화
+                
+                // 티커가 여러 개인 경우 분리 (쉼표 기준)
+                const tickers = metadata.ticker.split(',').map(t => t.trim());
+                
+                tickers.forEach(ticker => {
+                    const chartWrapper = document.createElement('div');
+                    chartWrapper.className = 'tradingview-widget-container';
+                    chartWrapper.style.height = '220px';
+                    chartWrapper.style.marginBottom = '15px';
+                    
+                    const widgetDiv = document.createElement('div');
+                    widgetDiv.className = 'tradingview-widget-container__widget';
+                    chartWrapper.appendChild(widgetDiv);
+                    
+                    const script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js';
+                    script.async = true;
+                    
+                    const config = {
+                        "symbol": ticker.includes(':') ? ticker : `AMEX:${ticker}`,
+                        "width": "100%",
+                        "height": "100%",
+                        "locale": "ko",
+                        "dateRange": "12M",
+                        "colorTheme": "light",
+                        "trendLineColor": "rgba(253, 203, 110, 1)",
+                        "underLineColor": "rgba(253, 203, 110, 0.3)",
+                        "underLineBottomColor": "rgba(253, 203, 110, 0)",
+                        "isTransparent": false,
+                        "autosize": true,
+                        "largeChartUrl": ""
+                    };
+                    
+                    script.text = JSON.stringify(config);
+                    chartWrapper.appendChild(script);
+                    chartSection.appendChild(chartWrapper);
+                });
+                
+                chartSection.style.display = 'block';
             }
 
             // 포맷에 따라 렌더링 방식 분기
