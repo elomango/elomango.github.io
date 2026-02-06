@@ -443,11 +443,25 @@
                 tickers.forEach(ticker => {
                     const chartWrapper = document.createElement('div');
                     chartWrapper.className = 'tradingview-widget-container';
-                    chartWrapper.style.height = '220px';
-                    chartWrapper.style.marginBottom = '15px';
+                    chartWrapper.style.height = '280px'; // 높이 소폭 조절
+                    chartWrapper.style.marginBottom = '20px';
+                    chartWrapper.style.position = 'relative';
+
+                    // 날짜 마커 추가 (차트 위)
+                    const dateMarker = document.createElement('div');
+                    dateMarker.innerHTML = `📌 <strong>보고서 발행 시점: ${metadata.date}</strong>`;
+                    dateMarker.style.fontSize = '13px';
+                    dateMarker.style.color = '#e17055';
+                    dateMarker.style.marginBottom = '8px';
+                    dateMarker.style.padding = '5px 10px';
+                    dateMarker.style.background = '#fff5f0';
+                    dateMarker.style.borderRadius = '5px';
+                    dateMarker.style.display = 'inline-block';
+                    chartWrapper.appendChild(dateMarker);
                     
                     const widgetDiv = document.createElement('div');
                     widgetDiv.className = 'tradingview-widget-container__widget';
+                    widgetDiv.style.height = '220px';
                     chartWrapper.appendChild(widgetDiv);
                     
                     const script = document.createElement('script');
@@ -455,8 +469,19 @@
                     script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js';
                     script.async = true;
                     
+                    // 거래소 코드 판별 (단순화된 로직)
+                    let fullSymbol = ticker;
+                    if (!ticker.includes(':')) {
+                        const nyseTickers = ['LMT', 'GE', 'RTX', 'BA', 'GD', 'NOC', 'LHX', 'HWM', 'TXT', 'HII'];
+                        if (nyseTickers.includes(ticker.toUpperCase())) {
+                            fullSymbol = `NYSE:${ticker}`;
+                        } else {
+                            fullSymbol = `NASDAQ:${ticker}`;
+                        }
+                    }
+                    
                     const config = {
-                        "symbol": ticker.includes(':') ? ticker : `AMEX:${ticker}`,
+                        "symbol": fullSymbol,
                         "width": "100%",
                         "height": "100%",
                         "locale": "ko",
