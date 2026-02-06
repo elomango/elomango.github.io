@@ -6,6 +6,8 @@
     <title>기업 분석 보고서</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+    <!-- Lightweight Charts 라이브러리 추가 -->
+    <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
     <script src="../../assets/js/reports-data.js"></script>
     <style>
         body {
@@ -211,6 +213,36 @@
             height: 100%;
             border: none;
         }
+
+        /* Chart Styling */
+        .chart-container {
+            margin: 30px 0;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .chart-header {
+            padding: 12px 15px;
+            background: #fcfcfc;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .chart-canvas {
+            height: 350px;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -222,14 +254,6 @@
              data-ad-height="90"></ins>
     </div>
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-
-    <!-- UI 확인용 코드 (현재 비활성화) -->
-    <!--
-    <div style="width:728px; height:90px; background:#f0f0f0; border:2px dashed #999; text-align:center; color:#666; margin:10px auto; display:flex; flex-direction:column; justify-content:center; align-items:center;">
-        <div>AdFit 광고 영역 (728x90)</div>
-        <small style="font-size:12px; margin-top:5px;">data-ad-unit: DAN-IcWPvZi4YXDiGxxt</small>
-    </div>
-    -->
 
     <div class="container">
         <!-- Language Selector -->
@@ -259,8 +283,8 @@
             </div>
 
             <!-- Chart Section -->
-            <div id="chartSection" style="display: none; margin-bottom: 30px;">
-                <!-- TradingView charts will be inserted here -->
+            <div id="chartSection" style="display: none;">
+                <!-- Custom charts will be injected here -->
             </div>
 
             <div id="reportContent" class="report-content">
@@ -279,37 +303,17 @@
     </div>
 
     <script>
-        // Get report ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const reportId = urlParams.get('id');
 
-        // 동적 보고서 로딩 (reports-data.js 사용)
         function loadReport() {
-            console.log('Report ID:', reportId);
-
-            if (!reportId) {
-                console.log('No report ID provided');
-                showError();
-                return;
-            }
-
-            // reports-data.js에서 메타데이터 가져오기
-            if (!window.REPORTS_METADATA || !window.REPORTS_METADATA.reports) {
-                console.error('Reports metadata not loaded');
-                showError();
-                return;
-            }
+            if (!reportId) { showError(); return; }
+            if (!window.REPORTS_METADATA || !window.REPORTS_METADATA.reports) { showError(); return; }
 
             const report = window.REPORTS_METADATA.reports.find(r => r.id === reportId);
-            if (!report) {
-                console.log('Invalid report ID:', reportId);
-                showError();
-                return;
-            }
+            if (!report) { showError(); return; }
 
-            // 확장자로 포맷 판단
             const isDocx = report.filename.toLowerCase().endsWith('.docx');
-
             if (isDocx) {
                 loadDocxReport(report);
             } else {
@@ -317,33 +321,22 @@
             }
         }
 
-        // DOCX 보고서 로드
         async function loadDocxReport(report) {
             const isLocal = window.location.hostname === 'localhost' || window.location.protocol === 'file:';
-
             if (isLocal) {
-                // 로컬: mammoth로 렌더링
                 try {
                     const response = await fetch(`./reports/${report.filename}`);
-                    if (!response.ok) {
-                        throw new Error('Failed to fetch DOCX file');
-                    }
                     const arrayBuffer = await response.arrayBuffer();
                     const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
                     renderReport(report, result.value, 'docx');
-                } catch (error) {
-                    console.error('Failed to load DOCX report:', error);
-                    showError();
-                }
+                } catch (error) { showError(); }
             } else {
-                // 배포: MS Office Viewer iframe
                 const docxUrl = `https://elomango.github.io/ko/research/reports/${report.filename}`;
                 const viewerUrl = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(docxUrl)}`;
                 renderReport(report, viewerUrl, 'docx-viewer');
             }
         }
 
-        // MD 보고서 로드 (기존 JS 파일 방식)
         function loadMdReport(report) {
             const script = document.createElement('script');
             script.src = `./reports/${report.filename}`;
@@ -351,184 +344,148 @@
                 if (window.reportContent) {
                     renderReport(report, window.reportContent, 'md');
                     window.reportContent = null;
-                } else {
-                    console.error('Report content not found in loaded script');
-                    showError();
-                }
+                } else { showError(); }
             };
-            script.onerror = function() {
-                console.error('Failed to load report script:', report.filename);
-                showError();
-            };
+            script.onerror = function() { showError(); };
             document.head.appendChild(script);
         }
 
-        // YouTube URL을 embed URL로 변환
         function convertToEmbedUrl(url) {
             if (!url) return null;
-
-            // URL에서 video ID와 시작 시간 추출
-            let videoId = null;
-            let startTime = null;
-
-            // youtube.com/watch?v=VIDEO_ID 형식
+            let videoId = null, startTime = null;
             const watchMatch = url.match(/[?&]v=([^&]+)/);
-            if (watchMatch) {
-                videoId = watchMatch[1];
-            }
-
-            // youtu.be/VIDEO_ID 형식
+            if (watchMatch) videoId = watchMatch[1];
             const shortMatch = url.match(/youtu\.be\/([^?]+)/);
-            if (shortMatch) {
-                videoId = shortMatch[1];
-            }
-
-            // 시작 시간 추출 (t=29s 또는 start=29 형식)
+            if (shortMatch) videoId = shortMatch[1];
             const timeMatch = url.match(/[?&]t=(\d+)s?/);
-            if (timeMatch) {
-                startTime = timeMatch[1];
-            }
-
+            if (timeMatch) startTime = timeMatch[1];
             if (!videoId) return null;
-
-            // embed URL 생성
             let embedUrl = `https://www.youtube.com/embed/${videoId}`;
-            if (startTime) {
-                embedUrl += `?start=${startTime}`;
-            }
-
+            if (startTime) embedUrl += `?start=${startTime}`;
             return embedUrl;
         }
 
-        // 보고서 렌더링
-        function renderReport(metadata, content, format) {
-            // 페이지 메타데이터 업데이트
+        async function renderReport(metadata, content, format) {
             document.getElementById('reportTitle').textContent = metadata.title.ko;
             document.getElementById('ticker').textContent = metadata.ticker;
             document.getElementById('reportDate').textContent = metadata.date;
-
-            // 페이지 제목 업데이트
             document.title = metadata.company + ' - ' + metadata.title.ko;
 
-            // YouTube 영상이 있는 경우 추가
             if (metadata.youtube && metadata.youtube.ko) {
                 const embedUrl = convertToEmbedUrl(metadata.youtube.ko);
                 if (embedUrl) {
                     const youtubeSection = document.getElementById('youtubeSection');
-                    youtubeSection.innerHTML = `
-                        <div class="youtube-container">
-                            <div class="video-wrapper">
-                                <iframe
-                                    src="${embedUrl}"
-                                    title="YouTube video player"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin"
-                                    allowfullscreen>
-                                </iframe>
-                            </div>
-                        </div>
-                    `;
+                    youtubeSection.innerHTML = `<div class="youtube-container"><div class="video-wrapper"><iframe src="${embedUrl}" allowfullscreen></iframe></div></div>`;
                     youtubeSection.style.display = 'block';
                 }
             }
 
-            // 차트 섹션 추가 (티커가 있는 경우)
+            // --- Advanced Chart Rendering ---
             if (metadata.ticker) {
-                const chartSection = document.getElementById('chartSection');
-                chartSection.innerHTML = ''; // 초기화
-                
-                // 티커가 여러 개인 경우 분리 (쉼표 기준)
-                const tickers = metadata.ticker.split(',').map(t => t.trim());
-                
-                tickers.forEach(ticker => {
-                    const chartWrapper = document.createElement('div');
-                    chartWrapper.className = 'tradingview-widget-container';
-                    chartWrapper.style.height = '280px'; // 높이 소폭 조절
-                    chartWrapper.style.marginBottom = '20px';
-                    chartWrapper.style.position = 'relative';
-
-                    // 날짜 마커 추가 (차트 위)
-                    const dateMarker = document.createElement('div');
-                    dateMarker.innerHTML = `📌 <strong>보고서 발행 시점: ${metadata.date}</strong>`;
-                    dateMarker.style.fontSize = '13px';
-                    dateMarker.style.color = '#e17055';
-                    dateMarker.style.marginBottom = '8px';
-                    dateMarker.style.padding = '5px 10px';
-                    dateMarker.style.background = '#fff5f0';
-                    dateMarker.style.borderRadius = '5px';
-                    dateMarker.style.display = 'inline-block';
-                    chartWrapper.appendChild(dateMarker);
-                    
-                    const widgetDiv = document.createElement('div');
-                    widgetDiv.className = 'tradingview-widget-container__widget';
-                    widgetDiv.style.height = '220px';
-                    chartWrapper.appendChild(widgetDiv);
-                    
-                    const script = document.createElement('script');
-                    script.type = 'text/javascript';
-                    script.src = 'https://s3.tradingview.com/external-embedding/embed-widget-mini-symbol-overview.js';
-                    script.async = true;
-                    
-                    // 거래소 코드 판별 (단순화된 로직)
-                    let fullSymbol = ticker;
-                    if (!ticker.includes(':')) {
-                        const nyseTickers = ['LMT', 'GE', 'RTX', 'BA', 'GD', 'NOC', 'LHX', 'HWM', 'TXT', 'HII'];
-                        if (nyseTickers.includes(ticker.toUpperCase())) {
-                            fullSymbol = `NYSE:${ticker}`;
-                        } else {
-                            fullSymbol = `NASDAQ:${ticker}`;
-                        }
-                    }
-                    
-                    const config = {
-                        "symbol": fullSymbol,
-                        "width": "100%",
-                        "height": "100%",
-                        "locale": "ko",
-                        "dateRange": "12M",
-                        "colorTheme": "light",
-                        "trendLineColor": "rgba(253, 203, 110, 1)",
-                        "underLineColor": "rgba(253, 203, 110, 0.3)",
-                        "underLineBottomColor": "rgba(253, 203, 110, 0)",
-                        "isTransparent": false,
-                        "autosize": true,
-                        "largeChartUrl": ""
-                    };
-                    
-                    script.text = JSON.stringify(config);
-                    chartWrapper.appendChild(script);
-                    chartSection.appendChild(chartWrapper);
-                });
-                
-                chartSection.style.display = 'block';
+                renderAdvancedCharts(metadata.ticker, metadata.date);
             }
 
-            // 포맷에 따라 렌더링 방식 분기
             if (format === 'docx-viewer') {
-                // MS Office Viewer iframe
-                document.getElementById('reportContent').innerHTML = `
-                    <div class="docx-viewer-container">
-                        <iframe src="${content}" width="100%" height="800px" frameborder="0"></iframe>
-                    </div>
-                `;
-            } else if (format === 'docx') {
-                // DOCX는 이미 HTML로 변환됨 (로컬용 mammoth)
-                document.getElementById('reportContent').innerHTML = content;
-            } else {
-                // 마크다운 렌더링
-                marked.setOptions({
-                    breaks: true,
-                    gfm: true,
-                    tables: true,
-                    smartLists: true,
-                    smartypants: true
-                });
+                document.getElementById('reportContent').innerHTML = `<iframe src="${content}" width="100%" height="800px" frameborder="0"></iframe>`;
+            } else if (format === 'md') {
+                marked.setOptions({ breaks: true, gfm: true, tables: true });
                 document.getElementById('reportContent').innerHTML = marked.parse(content);
+            } else {
+                document.getElementById('reportContent').innerHTML = content;
             }
 
-            // 로딩 숨기고 콘텐츠 표시
             document.getElementById('loading').style.display = 'none';
             document.getElementById('reportView').style.display = 'block';
+        }
+
+        async function renderAdvancedCharts(tickerStr, reportDate) {
+            const chartSection = document.getElementById('chartSection');
+            chartSection.innerHTML = '';
+            chartSection.style.display = 'block';
+
+            const tickers = tickerStr.split(',').map(t => t.trim().split(':')[1] || t.trim());
+            
+            for (const ticker of tickers) {
+                const container = document.createElement('div');
+                container.className = 'chart-container';
+                container.innerHTML = `
+                    <div class="chart-header">
+                        <span class="chart-title">📈 ${ticker} 실시간 추이</span>
+                        <span style="font-size: 12px; color: #e17055;">📍 화살표: 분석 시점 (${reportDate})</span>
+                    </div>
+                    <div id="chart_${ticker}" class="chart-canvas"></div>
+                `;
+                chartSection.appendChild(container);
+                
+                try {
+                    await initLightweightChart(`chart_${ticker}`, ticker, reportDate);
+                } catch (e) {
+                    console.error('Chart init failed:', e);
+                    container.innerHTML = '<p style="padding:20px; text-align:center; color:#999;">차트 데이터를 불러올 수 없습니다.</p>';
+                }
+            }
+        }
+
+        async function initLightweightChart(containerId, ticker, reportDate) {
+            const chartOptions = {
+                layout: { textColor: '#444', background: { type: 'solid', color: 'white' } },
+                grid: { vertLines: { color: '#f0f0f0' }, horzLines: { color: '#f0f0f0' } },
+                crosshair: { mode: LightweightCharts.CrosshairMode.Normal },
+                rightPriceScale: { borderColor: '#eee' },
+                timeScale: { borderColor: '#eee' },
+            };
+
+            const chart = LightweightCharts.createChart(document.getElementById(containerId), chartOptions);
+            const lineSeries = chart.addAreaSeries({
+                lineColor: '#fdcb6e',
+                topColor: 'rgba(253, 203, 110, 0.4)',
+                bottomColor: 'rgba(253, 203, 110, 0)',
+                lineWidth: 2,
+            });
+
+            // Fetch Data from Yahoo (via Proxy)
+            const to = Math.floor(Date.now() / 1000);
+            const from = to - (365 * 24 * 60 * 60); // 1 year
+            const url = `https://query1.finance.yahoo.com/v8/finance/chart/${ticker}?period1=${from}&period2=${to}&interval=1d`;
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+
+            const response = await fetch(proxyUrl);
+            const result = await response.json();
+            const quotes = result.chart.result[0];
+            const timestamps = quotes.timestamp;
+            const closes = quotes.indicators.quote[0].close;
+
+            const data = [];
+            for (let i = 0; i < timestamps.length; i++) {
+                if (closes[i] !== null) {
+                    data.push({ time: timestamps[i], value: closes[i] });
+                }
+            }
+            lineSeries.setData(data);
+
+            // Add Arrow Marker at Report Date
+            const targetTs = Math.floor(new Date(reportDate).getTime() / 1000);
+            // Find closest data point
+            const closest = data.reduce((prev, curr) => 
+                Math.abs(curr.time - targetTs) < Math.abs(prev.time - targetTs) ? curr : prev
+            );
+
+            lineSeries.setMarkers([
+                {
+                    time: closest.time,
+                    position: 'aboveBar',
+                    color: '#e17055',
+                    shape: 'arrowDown',
+                    text: 'REPORT',
+                    size: 2
+                }
+            ]);
+
+            chart.timeScale().fitContent();
+
+            window.addEventListener('resize', () => {
+                chart.applyOptions({ width: document.getElementById(containerId).clientWidth });
+            });
         }
 
         function showError() {
@@ -536,18 +493,13 @@
             document.getElementById('error').style.display = 'block';
         }
 
-        // Language change function
         function changeLanguage(lang) {
             const currentReportId = new URLSearchParams(window.location.search).get('id');
             if (lang === 'en') {
                 window.location.href = `../../en/research/index.html?id=${currentReportId}`;
-            } else if (lang === 'ko') {
-                // Already on Korean page
-                return;
             }
         }
 
-        // Load report when page loads
         document.addEventListener('DOMContentLoaded', loadReport);
     </script>
 </body>
