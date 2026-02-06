@@ -5,6 +5,23 @@
 window.REPORTS_METADATA = {
     "reports": [
         {
+            "id": "lockheed-martin-corporation-lmt-2026-02-06",
+            "company": "Lockheed Martin Corporation",
+            "ticker": "LMT",
+            "date": "2026-02-06",
+            "title": {
+                "ko": "Lockheed Martin Corporation 기업 분석",
+                "en": "Lockheed Martin Corporation Company Analysis"
+            },
+            "summary": {
+                "ko": "Lockheed Martin Corporation 기업 분석 상세 분석",
+                "en": "Detailed analysis of Lockheed Martin Corporation Company Analysis"
+            },
+            "path": "./research/index.html?id=lockheed-martin-corporation-lmt-2026-02-06",
+            "filename": "lockheed-martin-corporation-lmt-2026-02-06.js",
+            "analyst": "Yelbot"
+        },
+        {
             "id": "ishares-us-aerospace-defense-etf-ita-2026-02-05",
             "company": "iShares U.S. Aerospace & Defense ETF",
             "ticker": "ITA",
